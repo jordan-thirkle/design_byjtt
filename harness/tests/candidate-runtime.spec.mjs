@@ -14,19 +14,30 @@ const states = [
 ];
 
 const normalizeText = (value) => value.replace(/\s+/g, ' ').trim();
-const fixtureSignals = [
-  Math.trunc(fixture.headline.revenue.value).toLocaleString('en-GB'),
-  Math.trunc(fixture.headline.orders.value).toLocaleString('en-GB'),
-  fixture.headline.conversionRate.value.toLocaleString('en-GB'),
-  fixture.headline.averageOrderValue.value.toLocaleString('en-GB')
-];
+const normalizeNumbers = (value) => normalizeText(value).replace(/,/g, '');
+const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const exactNumberPattern = (value) => new RegExp(`(?:^|[^\\d.])${escapeRegExp(String(value))}(?:$|[^\\d.])`);
 const anomalyChannel = fixture.segments.channel.find((segment) => segment.name === 'Paid Social')?.name;
 
+function expectNumericSignal(text, value, { allowRounded = false } = {}) {
+  const normalized = normalizeNumbers(text);
+  const acceptedValues = [value];
+  if (allowRounded) acceptedValues.push(Math.round(value));
+
+  expect(
+    acceptedValues.some((candidate) => exactNumberPattern(candidate).test(normalized)),
+    `Expected one of these fixture representations: ${acceptedValues.join(', ')}`
+  ).toBe(true);
+}
+
 async function expectFixtureSignals(page) {
-  const text = normalizeText(await page.locator('body').innerText());
-  for (const signal of fixtureSignals) expect(text).toContain(signal);
+  const text = await page.locator('body').innerText();
+  expectNumericSignal(text, fixture.headline.revenue.value);
+  expectNumericSignal(text, fixture.headline.orders.value);
+  expectNumericSignal(text, fixture.headline.conversionRate.value);
+  expectNumericSignal(text, fixture.headline.averageOrderValue.value, { allowRounded: true });
   expect(anomalyChannel).toBeTruthy();
-  expect(text).toContain(anomalyChannel);
+  expect(normalizeText(text)).toContain(anomalyChannel);
 }
 
 async function expectStateCue(page, state) {
@@ -49,7 +60,7 @@ async function expectStateCue(page, state) {
 
   if (state === 'partial') {
     expect(text).toMatch(/partial|delayed|incomplete|limited|unavailable|missing|pending|still (?:loading|arriving)|some .*data/i);
-    expect(text).toContain(fixtureSignals[0]);
+    expectNumericSignal(text, fixture.headline.revenue.value);
     return;
   }
 
