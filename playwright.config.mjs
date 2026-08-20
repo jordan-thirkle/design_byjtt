@@ -17,12 +17,20 @@ export default defineConfig({
   },
   projects: [
     {
-      name: 'chromium-desktop',
-      use: { ...devices['Desktop Chrome'], viewport: { width: 1440, height: 900 } }
+      name: 'chromium-320x800',
+      use: { ...devices['Desktop Chrome'], viewport: { width: 320, height: 800 } }
     },
     {
-      name: 'chromium-mobile',
-      use: { ...devices['Pixel 7'], viewport: { width: 375, height: 812 } }
+      name: 'chromium-390x844',
+      use: { ...devices['Desktop Chrome'], viewport: { width: 390, height: 844 } }
+    },
+    {
+      name: 'chromium-768x1024',
+      use: { ...devices['Desktop Chrome'], viewport: { width: 768, height: 1024 } }
+    },
+    {
+      name: 'chromium-1440x1000',
+      use: { ...devices['Desktop Chrome'], viewport: { width: 1440, height: 1000 } }
     }
   ]
 });
