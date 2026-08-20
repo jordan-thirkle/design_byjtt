@@ -97,13 +97,13 @@
         "confidence": {"type": "string", "enum": ["low", "medium", "high"]}
       }
     },
-    "dimension15": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"type": "object", "properties": {"score": {"maximum": 15}, "max": {"const": 15}}}]},
-    "dimension12": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"type": "object", "properties": {"score": {"maximum": 12}, "max": {"const": 12}}}]},
-    "dimension10": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"type": "object", "properties": {"score": {"maximum": 10}, "max": {"const": 10}}}]},
-    "dimension8": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"type": "object", "properties": {"score": {"maximum": 8}, "max": {"const": 8}}}]},
-    "dimension7": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"type": "object", "properties": {"score": {"maximum": 7}, "max": {"const": 7}}}]},
-    "dimension4": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"type": "object", "properties": {"score": {"maximum": 4}, "max": {"const": 4}}}]},
-    "dimension3": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"type": "object", "properties": {"score": {"maximum": 3}, "max": {"const": 3}}}]},
-    "dimension2": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"type": "object", "properties": {"score": {"maximum": 2}, "max": {"const": 2}}}]}
+    "dimension15": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"type": "object", "properties": {"score": {"type": "number", "maximum": 15}, "max": {"type": "number", "const": 15}}}]},
+    "dimension12": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"type": "object", "properties": {"score": {"type": "number", "maximum": 12}, "max": {"type": "number", "const": 12}}}]},
+    "dimension10": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"type": "object", "properties": {"score": {"type": "number", "maximum": 10}, "max": {"type": "number", "const": 10}}}]},
+    "dimension8": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"type": "object", "properties": {"score": {"type": "number", "maximum": 8}, "max": {"type": "number", "const": 8}}}]},
+    "dimension7": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"type": "object", "properties": {"score": {"type": "number", "maximum": 7}, "max": {"type": "number", "const": 7}}}]},
+    "dimension4": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"type": "object", "properties": {"score": {"type": "number", "maximum": 4}, "max": {"type": "number", "const": 4}}}]},
+    "dimension3": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"type": "object", "properties": {"score": {"type": "number", "maximum": 3}, "max": {"type": "number", "const": 3}}}]},
+    "dimension2": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"type": "object", "properties": {"score": {"type": "number", "maximum": 2}, "max": {"type": "number", "const": 2}}}]}
   }
 }
