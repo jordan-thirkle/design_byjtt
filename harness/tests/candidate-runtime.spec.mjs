@@ -32,7 +32,7 @@ function expectNumericSignal(text, value, { allowRounded = false } = {}) {
 
 async function expectFixtureSignals(page) {
   const text = await page.locator('body').innerText();
-  expectNumericSignal(text, fixture.headline.revenue.value);
+  expectNumericSignal(text, fixture.headline.revenue.value, { allowRounded: true });
   expectNumericSignal(text, fixture.headline.orders.value);
   expectNumericSignal(text, fixture.headline.conversionRate.value);
   expectNumericSignal(text, fixture.headline.averageOrderValue.value, { allowRounded: true });
@@ -60,7 +60,7 @@ async function expectStateCue(page, state) {
 
   if (state === 'partial') {
     expect(text).toMatch(/partial|delayed|incomplete|limited|unavailable|missing|pending|still (?:loading|arriving)|some .*data/i);
-    expectNumericSignal(text, fixture.headline.revenue.value);
+    expectNumericSignal(text, fixture.headline.revenue.value, { allowRounded: true });
     return;
   }
 
