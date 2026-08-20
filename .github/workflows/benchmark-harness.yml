@@ -1,0 +1,57 @@
+name: Benchmark Harness
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - 'phase-1/**'
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark-harness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          package-manager-cache: false
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Validate benchmark contracts
+        run: npm run benchmark:validate
+
+      - name: Run benchmark harness
+        run: npm run benchmark:test
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: playwright-report
+          path: playwright-report/
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Upload test evidence
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: benchmark-test-results
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 14

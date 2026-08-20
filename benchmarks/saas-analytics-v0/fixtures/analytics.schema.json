@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design.byjtt.com/schemas/saas-analytics-fixture-v0.json",
+  "title": "SaaS Analytics v0 Fixture",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["currency", "period", "headline", "trend", "segments", "anomalies", "recentEvents"],
+  "properties": {
+    "currency": {"type": "string", "pattern": "^[A-Z]{3}$"},
+    "period": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "comparisonLabel"],
+      "properties": {
+        "label": {"type": "string", "minLength": 1},
+        "comparisonLabel": {"type": "string", "minLength": 1}
+      }
+    },
+    "headline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["revenue", "orders", "conversionRate", "averageOrderValue"],
+      "properties": {
+        "revenue": {"$ref": "#/$defs/valueChange"},
+        "orders": {"$ref": "#/$defs/valueChange"},
+        "conversionRate": {"$ref": "#/$defs/valueChange"},
+        "averageOrderValue": {"$ref": "#/$defs/valueChange"}
+      }
+    },
+    "trend": {
+      "type": "array",
+      "minItems": 30,
+      "maxItems": 30,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["day", "revenue"],
+        "properties": {
+          "day": {"type": "string", "format": "date"},
+          "revenue": {"type": "number", "minimum": 0}
+        }
+      }
+    },
+    "segments": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["channel", "device"],
+      "properties": {
+        "channel": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "revenue", "changePercent"],
+            "properties": {
+              "name": {"type": "string", "minLength": 1},
+              "revenue": {"type": "number", "minimum": 0},
+              "changePercent": {"type": "number"}
+            }
+          }
+        },
+        "device": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "revenue", "conversionRate", "changePercent"],
+            "properties": {
+              "name": {"type": "string", "minLength": 1},
+              "revenue": {"type": "number", "minimum": 0},
+              "conversionRate": {"type": "number", "minimum": 0},
+              "changePercent": {"type": "number"}
+            }
+          }
+        }
+      }
+    },
+    "anomalies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "severity", "title", "summary", "evidence", "likelyCause"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "severity": {"type": "string", "enum": ["low", "medium", "high", "critical"]},
+          "title": {"type": "string", "minLength": 1},
+          "summary": {"type": "string", "minLength": 1},
+          "evidence": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+          "likelyCause": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "recentEvents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["timestamp", "type", "label"],
+        "properties": {
+          "timestamp": {"type": "string", "format": "date-time"},
+          "type": {"type": "string", "minLength": 1},
+          "label": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "valueChange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "changePercent"],
+      "properties": {
+        "value": {"type": "number", "minimum": 0},
+        "changePercent": {"type": "number"}
+      }
+    }
+  }
+}

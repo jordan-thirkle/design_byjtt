@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ByJTT Benchmark Harness Reference</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Harness reference only</p>
+      <h1>Commerce performance</h1>
+    </div>
+    <button id="refresh" type="button">Refresh data</button>
+  </header>
+  <main id="main" tabindex="-1">
+    <section aria-labelledby="summary-heading">
+      <h2 id="summary-heading">Last 30 days</h2>
+      <div class="metrics" id="metrics"></div>
+    </section>
+    <section class="panel" aria-labelledby="alert-heading">
+      <h2 id="alert-heading">Priority signal</h2>
+      <div id="alert"></div>
+    </section>
+    <section class="panel" aria-labelledby="channel-heading">
+      <h2 id="channel-heading">Revenue by channel</h2>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Channel performance table">
+        <table>
+          <caption>Channel revenue and change versus previous period</caption>
+          <thead><tr><th scope="col">Channel</th><th scope="col">Revenue</th><th scope="col">Change</th></tr></thead>
+          <tbody id="channels"></tbody>
+        </table>
+      </div>
+    </section>
+    <section class="panel" aria-labelledby="state-heading">
+      <h2 id="state-heading">State coverage</h2>
+      <p id="state-copy"></p>
+      <nav aria-label="Reference state examples">
+        <a href="/?state=default">Default</a>
+        <a href="/?state=loading">Loading</a>
+        <a href="/?state=empty">Empty</a>
+        <a href="/?state=error">Error</a>
+        <a href="/?state=partial">Partial</a>
+      </nav>
+    </section>
+  </main>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

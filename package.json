@@ -1,0 +1,21 @@
+{
+  "name": "byjtt-design",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "benchmark:validate": "node harness/validate-benchmark.mjs",
+    "benchmark:serve": "node harness/server.mjs",
+    "benchmark:test": "playwright test",
+    "benchmark:check": "npm run benchmark:validate && npm run benchmark:test"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.62.1",
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1"
+  }
+}
