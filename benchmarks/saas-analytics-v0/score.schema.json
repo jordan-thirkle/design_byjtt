@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design.byjtt.com/schemas/benchmark-score-v0.json",
+  "title": "ByJTT Design Benchmark Score",
+  "type": "object",
+  "required": ["benchmarkId", "benchmarkVersion", "runId", "workflow", "runDate", "dimensions", "efficiency", "evidence", "uncertainty", "conclusion"],
+  "properties": {
+    "benchmarkId": {"type": "string"},
+    "benchmarkVersion": {"type": "string"},
+    "runId": {"type": "string"},
+    "workflow": {
+      "type": "object",
+      "required": ["name", "tools"],
+      "properties": {
+        "name": {"type": "string"},
+        "tools": {"type": "array", "items": {"type": "object", "required": ["name", "versionOrDate"]}},
+        "contextNotes": {"type": "string"}
+      }
+    },
+    "runDate": {"type": "string", "format": "date"},
+    "dimensions": {
+      "type": "object",
+      "required": ["requirementCoverage", "ux", "visualDesign", "distinctiveness", "accessibility", "responsiveQuality", "stateResilience", "designSystemConformance", "engineeringQuality", "performance", "mutationFidelity", "provenance", "productionReadiness"],
+      "properties": {
+        "requirementCoverage": {"$ref": "#/$defs/dimension15"},
+        "ux": {"$ref": "#/$defs/dimension12"},
+        "visualDesign": {"$ref": "#/$defs/dimension10"},
+        "distinctiveness": {"$ref": "#/$defs/dimension8"},
+        "accessibility": {"$ref": "#/$defs/dimension12"},
+        "responsiveQuality": {"$ref": "#/$defs/dimension8"},
+        "stateResilience": {"$ref": "#/$defs/dimension8"},
+        "designSystemConformance": {"$ref": "#/$defs/dimension7"},
+        "engineeringQuality": {"$ref": "#/$defs/dimension8"},
+        "performance": {"$ref": "#/$defs/dimension4"},
+        "mutationFidelity": {"$ref": "#/$defs/dimension3"},
+        "provenance": {"$ref": "#/$defs/dimension2"},
+        "productionReadiness": {"$ref": "#/$defs/dimension3"}
+      }
+    },
+    "efficiency": {
+      "type": "object",
+      "properties": {
+        "activeMinutes": {"type": ["number", "null"], "minimum": 0},
+        "toolCalls": {"type": ["integer", "null"], "minimum": 0},
+        "retries": {"type": ["integer", "null"], "minimum": 0},
+        "humanInterventions": {"type": ["integer", "null"], "minimum": 0},
+        "knownCost": {"type": ["number", "null"], "minimum": 0},
+        "knownCostCurrency": {"type": ["string", "null"]},
+        "replacedGeneratedCodePercent": {"type": ["number", "null"], "minimum": 0, "maximum": 100},
+        "unexpectedRegressions": {"type": ["integer", "null"], "minimum": 0}
+      }
+    },
+    "evidence": {"type": "array", "items": {"type": "object", "required": ["type", "pathOrUrl", "description"]}},
+    "uncertainty": {"type": "array", "items": {"type": "string"}},
+    "conclusion": {"type": "string"}
+  },
+  "$defs": {
+    "dimensionBase": {
+      "type": "object",
+      "required": ["score", "max", "rationale", "evidenceRefs"],
+      "properties": {
+        "score": {"type": "number", "minimum": 0},
+        "max": {"type": "number"},
+        "rationale": {"type": "string"},
+        "evidenceRefs": {"type": "array", "items": {"type": "string"}},
+        "confidence": {"type": "string", "enum": ["low", "medium", "high"]}
+      }
+    },
+    "dimension15": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"properties": {"score": {"maximum": 15}, "max": {"const": 15}}}]},
+    "dimension12": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"properties": {"score": {"maximum": 12}, "max": {"const": 12}}}]},
+    "dimension10": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"properties": {"score": {"maximum": 10}, "max": {"const": 10}}}]},
+    "dimension8": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"properties": {"score": {"maximum": 8}, "max": {"const": 8}}}]},
+    "dimension7": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"properties": {"score": {"maximum": 7}, "max": {"const": 7}}}]},
+    "dimension4": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"properties": {"score": {"maximum": 4}, "max": {"const": 4}}}]},
+    "dimension3": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"properties": {"score": {"maximum": 3}, "max": {"const": 3}}}]},
+    "dimension2": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"properties": {"score": {"maximum": 2}, "max": {"const": 2}}}]}
+  }
+}
