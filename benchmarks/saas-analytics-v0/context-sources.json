@@ -12,7 +12,12 @@
         {
           "source": "benchmarks/saas-analytics-v0/prompts/baseline-v0.md",
           "target": "PROMPT.md",
-          "sha256": "1f58c9aef30f98fe0e5fce7bccef7a3b4a9949783a7db42702ab66c96b220969"
+          "sha256": "259c75a0b273fd1ebdb83f2778b30ca097863dc5a3335076fb0d1bd0a7e47ffe"
+        },
+        {
+          "source": "benchmarks/saas-analytics-v0/shared-controls.md",
+          "target": "SHARED-CONTROLS.md",
+          "sha256": "fe13f9305e2cad4a32c1bc561bb059b61d0553119f5d6040a8e6124fd97e2bee"
         },
         {
           "source": "benchmarks/saas-analytics-v0/brief.json",
@@ -32,7 +37,12 @@
         {
           "source": "benchmarks/saas-analytics-v0/prompts/byjtt-guided-v0.md",
           "target": "PROMPT.md",
-          "sha256": "e048cea6668fd829d238ec6c768cec0010a719e58c5816d7ea4429b0c8089c5d"
+          "sha256": "ad670a5a1835d7d094239319eecf50e366f9fc56ee38801f25d283ee17631d5c"
+        },
+        {
+          "source": "benchmarks/saas-analytics-v0/shared-controls.md",
+          "target": "SHARED-CONTROLS.md",
+          "sha256": "fe13f9305e2cad4a32c1bc561bb059b61d0553119f5d6040a8e6124fd97e2bee"
         },
         {
           "source": "benchmarks/saas-analytics-v0/brief.json",
