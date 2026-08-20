@@ -18,19 +18,24 @@ if (targetUrl) {
   targetUrl = parsed.toString().replace(/\/$/, '');
 }
 
+const smokeMode = !targetUrl;
 const executable = process.platform === 'win32' ? 'npx.cmd' : 'npx';
+const outputDir = process.env.BENCHMARK_CANDIDATE_OUTPUT_DIR || (smokeMode ? 'test-results-candidate-smoke' : 'test-results-candidate');
+const reportDir = process.env.BENCHMARK_CANDIDATE_REPORT_DIR || (smokeMode ? 'playwright-report-candidate-smoke' : 'playwright-report-candidate');
 const env = {
   ...process.env,
-  BENCHMARK_CANDIDATE_SMOKE: targetUrl ? '' : '1'
+  BENCHMARK_CANDIDATE_SMOKE: smokeMode ? '1' : '',
+  PLAYWRIGHT_HTML_OUTPUT_DIR: reportDir
 };
 
 if (targetUrl) env.BENCHMARK_TARGET_URL = targetUrl;
 else delete env.BENCHMARK_TARGET_URL;
 
-const child = spawn(executable, ['playwright', 'test', 'harness/tests/candidate-runtime.spec.mjs'], {
-  env,
-  stdio: 'inherit'
-});
+const child = spawn(
+  executable,
+  ['playwright', 'test', 'harness/tests/candidate-runtime.spec.mjs', `--output=${outputDir}`],
+  { env, stdio: 'inherit' }
+);
 
 child.on('error', (error) => {
   console.error(error);
