@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { cp, lstat, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -17,6 +17,31 @@ const resolveInsideRepo = (relativePath) => {
   return resolved;
 };
 
+if (!sourceManifest.benchmarkId || !sourceManifest.benchmarkVersion || !Array.isArray(sourceManifest.bundles)) {
+  throw new Error('Context source manifest is missing required benchmark metadata or bundles');
+}
+
+const bundleIds = new Set();
+for (const bundle of sourceManifest.bundles) {
+  if (!bundle.id || !Array.isArray(bundle.files) || bundle.files.length === 0) {
+    throw new Error('Each context bundle requires an id and at least one file');
+  }
+  if (bundleIds.has(bundle.id)) throw new Error(`Duplicate context bundle id: ${bundle.id}`);
+  bundleIds.add(bundle.id);
+
+  const targets = new Set();
+  const sources = new Set();
+  for (const file of bundle.files) {
+    if (!file.source || !file.target || !/^[a-f0-9]{64}$/.test(file.sha256 ?? '')) {
+      throw new Error(`Invalid frozen context file declaration in ${bundle.id}`);
+    }
+    if (targets.has(file.target)) throw new Error(`Duplicate context target in ${bundle.id}: ${file.target}`);
+    if (sources.has(file.source)) throw new Error(`Duplicate context source in ${bundle.id}: ${file.source}`);
+    targets.add(file.target);
+    sources.add(file.source);
+  }
+}
+
 await rm(outputRoot, { recursive: true, force: true });
 await mkdir(outputRoot, { recursive: true });
 
@@ -26,6 +51,11 @@ for (const bundle of sourceManifest.bundles) {
 
   for (const file of bundle.files) {
     const absoluteSource = resolveInsideRepo(file.source);
+    const sourceStat = await lstat(absoluteSource);
+    if (!sourceStat.isFile() || sourceStat.isSymbolicLink()) {
+      throw new Error(`Context source must be a regular non-symlink file: ${file.source}`);
+    }
+
     const absoluteTarget = resolve(bundleRoot, file.target);
     if (absoluteTarget !== bundleRoot && !absoluteTarget.startsWith(`${bundleRoot}${sep}`)) {
       throw new Error(`Context target escapes bundle root: ${file.target}`);
