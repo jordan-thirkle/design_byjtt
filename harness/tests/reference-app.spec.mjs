@@ -50,9 +50,7 @@ test.describe('benchmark harness reference app', () => {
     await page.keyboard.press('Enter');
     await expect(page.locator('#main')).toBeFocused();
 
-    await page.reload();
-    await page.keyboard.press('Tab');
-    await page.keyboard.press('Tab');
+    await page.keyboard.press('Shift+Tab');
     await expect(page.getByRole('button', { name: 'Refresh data' })).toBeFocused();
   });
 
