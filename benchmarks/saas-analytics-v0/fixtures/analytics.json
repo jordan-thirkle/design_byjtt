@@ -63,7 +63,7 @@
     }
   ],
   "recentEvents": [
-    {"timestamp": "2026-08-12T09:30:00+01:00", "type": "release", "label": "Mobile checkout update deployed"},
+    {"timestamp": "2026-08-02T09:30:00+01:00", "type": "release", "label": "Mobile checkout update deployed"},
     {"timestamp": "2026-08-15T12:00:00+01:00", "type": "campaign", "label": "Paid Social creative refresh"}
   ]
 }
