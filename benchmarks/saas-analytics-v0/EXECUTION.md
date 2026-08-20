@@ -19,6 +19,20 @@ The first comparison requires two fresh contexts:
 
 Do not create both candidates inside one AI conversation or agent context. Shared hidden conversation history would contaminate the baseline.
 
+## Frozen context source of truth
+
+The exact files permitted in each context are pre-registered in [`context-sources.json`](./context-sources.json).
+
+That manifest records, for every permitted source:
+
+- repository source path;
+- destination path inside the isolated bundle;
+- expected SHA-256 digest.
+
+`harness/export-benchmark-contexts.mjs` must refuse export when any source digest differs from the pre-registered value. A treatment-source change therefore requires an explicit manifest change **before** candidate generation. Once a candidate run has begun, changing the source allowlist or digest invalidates that run and requires a restart under a new pre-registered context.
+
+The guided allowlist intentionally excludes `docs/COMPETITIVE-MAP.md` and other provider-selection guidance. The treatment may recommend using mature solved primitives, but it must not steer the generator toward a paid external provider.
+
 ## Canonical inputs supplied to both workflows
 
 Both workflows receive, without material semantic differences:
@@ -32,15 +46,15 @@ Both workflows receive, without material semantic differences:
 7. the same permission or prohibition on human visual edits;
 8. the same requirement to expose the generated implementation for evaluation.
 
-The baseline does **not** receive ByJTT's private research conclusions, `DESIGN.md`, anti-slop taxonomy, competitive map, solved-system gate, or Gauntlet repair instructions.
+The baseline receives no additional product/design sources beyond its frozen allowlist.
 
 ## ByJTT treatment
 
 The guided context receives the canonical inputs plus these fixed interventions, in this order:
 
 1. **Requirements discipline** — convert the brief into explicit user jobs, information hierarchy, states, constraints and acceptance criteria before visual implementation.
-2. **Solved-system gate** — inspect the environment and prefer mature accessible primitives/components before bespoke UI infrastructure.
-3. **Design Contract** — apply the current `DESIGN.md` principles and rationale, including product-specific hierarchy, restrained visual devices, semantic states and anti-slop rules.
+2. **Solved-system gate** — inspect the available environment and prefer mature accessible primitives/components before bespoke UI infrastructure, without provisioning paid external services.
+3. **Design Contract** — apply the supplied `DESIGN.md` principles and rationale, including product-specific hierarchy, restrained visual devices, semantic states and anti-slop rules.
 4. **Implementation continuity** — preserve semantic component intent through the implemented product rather than treating the screenshot as the deliverable.
 5. **Pre-submission Gauntlet** — inspect the candidate against requirement coverage, state completeness, accessibility, responsive behaviour, content resilience, design-system coherence and obvious model-default design patterns; make only evidence-backed revisions within the shared attempt budget.
 
@@ -90,6 +104,7 @@ Capture contemporaneously:
 
 - provider/tool/model/version/date;
 - exact material prompt/context supplied;
+- context bundle ID and manifest digest;
 - start/end active time;
 - every material generation/revision attempt;
 - every human intervention;
@@ -110,7 +125,7 @@ The evaluator must not change benchmark weights after seeing which candidate is 
 
 ## Required evaluation sequence
 
-1. Validate benchmark contracts.
+1. Validate benchmark contracts and frozen context-source hashes.
 2. Capture candidate identity and generation metadata.
 3. Run required viewport/state rendering checks.
 4. Run axe accessibility baseline.
@@ -127,8 +142,9 @@ The evaluator must not change benchmark weights after seeing which candidate is 
 
 Invalidate or clearly downgrade a run if:
 
-- one workflow receives material hidden context not declared here;
-- the baseline is generated in a context already containing ByJTT strategy/research;
+- one workflow receives material hidden context outside its frozen allowlist;
+- a context source digest or allowlist changes after candidate generation begins;
+- the baseline is generated in a context already containing guided strategy/research;
 - budgets are changed after seeing output;
 - external paid credits/services are used without explicit approval;
 - human visual edits are applied to one candidate only;
