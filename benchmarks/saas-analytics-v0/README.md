@@ -53,7 +53,7 @@ Minimum evidence:
 
 - production-like URL or locally runnable build reference;
 - screenshots at all required viewports;
-- loading, populated, empty and error states;
+- loading, populated, empty, partial and error states;
 - keyboard/focus evidence;
 - automated accessibility output;
 - benchmark score document;
