@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design.byjtt.com/schemas/benchmark-brief-v0.json",
+  "title": "ByJTT Design Benchmark Brief",
+  "type": "object",
+  "required": ["id", "version", "title", "problem", "users", "productGoals", "requiredFlows", "requiredStates", "viewports", "accessibility", "constraints", "antiGoals", "acceptanceCriteria"],
+  "properties": {
+    "id": {"type": "string", "minLength": 1},
+    "version": {"type": "string", "minLength": 1},
+    "title": {"type": "string", "minLength": 1},
+    "problem": {"type": "string", "minLength": 1},
+    "users": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["id", "description", "primaryJobs"]}},
+    "productGoals": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "requiredData": {"type": "object"},
+    "requiredFlows": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "requiredStates": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "viewports": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "object", "required": ["name", "width", "height"], "properties": {"name": {"type": "string"}, "width": {"type": "integer", "minimum": 240}, "height": {"type": "integer", "minimum": 240}}}
+    },
+    "accessibility": {"type": "object", "required": ["target", "requirements"]},
+    "contentStress": {"type": "array", "items": {"type": "string"}},
+    "constraints": {"type": "array", "items": {"type": "string"}},
+    "antiGoals": {"type": "array", "items": {"type": "string"}},
+    "acceptanceCriteria": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+  },
+  "additionalProperties": true
+}
