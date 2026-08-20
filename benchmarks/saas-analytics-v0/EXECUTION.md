@@ -33,18 +33,15 @@ That manifest records, for every permitted source:
 
 The guided allowlist intentionally excludes `docs/COMPETITIVE-MAP.md` and other provider-selection guidance. The treatment may recommend using mature solved primitives, but it must not steer the generator toward a paid external provider.
 
-## Canonical inputs supplied to both workflows
+## Shared controls supplied identically to both workflows
 
-Both workflows receive, without material semantic differences:
+[`shared-controls.md`](./shared-controls.md) is the single source of truth for candidate-level context boundaries, deliverable requirements, operator interaction rules, attempt/time budget, paid-service prohibition and completion checks. Its exact same frozen file is included as `SHARED-CONTROLS.md` in both context bundles.
+
+Both workflows also receive the same canonical:
 
 1. `brief.json`;
 2. `fixtures/analytics.json`;
-3. the requirement that the result be an inspectable web implementation rather than an image;
-4. the required state contract: `default`, `loading`, `empty`, `partial`, `error`;
-5. the required viewport targets: 320×800, 390×844, 768×1024, 1440×1000;
-6. the same time/attempt budget;
-7. the same permission or prohibition on human visual edits;
-8. the same requirement to expose the generated implementation for evaluation.
+3. output/state/viewports/accessibility requirements encoded by the brief and shared controls.
 
 The baseline receives no additional product/design sources beyond its frozen allowlist.
 
@@ -60,19 +57,16 @@ The guided context receives the canonical inputs plus these fixed interventions,
 
 No post-hoc ByJTT instruction may be added to rescue a weak guided run unless the entire benchmark is invalidated and restarted with the new treatment pre-registered here.
 
-## Budget
+## Provider and cost controls
 
-For the first run, unless a provider imposes a stricter observable cap:
+Candidate-level spend and attempt limits come from the identical frozen `SHARED-CONTROLS.md` supplied to both workflows.
 
-- fresh context per workflow: required;
-- maximum material generation/revision attempts: **3**;
-- human visual editing: **not allowed**;
-- human clarifications after start: **not allowed unless the generator cannot proceed for a non-design operational reason**;
-- active operator time target: **30 minutes per workflow**;
-- external paid credits/services: **not allowed without explicit user approval**;
-- provider credits/cost: record exactly when exposed; otherwise `unknown`, never estimated as fact.
+Additionally:
 
-Operational retries caused solely by provider/network/runtime failure do not count as design attempts, but must be recorded.
+- provider/tool/model/version/date must be recorded;
+- provider-visible cost/credits must be recorded exactly when exposed and otherwise represented as unknown/null rather than estimated;
+- external paid services remain prohibited unless explicit user approval was recorded before the run;
+- operational provider/network/runtime failures must be recorded separately from design-quality failures.
 
 ## Generator equality
 
@@ -145,7 +139,7 @@ Invalidate or clearly downgrade a run if:
 - one workflow receives material hidden context outside its frozen allowlist;
 - a context source digest or allowlist changes after candidate generation begins;
 - the baseline is generated in a context already containing guided strategy/research;
-- budgets are changed after seeing output;
+- shared controls or budgets are changed after seeing output;
 - external paid credits/services are used without explicit approval;
 - human visual edits are applied to one candidate only;
 - a provider failure materially reduces one candidate's opportunity and is treated as design quality;
