@@ -21,7 +21,7 @@ if (!validateBrief(brief)) {
 }
 
 const fixture = await readJson('fixtures/analytics.json');
-const requiredFixtureKeys = ['summary', 'timeseries', 'channels', 'alerts'];
+const requiredFixtureKeys = ['currency', 'period', 'headline', 'trend', 'segments', 'anomalies', 'recentEvents'];
 const missingFixtureKeys = requiredFixtureKeys.filter((key) => !(key in fixture));
 if (missingFixtureKeys.length) {
   failed = true;
