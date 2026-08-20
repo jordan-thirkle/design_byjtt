@@ -8,9 +8,10 @@
   },
   "scripts": {
     "benchmark:validate": "node harness/validate-benchmark.mjs",
+    "benchmark:export-contexts": "node harness/export-benchmark-contexts.mjs",
     "benchmark:serve": "node harness/server.mjs",
     "benchmark:test": "playwright test",
-    "benchmark:check": "npm run benchmark:validate && npm run benchmark:test"
+    "benchmark:check": "npm run benchmark:validate && npm run benchmark:export-contexts && npm run benchmark:test"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",
