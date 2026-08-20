@@ -13,7 +13,8 @@ This repository is designed to be worked on by AI agents and humans together. Ke
 - **Requirements / feature planning / acceptance criteria:** read [`docs/REQUIREMENTS.md`](./docs/REQUIREMENTS.md).
 - **Competitor feature, build-vs-integrate, or market-positioning decision:** read [`docs/COMPETITIVE-MAP.md`](./docs/COMPETITIVE-MAP.md) and current primary documentation for affected tools.
 - **AI-slop, user pain, UX failure, or design-quality claim:** read [`docs/research/AI-SLOP-AND-USER-PAIN.md`](./docs/research/AI-SLOP-AND-USER-PAIN.md) and refresh external evidence when the claim may have changed.
-- **Benchmark, evaluation, scoring, or comparison work:** read [`docs/BENCHMARKS.md`](./docs/BENCHMARKS.md).
+- **Benchmark methodology, evaluation, scoring, or comparison work:** read [`docs/BENCHMARKS.md`](./docs/BENCHMARKS.md).
+- **Executing a benchmark run:** also read the benchmark-specific `EXECUTION.md` and [`docs/decisions/0004-benchmark-spend-and-isolation.md`](./docs/decisions/0004-benchmark-spend-and-isolation.md). Never consume external paid credits/services without explicit user approval.
 - **Sequencing / what to build next:** read [`docs/ROADMAP.md`](./docs/ROADMAP.md).
 - **Durable change to product boundaries, architecture, or operating philosophy:** inspect [`docs/decisions/`](./docs/decisions/) and add/update an ADR when the decision would otherwise be rediscovered later.
 
