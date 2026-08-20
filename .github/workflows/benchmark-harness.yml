@@ -42,6 +42,7 @@ jobs:
         run: npm run benchmark:test
 
       - name: Upload baseline context
+        if: always()
         uses: actions/upload-artifact@v6
         with:
           name: benchmark-context-baseline-v0
@@ -50,6 +51,7 @@ jobs:
           retention-days: 14
 
       - name: Upload ByJTT-guided context
+        if: always()
         uses: actions/upload-artifact@v6
         with:
           name: benchmark-context-byjtt-guided-v0
