@@ -1,5 +1,6 @@
 node_modules/
 playwright-report/
 test-results/
+benchmark-contexts/
 .DS_Store
 *.log

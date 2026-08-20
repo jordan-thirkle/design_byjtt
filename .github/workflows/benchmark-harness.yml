@@ -29,6 +29,9 @@ jobs:
       - name: Install dependencies
         run: npm install --no-audit --no-fund
 
+      - name: Export isolated benchmark contexts
+        run: npm run benchmark:export-contexts
+
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
 
@@ -37,6 +40,24 @@ jobs:
 
       - name: Run benchmark harness
         run: npm run benchmark:test
+
+      - name: Upload baseline context
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: benchmark-context-baseline-v0
+          path: benchmark-contexts/baseline-v0/
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Upload ByJTT-guided context
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: benchmark-context-byjtt-guided-v0
+          path: benchmark-contexts/byjtt-guided-v0/
+          if-no-files-found: error
+          retention-days: 14
 
       - name: Upload Playwright report
         if: always()
