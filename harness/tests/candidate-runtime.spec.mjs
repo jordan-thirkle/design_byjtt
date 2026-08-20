@@ -14,14 +14,19 @@ const states = [
 ];
 
 const normalizeText = (value) => value.replace(/\s+/g, ' ').trim();
+const fixtureSignals = [
+  Math.trunc(fixture.headline.revenue.value).toLocaleString('en-GB'),
+  Math.trunc(fixture.headline.orders.value).toLocaleString('en-GB'),
+  fixture.headline.conversionRate.value.toLocaleString('en-GB'),
+  fixture.headline.averageOrderValue.value.toLocaleString('en-GB')
+];
+const anomalyChannel = fixture.segments.channel.find((segment) => segment.name === 'Paid Social')?.name;
 
 async function expectFixtureSignals(page) {
   const text = normalizeText(await page.locator('body').innerText());
-  expect(text).toContain('48,216');
-  expect(text).toContain('1,284');
-  expect(text).toContain('2.84');
-  expect(text).toContain('37.55');
-  expect(text).toMatch(/Paid Social/i);
+  for (const signal of fixtureSignals) expect(text).toContain(signal);
+  expect(anomalyChannel).toBeTruthy();
+  expect(text).toContain(anomalyChannel);
 }
 
 async function expectStateCue(page, state) {
@@ -44,7 +49,7 @@ async function expectStateCue(page, state) {
 
   if (state === 'partial') {
     expect(text).toMatch(/partial|delayed|incomplete|limited|unavailable|missing|pending|still (?:loading|arriving)|some .*data/i);
-    expect(text).toContain('48,216');
+    expect(text).toContain(fixtureSignals[0]);
     return;
   }
 
