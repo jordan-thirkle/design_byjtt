@@ -1,5 +1,5 @@
-import { readFile, readdir } from 'node:fs/promises';
-import { join } from 'node:path';
+import { access, readFile, readdir } from 'node:fs/promises';
+import { isAbsolute, join, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
@@ -25,11 +25,32 @@ const reportValidation = (label, validate, value) => {
 
 const briefSchema = await readJson('brief.schema.json');
 const brief = await readJson('brief.json');
-reportValidation('brief.json', ajv.compile(briefSchema), brief);
+const briefValid = reportValidation('brief.json', ajv.compile(briefSchema), brief);
 
 const fixtureSchema = await readJson('fixtures/analytics.schema.json');
 const fixture = await readJson('fixtures/analytics.json');
-reportValidation('fixtures/analytics.json', ajv.compile(fixtureSchema), fixture);
+const fixtureValid = reportValidation('fixtures/analytics.json', ajv.compile(fixtureSchema), fixture);
+
+const validateTrendSemantics = () => {
+  if (!fixtureValid) return;
+  const days = fixture.trend.map((point) => point.day);
+  if (new Set(days).size !== days.length) {
+    failed = true;
+    console.error('fixtures/analytics.json trend contains duplicate day values');
+  }
+
+  for (let index = 1; index < days.length; index += 1) {
+    if (days[index] <= days[index - 1]) {
+      failed = true;
+      console.error(`fixtures/analytics.json trend is not strictly chronological at ${days[index - 1]} -> ${days[index]}`);
+      break;
+    }
+  }
+
+  if (!failed) console.log('✓ analytics trend contains 30 unique chronological days');
+};
+
+validateTrendSemantics();
 
 const invalidDateProbe = ajv.compile({ type: 'string', format: 'date' });
 if (invalidDateProbe('2026-99-99')) {
@@ -45,6 +66,10 @@ const runsDir = new URL('runs/', benchmarkRoot);
 const runsDirPath = fileURLToPath(runsDir);
 const runEntries = await readdir(runsDir, { withFileTypes: true });
 let scoreCount = 0;
+
+const viewportKey = ({ name, width, height }) => `${name}:${width}x${height}`;
+const requiredViewportKeys = briefValid ? new Set(brief.viewports.map(viewportKey)) : new Set();
+const requiredStates = briefValid ? brief.requiredStates : [];
 
 const validateEvidenceReferences = (score, runName) => {
   const evidenceIds = score.evidence.map((item) => item.id);
@@ -62,6 +87,48 @@ const validateEvidenceReferences = (score, runName) => {
   }
 };
 
+const validateEvidenceLocations = async (score, runName) => {
+  const runDir = resolve(runsDirPath, runName);
+  for (const item of score.evidence) {
+    if (item.location.kind !== 'local') continue;
+    const localPath = item.location.path;
+    if (isAbsolute(localPath)) {
+      failed = true;
+      console.error(`${runName}/score.json evidence ${item.id} must use a run-relative local path`);
+      continue;
+    }
+
+    const resolvedPath = resolve(runDir, localPath);
+    if (resolvedPath !== runDir && !resolvedPath.startsWith(`${runDir}${sep}`)) {
+      failed = true;
+      console.error(`${runName}/score.json evidence ${item.id} escapes the run directory`);
+      continue;
+    }
+
+    try {
+      await access(resolvedPath);
+    } catch {
+      failed = true;
+      console.error(`${runName}/score.json evidence ${item.id} points to missing local path: ${localPath}`);
+    }
+  }
+};
+
+const validateEvidenceCoverage = (score, runName) => {
+  if (!briefValid) return;
+  const screenshotEvidence = score.evidence.filter((item) => item.type === 'state-screenshot' || item.type === 'viewport-screenshot');
+
+  for (const state of requiredStates) {
+    for (const requiredViewport of requiredViewportKeys) {
+      const covered = screenshotEvidence.some((item) => item.state === state && item.viewport && viewportKey(item.viewport) === requiredViewport);
+      if (!covered) {
+        failed = true;
+        console.error(`${runName}/score.json is missing screenshot evidence for ${state} at ${requiredViewport}`);
+      }
+    }
+  }
+};
+
 for (const entry of runEntries) {
   if (!entry.isDirectory()) continue;
   const runPath = join(runsDirPath, entry.name, 'score.json');
@@ -75,6 +142,8 @@ for (const entry of runEntries) {
       continue;
     }
     validateEvidenceReferences(score, entry.name);
+    await validateEvidenceLocations(score, entry.name);
+    validateEvidenceCoverage(score, entry.name);
   } catch (error) {
     if (error?.code !== 'ENOENT') throw error;
   }
