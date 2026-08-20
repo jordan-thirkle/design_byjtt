@@ -3,23 +3,38 @@
   "$id": "https://design.byjtt.com/schemas/benchmark-score-v0.json",
   "title": "ByJTT Design Benchmark Score",
   "type": "object",
+  "additionalProperties": false,
   "required": ["benchmarkId", "benchmarkVersion", "runId", "workflow", "runDate", "dimensions", "efficiency", "evidence", "uncertainty", "conclusion"],
   "properties": {
-    "benchmarkId": {"type": "string"},
-    "benchmarkVersion": {"type": "string"},
-    "runId": {"type": "string"},
+    "benchmarkId": {"type": "string", "minLength": 1},
+    "benchmarkVersion": {"type": "string", "minLength": 1},
+    "runId": {"type": "string", "minLength": 1},
     "workflow": {
       "type": "object",
+      "additionalProperties": false,
       "required": ["name", "tools"],
       "properties": {
-        "name": {"type": "string"},
-        "tools": {"type": "array", "items": {"type": "object", "required": ["name", "versionOrDate"]}},
+        "name": {"type": "string", "minLength": 1},
+        "tools": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "versionOrDate"],
+            "properties": {
+              "name": {"type": "string", "minLength": 1},
+              "versionOrDate": {"type": "string", "minLength": 1}
+            }
+          }
+        },
         "contextNotes": {"type": "string"}
       }
     },
     "runDate": {"type": "string", "format": "date"},
     "dimensions": {
       "type": "object",
+      "additionalProperties": false,
       "required": ["requirementCoverage", "ux", "visualDesign", "distinctiveness", "accessibility", "responsiveQuality", "stateResilience", "designSystemConformance", "engineeringQuality", "performance", "mutationFidelity", "provenance", "productionReadiness"],
       "properties": {
         "requirementCoverage": {"$ref": "#/$defs/dimension15"},
@@ -39,6 +54,7 @@
     },
     "efficiency": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "activeMinutes": {"type": ["number", "null"], "minimum": 0},
         "toolCalls": {"type": ["integer", "null"], "minimum": 0},
@@ -50,19 +66,34 @@
         "unexpectedRegressions": {"type": ["integer", "null"], "minimum": 0}
       }
     },
-    "evidence": {"type": "array", "items": {"type": "object", "required": ["type", "pathOrUrl", "description"]}},
-    "uncertainty": {"type": "array", "items": {"type": "string"}},
-    "conclusion": {"type": "string"}
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "type", "pathOrUrl", "description"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "type": {"type": "string", "minLength": 1},
+          "pathOrUrl": {"type": "string", "minLength": 1},
+          "description": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "uncertainty": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "conclusion": {"type": "string", "minLength": 1}
   },
   "$defs": {
     "dimensionBase": {
       "type": "object",
-      "required": ["score", "max", "rationale", "evidenceRefs"],
+      "additionalProperties": false,
+      "required": ["score", "max", "rationale", "evidenceRefs", "confidence"],
       "properties": {
         "score": {"type": "number", "minimum": 0},
         "max": {"type": "number"},
-        "rationale": {"type": "string"},
-        "evidenceRefs": {"type": "array", "items": {"type": "string"}},
+        "rationale": {"type": "string", "minLength": 1},
+        "evidenceRefs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
         "confidence": {"type": "string", "enum": ["low", "medium", "high"]}
       }
     },
