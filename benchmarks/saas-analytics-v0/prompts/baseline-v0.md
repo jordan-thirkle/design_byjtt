@@ -1,6 +1,6 @@
 # Baseline v0 prompt
 
-You are in a fresh isolated implementation context. Use **only the files supplied in this benchmark bundle** as product/design context. Do not retrieve or infer hidden ByJTT project guidance from elsewhere.
+You are in a fresh isolated implementation context. Use **only the files supplied in this benchmark bundle** as product/design context. Do not retrieve external product/design guidance from elsewhere.
 
 Build an inspectable web implementation of the product defined by `brief.json` using the deterministic data in `fixtures/analytics.json`.
 
@@ -21,4 +21,4 @@ Budget:
 - no human visual editing;
 - target no more than 30 minutes of active operator time.
 
-Before declaring the candidate finished, check that the required states are reachable and that the implementation is runnable. Do not apply any ByJTT-specific design framework, anti-slop taxonomy, Design Contract, competitive research or Gauntlet instructions unless they are present in this bundle (they should not be).
+Before declaring the candidate finished, check that the required states are reachable and that the implementation is runnable.
