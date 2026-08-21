@@ -34,7 +34,7 @@ Supply the fresh context only the exported `benchmark-contexts/byjtt-guided-v0/`
 
 Inside the fresh context, the generator receives the exported guided bundle and this neutral task instruction only:
 
-> Build the runnable web product defined by the supplied benchmark bundle. Treat `brief.json` as the canonical requirements source, `fixtures/analytics.json` as the canonical deterministic data, `SHARED-CONTROLS.md` as binding execution controls, and the additional files in this supplied bundle as the complete pre-registered treatment. Do not ask follow-up design questions. Produce a real runnable implementation, expose every required state URL, stay within the material-attempt and active-time limits, do not use paid external services or generators, and record any unmet requirement rather than hiding it.
+> Build the runnable web product defined by the supplied benchmark bundle. Treat `brief.json` as the canonical requirements source, `fixtures/analytics.json` as the canonical deterministic data, `SHARED-CONTROLS.md` as binding execution controls, and every other file supplied in this bundle as binding context. Do not ask follow-up design questions. Produce a real runnable implementation, expose every required state URL, stay within the material-attempt and active-time limits, do not use paid external services or generators, and record any unmet requirement rather than hiding it.
 
 No additional ByJTT instruction, design critique, comparison against the baseline, external product research, or rescue instruction may be added after generation begins.
 
