@@ -4,25 +4,7 @@
   "title": "ByJTT Design Benchmark Run Manifest",
   "type": "object",
   "additionalProperties": false,
-  "required": [
-    "benchmarkId",
-    "benchmarkVersion",
-    "runId",
-    "candidateId",
-    "workflowRole",
-    "status",
-    "context",
-    "generator",
-    "controls",
-    "timing",
-    "attempts",
-    "interventions",
-    "cost",
-    "candidate",
-    "evaluation",
-    "confounds",
-    "notes"
-  ],
+  "required": ["benchmarkId", "benchmarkVersion", "runId", "candidateId", "workflowRole", "status", "context", "generator", "controls", "timing", "attempts", "interventions", "cost", "candidate", "evaluation", "confounds", "notes"],
   "properties": {
     "benchmarkId": {"type": "string", "minLength": 1},
     "benchmarkVersion": {"type": "string", "minLength": 1},
@@ -113,17 +95,11 @@
         "amount": {"type": ["number", "null"], "minimum": 0},
         "currency": {"type": ["string", "null"], "minLength": 1},
         "credits": {"type": ["number", "null"], "minimum": 0},
-        "source": {"type": "string", "enum": ["provider-visible", "not-exposed", "not-applicable"]}
+        "source": {"type": "string", "enum": ["pending", "provider-visible", "not-exposed", "not-applicable"]}
       },
       "allOf": [
-        {
-          "if": {"properties": {"amount": {"type": "number"}}, "required": ["amount"]},
-          "then": {"properties": {"currency": {"type": "string", "minLength": 1}}}
-        },
-        {
-          "if": {"properties": {"amount": {"type": "null"}}, "required": ["amount"]},
-          "then": {"properties": {"currency": {"type": "null"}}}
-        }
+        {"if": {"properties": {"amount": {"type": "number"}}, "required": ["amount"]}, "then": {"properties": {"currency": {"type": "string", "minLength": 1}}}},
+        {"if": {"properties": {"amount": {"type": "null"}}, "required": ["amount"]}, "then": {"properties": {"currency": {"type": "null"}}}}
       ]
     },
     "candidate": {
@@ -150,10 +126,7 @@
         "objectiveGatePassed": {"type": ["boolean", "null"]}
       }
     },
-    "confounds": {
-      "type": "array",
-      "items": {"type": "string", "minLength": 1}
-    },
+    "confounds": {"type": "array", "items": {"type": "string", "minLength": 1}},
     "notes": {
       "type": "object",
       "additionalProperties": false,
@@ -176,9 +149,6 @@
     }
   },
   "allOf": [
-    {
-      "if": {"properties": {"status": {"const": "invalidated"}}, "required": ["status"]},
-      "then": {"required": ["invalidation"], "properties": {"invalidation": {"type": "object"}}}
-    }
+    {"if": {"properties": {"status": {"const": "invalidated"}}, "required": ["status"]}, "then": {"required": ["invalidation"], "properties": {"invalidation": {"type": "object"}}}}
   ]
 }
