@@ -19,29 +19,46 @@ const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const exactNumberPattern = (value) => new RegExp(`(?:^|[^\\d.])${escapeRegExp(String(value))}(?:$|[^\\d.])`);
 const anomalyChannel = fixture.segments.channel.find((segment) => segment.name === 'Paid Social')?.name;
 
-function expectNumericSignal(text, value, { allowRounded = false } = {}) {
+function hasNumericSignal(text, value, { allowRounded = false } = {}) {
   const normalized = normalizeNumbers(text);
   const acceptedValues = [value];
   if (allowRounded) acceptedValues.push(Math.round(value));
+  return acceptedValues.some((candidate) => exactNumberPattern(candidate).test(normalized));
+}
 
-  expect(
-    acceptedValues.some((candidate) => exactNumberPattern(candidate).test(normalized)),
-    `Expected one of these fixture representations: ${acceptedValues.join(', ')}`
+async function hasVisibleLocator(locator) {
+  const count = await locator.count();
+  for (let index = 0; index < count; index += 1) {
+    if (await locator.nth(index).isVisible()) return true;
+  }
+  return false;
+}
+
+async function expectVisibleTextCue(main, pattern, label) {
+  await expect.poll(
+    async () => hasVisibleLocator(main.getByText(pattern)),
+    { timeout: 5000, message: `Expected a visible ${label} cue inside main` }
   ).toBe(true);
 }
 
 async function expectFixtureSignals(page) {
-  const text = await page.locator('body').innerText();
-  expectNumericSignal(text, fixture.headline.revenue.value, { allowRounded: true });
-  expectNumericSignal(text, fixture.headline.orders.value);
-  expectNumericSignal(text, fixture.headline.conversionRate.value);
-  expectNumericSignal(text, fixture.headline.averageOrderValue.value, { allowRounded: true });
+  const main = page.getByRole('main');
   expect(anomalyChannel).toBeTruthy();
-  expect(normalizeText(text)).toContain(anomalyChannel);
+
+  await expect.poll(async () => {
+    const text = await main.innerText();
+    return (
+      hasNumericSignal(text, fixture.headline.revenue.value, { allowRounded: true }) &&
+      hasNumericSignal(text, fixture.headline.orders.value) &&
+      hasNumericSignal(text, fixture.headline.conversionRate.value) &&
+      hasNumericSignal(text, fixture.headline.averageOrderValue.value, { allowRounded: true }) &&
+      normalizeText(text).includes(anomalyChannel)
+    );
+  }, { timeout: 5000, message: 'Expected canonical populated fixture signals inside main' }).toBe(true);
 }
 
 async function expectStateCue(page, state) {
-  const text = normalizeText(await page.locator('body').innerText());
+  const main = page.getByRole('main');
 
   if (state === 'populated') {
     await expectFixtureSignals(page);
@@ -49,23 +66,31 @@ async function expectStateCue(page, state) {
   }
 
   if (state === 'loading') {
-    expect(await page.locator('[role="status"], [aria-busy="true"]').count()).toBeGreaterThan(0);
+    await expect.poll(
+      async () => hasVisibleLocator(main.locator('[role="status"], [aria-busy="true"]')),
+      { timeout: 5000, message: 'Expected visible loading semantics inside main' }
+    ).toBe(true);
     return;
   }
 
   if (state === 'empty') {
-    expect(text).toMatch(/no (?:performance )?data|no results|nothing to show|nothing here|empty|no activity/i);
+    await expectVisibleTextCue(main, /no (?:performance )?data|no results|nothing to show|nothing here|empty|no activity/i, 'empty-state');
     return;
   }
 
   if (state === 'partial') {
-    expect(text).toMatch(/partial|delayed|incomplete|limited|unavailable|missing|pending|still (?:loading|arriving)|some .*data/i);
-    expectNumericSignal(text, fixture.headline.revenue.value, { allowRounded: true });
+    await expectVisibleTextCue(main, /partial|delayed|incomplete|limited|unavailable|missing|pending|still (?:loading|arriving)|some .*data/i, 'partial-data');
+    await expect.poll(async () => {
+      const text = await main.innerText();
+      return hasNumericSignal(text, fixture.headline.revenue.value, { allowRounded: true });
+    }, { timeout: 5000, message: 'Expected core revenue summary to remain available in partial state' }).toBe(true);
     return;
   }
 
-  const semanticAlertCount = await page.locator('[role="alert"], [aria-live="assertive"]').count();
-  expect(semanticAlertCount > 0 || /error|could not|failed|try again|unavailable/i.test(text)).toBe(true);
+  await expect.poll(async () => {
+    if (await hasVisibleLocator(main.locator('[role="alert"], [aria-live="assertive"]'))) return true;
+    return hasVisibleLocator(main.getByText(/error|could not|failed|try again|unavailable/i));
+  }, { timeout: 5000, message: 'Expected a visible error cue inside main' }).toBe(true);
 }
 
 function captureRuntimeErrors(page) {
@@ -87,7 +112,8 @@ test.describe('generic SaaS analytics candidate evaluator', () => {
       expect(response, `No navigation response for ${state.path}`).not.toBeNull();
       expect(response.ok(), `${state.path} returned HTTP ${response.status()}`).toBe(true);
 
-      await expect(page.getByRole('main')).toBeVisible();
+      const main = page.getByRole('main');
+      await expect(main).toBeVisible();
       await expect(page.getByRole('heading', { level: 1 }).first()).toBeVisible();
       await expectStateCue(page, state.id);
 
@@ -99,13 +125,14 @@ test.describe('generic SaaS analytics candidate evaluator', () => {
         .analyze();
       expect(accessibility.violations, JSON.stringify(accessibility.violations, null, 2)).toEqual([]);
 
-      const stateText = normalizeText(await page.locator('body').innerText());
+      const stateText = normalizeText(await main.innerText());
       await page.screenshot({ path: testInfo.outputPath(`candidate-${state.id}.png`), fullPage: true });
 
       if (state.id !== 'populated') {
         const defaultResponse = await page.goto('/', { waitUntil: 'domcontentloaded' });
         expect(defaultResponse?.ok()).toBe(true);
-        const defaultText = normalizeText(await page.locator('body').innerText());
+        await expectFixtureSignals(page);
+        const defaultText = normalizeText(await page.getByRole('main').innerText());
         expect(stateText, `${state.id} appears identical to the populated state`).not.toBe(defaultText);
       }
 
@@ -133,7 +160,7 @@ test.describe('generic SaaS analytics candidate evaluator', () => {
     expect(runtimeErrors, runtimeErrors.join('\n')).toEqual([]);
   });
 
-  test('reduced-motion environment renders the populated product cleanly', async ({ page }) => {
+  test('reduced-motion preference render smoke remains clean', async ({ page }) => {
     const runtimeErrors = captureRuntimeErrors(page);
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/', { waitUntil: 'domcontentloaded' });
