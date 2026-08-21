@@ -31,13 +31,15 @@ All five states are evaluated at:
 
 ## Running the evaluator
 
-With the candidate server already running, every real evaluation requires a unique run ID:
+With the candidate server already running, every real evaluation requires a unique, single-use run ID:
 
 ```text
 npm run benchmark:candidate:evaluate -- --url http://127.0.0.1:<port> --run-id <run-id>
 ```
 
-The runner accepts HTTP or HTTPS only. Run IDs are restricted to 1–80 characters using letters, numbers, dots, underscores and hyphens. When no URL is supplied, the command intentionally evaluates the repository's neutral reference app as a smoke test of the evaluator itself and does not require a run ID.
+The runner accepts HTTP or HTTPS only. Run IDs are restricted to 1–80 characters using letters, numbers, dots, underscores and hyphens. A real run atomically reserves `<artifact-root>/<run-id>` before Playwright starts and fails if that directory already exists. A run ID therefore cannot be reused, even after a failed or interrupted attempt; a retry must use a new run ID. This preserves evidence provenance and prevents later runs from replacing or mixing earlier screenshots, traces or reports.
+
+When no URL is supplied, the command intentionally evaluates the repository's neutral reference app as a smoke test of the evaluator itself and does not require or reserve a run ID.
 
 ## Objective automated gates
 
@@ -87,17 +89,19 @@ Those remain separate scorecard evidence, not hidden automated assumptions.
 
 ## Evidence output
 
-A real candidate's evidence is run-specific and cannot share the default output directory with another candidate evaluation:
+A real candidate's evidence is run-specific and immutable by run ID:
 
 - `benchmark-run-evidence/<run-id>/test-results/`;
 - `benchmark-run-evidence/<run-id>/playwright-report/`.
+
+The evaluator reserves the run directory before execution. Existing run directories are never reused or overwritten. Each new attempt—including retries after a failed evaluation—must use a new run ID.
 
 The neutral evaluator smoke target remains separate:
 
 - `test-results-candidate-smoke/`;
 - `playwright-report-candidate-smoke/`.
 
-`BENCHMARK_CANDIDATE_ARTIFACT_ROOT` may relocate the root directory, but the run ID is always retained below it for a real target. Generated evidence is ignored by Git. Required evidence can then be copied into the immutable `runs/<run-id>/` benchmark record before scoring.
+`BENCHMARK_CANDIDATE_ARTIFACT_ROOT` may relocate the root directory, but the single-use run ID is always retained below it for a real target. Generated evidence is ignored by Git. Required evidence can then be copied into the immutable `runs/<run-id>/` benchmark record before scoring.
 
 ## Failure interpretation
 
