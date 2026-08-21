@@ -31,13 +31,13 @@ All five states are evaluated at:
 
 ## Running the evaluator
 
-With the candidate server already running:
+With the candidate server already running, every real evaluation requires a unique run ID:
 
 ```text
-npm run benchmark:candidate:evaluate -- --url http://127.0.0.1:<port>
+npm run benchmark:candidate:evaluate -- --url http://127.0.0.1:<port> --run-id <run-id>
 ```
 
-The runner accepts HTTP or HTTPS only. When no URL is supplied, it intentionally evaluates the repository's neutral reference app as a smoke test of the evaluator itself.
+The runner accepts HTTP or HTTPS only. Run IDs are restricted to 1–80 characters using letters, numbers, dots, underscores and hyphens. When no URL is supplied, the command intentionally evaluates the repository's neutral reference app as a smoke test of the evaluator itself and does not require a run ID.
 
 ## Objective automated gates
 
@@ -46,19 +46,22 @@ The generic evaluator currently checks:
 - successful HTTP navigation for every required state;
 - a semantic `main` landmark and level-one heading;
 - populated-state presence of the canonical headline fixture signals and Paid Social anomaly context;
-- explicit loading semantics through `role=status` or `aria-busy`;
-- communicated empty state;
-- communicated partial/delayed-data state while core summary remains available;
-- communicated error state with semantic alerting or clear error copy;
-- non-default states are materially distinct from the populated state;
+- visible loading semantics inside `main` through `role=status` or `aria-busy`;
+- a visible empty-state cue inside `main`;
+- a visible partial/delayed-data cue inside `main` while core summary remains available;
+- a visible error cue inside `main`, including semantic alerting when supplied;
+- asynchronous state rendering is given a bounded wait before a state is failed;
+- non-default states are materially distinct from the populated `main` content;
 - no page-level horizontal overflow at required viewports;
 - axe WCAG A/AA baseline using the same tags as the reference harness;
 - no browser page errors or console errors during tested paths;
 - basic visible keyboard entry into an interactive target;
-- clean rendering when `prefers-reduced-motion: reduce` is active;
+- clean rendering when `prefers-reduced-motion: reduce` is requested;
 - full-page screenshots for every state × viewport.
 
 Fixture assertions are derived from the canonical deterministic fixture rather than from reference-app implementation IDs.
+
+The reduced-motion automated check is intentionally a **render smoke only**. It proves the candidate can render its populated product under the user's reduced-motion media preference without runtime failure; it does not prove that every animation or transition is necessary, suppressed or appropriately reduced.
 
 ## What this evaluator deliberately does not claim
 
@@ -72,6 +75,7 @@ Still requiring evidence-backed evaluation include:
 - whether the period/anomaly/segment interactions are genuinely useful rather than merely present;
 - 200% zoom review;
 - targeted assistive-technology review;
+- full reduced-motion behavior review, including non-essential and continuous animation;
 - performance interpretation;
 - engineering architecture and maintainability;
 - design-system rationale/conformance;
@@ -83,14 +87,17 @@ Those remain separate scorecard evidence, not hidden automated assumptions.
 
 ## Evidence output
 
-Candidate evaluation uses separate generated directories so it cannot overwrite reference-harness evidence:
+A real candidate's evidence is run-specific and cannot share the default output directory with another candidate evaluation:
 
-- `test-results-candidate/` for a real target;
-- `playwright-report-candidate/` for a real target;
-- `test-results-candidate-smoke/` for the neutral evaluator smoke target;
-- `playwright-report-candidate-smoke/` for that smoke target.
+- `benchmark-run-evidence/<run-id>/test-results/`;
+- `benchmark-run-evidence/<run-id>/playwright-report/`.
 
-Generated evidence is ignored by Git. A benchmark run may copy required evidence into its immutable `runs/<run-id>/` record before scoring.
+The neutral evaluator smoke target remains separate:
+
+- `test-results-candidate-smoke/`;
+- `playwright-report-candidate-smoke/`.
+
+`BENCHMARK_CANDIDATE_ARTIFACT_ROOT` may relocate the root directory, but the run ID is always retained below it for a real target. Generated evidence is ignored by Git. Required evidence can then be copied into the immutable `runs/<run-id>/` benchmark record before scoring.
 
 ## Failure interpretation
 
