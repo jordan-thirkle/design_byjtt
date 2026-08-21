@@ -6,5 +6,6 @@ test-results/
 test-results-candidate/
 test-results-candidate-smoke/
 benchmark-contexts/
+benchmark-run-evidence/
 .DS_Store
 *.log
