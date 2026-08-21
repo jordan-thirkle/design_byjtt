@@ -57,13 +57,19 @@ npm run benchmark:run:init -- \
 
 If either ID already exists, choose a new ID. Never delete an earlier run record simply to reuse its name.
 
+## Shared generator instruction
+
+Both candidate arms receive the exact same generator-facing text from [`launch/GENERATOR-INSTRUCTION.md`](./launch/GENERATOR-INSTRUCTION.md). Do not prepend, append, paraphrase, explain, or customize it for either arm.
+
+The only intended difference in generation context is the pre-registered exported bundle supplied to that fresh context.
+
 ## Launch the baseline
 
 Open a completely new generation conversation/context that has not seen ByJTT Design, this repository's treatment documents, the guided launch packet, the guided candidate, or any benchmark result.
 
 Operator instructions: [`launch/BASELINE-LAUNCH.md`](./launch/BASELINE-LAUNCH.md).
 
-Supply only the exported `benchmark-contexts/baseline-v0/` directory plus the neutral generator instruction embedded in that operator packet.
+Supply only the exported `benchmark-contexts/baseline-v0/` directory plus the exact shared generator instruction.
 
 The current informed development conversation is not eligible to serve as the baseline context.
 
@@ -73,7 +79,7 @@ Open a different completely new generation conversation/context that has not see
 
 Operator instructions: [`launch/BYJTT-GUIDED-LAUNCH.md`](./launch/BYJTT-GUIDED-LAUNCH.md).
 
-Supply only the exported `benchmark-contexts/byjtt-guided-v0/` directory plus the neutral generator instruction embedded in that operator packet.
+Supply only the exported `benchmark-contexts/byjtt-guided-v0/` directory plus the exact same shared generator instruction.
 
 Do not add treatment advice after the run begins.
 
