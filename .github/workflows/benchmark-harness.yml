@@ -32,11 +32,24 @@ jobs:
       - name: Export isolated benchmark contexts
         run: npm run benchmark:export-contexts
 
+      - name: Smoke test benchmark run registration
+        run: >-
+          npm run benchmark:run:init --
+          --run-id ci-registration-smoke
+          --candidate-id candidate-ci-smoke
+          --role baseline
+          --source-commit "$GITHUB_SHA"
+          --max-attempts 2
+          --active-minutes 30
+
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
 
-      - name: Validate benchmark contracts
+      - name: Validate benchmark contracts and run intake
         run: npm run benchmark:validate
+
+      - name: Remove ephemeral run-registration smoke record
+        run: rm -rf benchmarks/saas-analytics-v0/runs/ci-registration-smoke
 
       - name: Run reference harness
         run: npm run benchmark:test

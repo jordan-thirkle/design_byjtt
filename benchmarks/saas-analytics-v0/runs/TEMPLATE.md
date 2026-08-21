@@ -1,63 +1,47 @@
-# Benchmark run template
+# Benchmark run record
 
-Duplicate this file into `runs/<run-id>/README.md` when executing a workflow. Do not fill fields from memory after the run if they can be captured during execution.
+Each executed run lives at `runs/<run-id>/`.
 
-## Identity
+`run.json` is the canonical machine-readable source of truth and must validate against [`../run.schema.json`](../run.schema.json). This README is optional human commentary; do not duplicate structured facts here unless they need explanation.
 
-- Run ID:
-- Benchmark version:
-- Date:
-- Workflow name:
-- Tool/provider/model:
-- Tool/version/build/date observed:
-- Operator:
+Register the run **before generation starts**:
 
-## Allowed context
+```text
+npm run benchmark:run:init -- \
+  --run-id <unique-run-id> \
+  --candidate-id candidate-a \
+  --role baseline \
+  --source-commit <40-char-git-sha> \
+  --max-attempts <n> \
+  --active-minutes <minutes>
+```
 
-List every material input supplied beyond the canonical benchmark package.
+Use `--role byjtt-guided` for the treatment run. Run IDs are immutable and single-use. If a run is invalidated, interrupted or retried, create a new run ID rather than rewriting its identity.
 
-## Budget
+## What must be recorded contemporaneously
 
-- Active work time budget:
-- Maximum material generation/revision attempts:
-- Human visual editing allowed: yes/no
-- Monetary/credit budget:
+Update `run.json` during execution rather than reconstructing these facts after judging output:
 
-## Attempt log
+- provider, tool, model and observed version/date;
+- confirmation that the generator started in a fresh isolated context;
+- context bundle digest when available;
+- start/end timestamps and active minutes;
+- every material attempt and intervention;
+- provider-visible cost/credits, or explicit `null` with the correct provenance source;
+- candidate source commit/ref, runtime command/reference and implementation digest when available;
+- operational failures, discarded work and confounds;
+- evaluator run ID, evidence location/digest, objective gate result and `score.json` binding.
 
-| Attempt | Action | Outcome | Accepted? | Regression introduced? |
-| --- | --- | --- | --- | --- |
+Unknown facts stay `null`; never estimate them merely to complete a record.
 
-## Evidence
+## Human commentary
 
-Record paths/URLs for:
-- implementation;
-- viewport screenshots;
-- state screenshots;
-- accessibility output;
-- keyboard/interaction evidence;
-- build/test output;
-- performance evidence where measured;
-- final score JSON.
+Use this README only for narrative that is awkward to represent structurally, such as:
 
-## Interventions
+- why a provider mismatch occurred;
+- why a run was invalidated;
+- unusual operational circumstances;
+- interpretation caveats;
+- lessons that materially affect the ByJTT product thesis.
 
-Record every material human correction, clarification or workaround.
-
-## Efficiency
-
-- Active minutes:
-- Tool calls/messages:
-- Retries:
-- Human interventions:
-- Known cost:
-- Unexpected regressions:
-- Generated work later replaced:
-
-## Evaluator uncertainty
-
-List evidence gaps, subjective calls and anything that prevents strong conclusions.
-
-## Lessons
-
-What did this run reveal about the workflow and about ByJTT's proposed evaluation system?
+The validator rejects evaluated runs with unresolved lifecycle metadata, missing score binding or broken benchmark identity.

@@ -9,6 +9,7 @@
   "scripts": {
     "benchmark:validate": "node harness/validate-benchmark.mjs",
     "benchmark:export-contexts": "node harness/export-benchmark-contexts.mjs",
+    "benchmark:run:init": "node harness/init-benchmark-run.mjs",
     "benchmark:serve": "node harness/server.mjs",
     "benchmark:test": "playwright test",
     "benchmark:candidate:smoke": "node harness/run-candidate-evaluator.mjs",

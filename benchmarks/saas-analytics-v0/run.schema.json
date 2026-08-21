@@ -1,0 +1,154 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design.byjtt.com/schemas/benchmark-run-v0.json",
+  "title": "ByJTT Design Benchmark Run Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["benchmarkId", "benchmarkVersion", "runId", "candidateId", "workflowRole", "status", "context", "generator", "controls", "timing", "attempts", "interventions", "cost", "candidate", "evaluation", "confounds", "notes"],
+  "properties": {
+    "benchmarkId": {"type": "string", "minLength": 1},
+    "benchmarkVersion": {"type": "string", "minLength": 1},
+    "runId": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,79}$"},
+    "candidateId": {"type": "string", "pattern": "^candidate-[a-z0-9][a-z0-9-]{0,39}$"},
+    "workflowRole": {"type": "string", "enum": ["baseline", "byjtt-guided"]},
+    "status": {"type": "string", "enum": ["registered", "generating", "generated", "evaluated", "invalidated"]},
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bundleId", "bundleDigestSha256", "sourceManifestDigestSha256", "sourceCommitSha"],
+      "properties": {
+        "bundleId": {"type": "string", "minLength": 1},
+        "bundleDigestSha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
+        "sourceManifestDigestSha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "sourceCommitSha": {"type": "string", "pattern": "^[a-f0-9]{40}$"}
+      }
+    },
+    "generator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider", "tool", "model", "versionOrDate", "freshContextConfirmed"],
+      "properties": {
+        "provider": {"type": ["string", "null"], "minLength": 1},
+        "tool": {"type": ["string", "null"], "minLength": 1},
+        "model": {"type": ["string", "null"], "minLength": 1},
+        "versionOrDate": {"type": ["string", "null"], "minLength": 1},
+        "freshContextConfirmed": {"type": "boolean"}
+      }
+    },
+    "controls": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["maxMaterialAttempts", "activeMinutesBudget", "humanVisualEditingAllowed", "paidExternalServicesApproved"],
+      "properties": {
+        "maxMaterialAttempts": {"type": "integer", "minimum": 1},
+        "activeMinutesBudget": {"type": "number", "exclusiveMinimum": 0},
+        "humanVisualEditingAllowed": {"const": false},
+        "paidExternalServicesApproved": {"type": "boolean"}
+      }
+    },
+    "timing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["startedAt", "endedAt", "activeMinutes"],
+      "properties": {
+        "startedAt": {"type": ["string", "null"], "format": "date-time"},
+        "endedAt": {"type": ["string", "null"], "format": "date-time"},
+        "activeMinutes": {"type": ["number", "null"], "minimum": 0}
+      }
+    },
+    "attempts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["number", "startedAt", "endedAt", "summary", "outcome", "accepted", "regressionIntroduced"],
+        "properties": {
+          "number": {"type": "integer", "minimum": 1},
+          "startedAt": {"type": ["string", "null"], "format": "date-time"},
+          "endedAt": {"type": ["string", "null"], "format": "date-time"},
+          "summary": {"type": "string", "minLength": 1},
+          "outcome": {"type": "string", "minLength": 1},
+          "accepted": {"type": "boolean"},
+          "regressionIntroduced": {"type": ["boolean", "null"]}
+        }
+      }
+    },
+    "interventions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["at", "type", "description", "material"],
+        "properties": {
+          "at": {"type": ["string", "null"], "format": "date-time"},
+          "type": {"type": "string", "enum": ["clarification", "workaround", "operator-action", "provider-recovery", "other"]},
+          "description": {"type": "string", "minLength": 1},
+          "material": {"type": "boolean"}
+        }
+      }
+    },
+    "cost": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["amount", "currency", "credits", "source"],
+      "properties": {
+        "amount": {"type": ["number", "null"], "minimum": 0},
+        "currency": {"type": ["string", "null"], "minLength": 1},
+        "credits": {"type": ["number", "null"], "minimum": 0},
+        "source": {"type": "string", "enum": ["pending", "provider-visible", "not-exposed", "not-applicable"]}
+      },
+      "allOf": [
+        {"if": {"properties": {"amount": {"type": "number"}}, "required": ["amount"]}, "then": {"properties": {"currency": {"type": "string", "minLength": 1}}}},
+        {"if": {"properties": {"amount": {"type": "null"}}, "required": ["amount"]}, "then": {"properties": {"currency": {"type": "null"}}}}
+      ]
+    },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceCommitSha", "sourceRef", "runtimeUrl", "startCommand", "implementationDigestSha256"],
+      "properties": {
+        "sourceCommitSha": {"type": ["string", "null"], "pattern": "^[a-f0-9]{40}$"},
+        "sourceRef": {"type": ["string", "null"], "minLength": 1},
+        "runtimeUrl": {"type": ["string", "null"], "format": "uri"},
+        "startCommand": {"type": ["string", "null"], "minLength": 1},
+        "implementationDigestSha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"}
+      }
+    },
+    "evaluation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evaluatorRunId", "evidenceRoot", "evidenceDigestSha256", "scorePath", "objectiveGatePassed"],
+      "properties": {
+        "evaluatorRunId": {"type": ["string", "null"], "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,79}$"},
+        "evidenceRoot": {"type": ["string", "null"], "minLength": 1},
+        "evidenceDigestSha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
+        "scorePath": {"type": ["string", "null"], "minLength": 1},
+        "objectiveGatePassed": {"type": ["boolean", "null"]}
+      }
+    },
+    "confounds": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "notes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operationalFailures", "discardedWork", "uncertainty", "lessons"],
+      "properties": {
+        "operationalFailures": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "discardedWork": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "uncertainty": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "lessons": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "invalidation": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["reason", "at"],
+      "properties": {
+        "reason": {"type": "string", "minLength": 1},
+        "at": {"type": ["string", "null"], "format": "date-time"}
+      }
+    }
+  },
+  "allOf": [
+    {"if": {"properties": {"status": {"const": "invalidated"}}, "required": ["status"]}, "then": {"required": ["invalidation"], "properties": {"invalidation": {"type": "object"}}}}
+  ]
+}
