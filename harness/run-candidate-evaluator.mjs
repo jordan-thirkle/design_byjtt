@@ -1,4 +1,5 @@
 import { spawn } from 'node:child_process';
+import { mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 
 const args = process.argv.slice(2);
@@ -35,6 +36,19 @@ if (!smokeMode) {
 
 const executable = process.platform === 'win32' ? 'npx.cmd' : 'npx';
 const artifactRoot = process.env.BENCHMARK_CANDIDATE_ARTIFACT_ROOT || 'benchmark-run-evidence';
+
+if (!smokeMode) {
+  mkdirSync(artifactRoot, { recursive: true });
+  try {
+    mkdirSync(join(artifactRoot, runId));
+  } catch (error) {
+    if (error?.code === 'EEXIST') {
+      throw new Error(`Run ID already has reserved evidence: ${runId}`);
+    }
+    throw error;
+  }
+}
+
 const outputDir = smokeMode ? 'test-results-candidate-smoke' : join(artifactRoot, runId, 'test-results');
 const reportDir = smokeMode ? 'playwright-report-candidate-smoke' : join(artifactRoot, runId, 'playwright-report');
 const env = {
