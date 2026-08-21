@@ -154,6 +154,10 @@ const validateRunLifecycle = (run, runName) => {
     failed = true;
     console.error(`${runName}/run.json context manifest digest does not match the pre-registered benchmark manifest`);
   }
+  if (run.controls.paidExternalServicesApproved) {
+    failed = true;
+    console.error(`${runName}/run.json cannot approve paid external services under the pre-registered v0 protocol`);
+  }
 
   if (run.attempts.length > run.controls.maxMaterialAttempts) {
     failed = true;
@@ -175,15 +179,32 @@ const validateRunLifecycle = (run, runName) => {
     }
   }
 
-  if (run.status === 'evaluated') {
-    if (run.cost.source === 'pending') {
+  const completedGenerationStatuses = new Set(['generated', 'evaluated']);
+  if (completedGenerationStatuses.has(run.status)) {
+    if (run.attempts.length === 0) {
       failed = true;
-      console.error(`${runName}/run.json evaluated run cannot leave cost provenance pending`);
+      console.error(`${runName}/run.json completed generation requires at least one recorded material attempt`);
     }
     if (run.timing.endedAt === null || run.timing.activeMinutes === null) {
       failed = true;
-      console.error(`${runName}/run.json evaluated run requires completed timing metadata`);
+      console.error(`${runName}/run.json completed generation requires end time and active minutes`);
+    } else if (run.timing.activeMinutes > run.controls.activeMinutesBudget) {
+      failed = true;
+      console.error(`${runName}/run.json exceeds its active-work time budget and must be invalidated or rerun`);
     }
+    if (run.cost.source === 'pending') {
+      failed = true;
+      console.error(`${runName}/run.json completed generation cannot leave cost provenance pending`);
+    }
+
+    const candidateIdentity = [run.candidate.sourceCommitSha, run.candidate.sourceRef, run.candidate.implementationDigestSha256];
+    if (candidateIdentity.every((value) => value === null)) {
+      failed = true;
+      console.error(`${runName}/run.json completed generation requires a reproducible candidate source/ref/digest`);
+    }
+  }
+
+  if (run.status === 'evaluated') {
     const evaluationValues = [run.evaluation.evaluatorRunId, run.evaluation.evidenceRoot, run.evaluation.evidenceDigestSha256, run.evaluation.scorePath, run.evaluation.objectiveGatePassed];
     if (evaluationValues.some((value) => value === null)) {
       failed = true;
