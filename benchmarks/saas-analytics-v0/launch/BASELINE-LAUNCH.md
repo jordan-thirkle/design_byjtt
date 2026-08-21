@@ -34,7 +34,7 @@ Supply the fresh context only the exported `benchmark-contexts/baseline-v0/` dir
 
 Inside the fresh context, the generator receives the exported baseline bundle and this neutral task instruction only:
 
-> Build the runnable web product defined by the supplied benchmark bundle. Treat `brief.json` as the canonical requirements source, `fixtures/analytics.json` as the canonical deterministic data, and `SHARED-CONTROLS.md` as binding execution controls. Use only the supplied bundle as product/design context. Do not ask follow-up design questions. Produce a real runnable implementation, expose every required state URL, stay within the material-attempt and active-time limits, do not use paid external services or generators, and record any unmet requirement rather than hiding it.
+> Build the runnable web product defined by the supplied benchmark bundle. Treat `brief.json` as the canonical requirements source, `fixtures/analytics.json` as the canonical deterministic data, `SHARED-CONTROLS.md` as binding execution controls, and every other file supplied in this bundle as binding context. Do not ask follow-up design questions. Produce a real runnable implementation, expose every required state URL, stay within the material-attempt and active-time limits, do not use paid external services or generators, and record any unmet requirement rather than hiding it.
 
 No additional design methodology, critique framework, UI references, external product research, or rescue instructions may be added after generation begins.
 
