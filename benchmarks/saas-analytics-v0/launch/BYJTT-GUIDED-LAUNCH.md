@@ -1,16 +1,16 @@
 # SaaS Analytics v0 — ByJTT-Guided Candidate Launch
 
-Use this packet only inside a genuinely fresh generation context that has not seen the baseline candidate, baseline evidence, comparative scores, or prior benchmark results.
+Use this packet only as operator instructions for a genuinely fresh generation context that has not seen the baseline candidate, baseline evidence, comparative scores, or prior benchmark results.
 
 ## Role
 
-You are generating the **ByJTT-guided** candidate for benchmark `saas-analytics-v0`.
+This launch produces the **ByJTT-guided** candidate for benchmark `saas-analytics-v0`.
 
-Use only the files present in the isolated `byjtt-guided-v0` benchmark bundle. The treatment contained in that bundle is pre-registered and must not be expanded, rescued, or tuned after generation begins.
+Use only the files present in the isolated `byjtt-guided-v0` benchmark bundle. The treatment contained in that bundle is pre-registered and must not be expanded, rescued, or tuned after generation begins. Do not supply this launch document to the generator; it contains operator-only provenance and contamination controls.
 
 ## Required operator preparation
 
-Before opening the fresh generation context, the operator must create a unique benchmark run record from the benchmark repository using:
+Before opening the fresh generation context, create a unique benchmark run record from the benchmark repository:
 
 ```text
 npm run benchmark:run:init -- \
@@ -22,21 +22,15 @@ npm run benchmark:run:init -- \
   --active-minutes 30
 ```
 
-Then export the frozen contexts with:
+Then export the frozen contexts:
 
 ```text
 npm run benchmark:export-contexts
 ```
 
-Supply the fresh context only the exported `benchmark-contexts/byjtt-guided-v0/` directory. Do not supply this launch document itself to the generator if it contains information not present in that exported bundle; its purpose is operator orchestration.
+Supply the fresh context only the exported `benchmark-contexts/byjtt-guided-v0/` directory plus the exact shared instruction in [`GENERATOR-INSTRUCTION.md`](./GENERATOR-INSTRUCTION.md).
 
-## Generator instruction
-
-Inside the fresh context, the generator receives the exported guided bundle and this neutral task instruction only:
-
-> Build the runnable web product defined by the supplied benchmark bundle. Treat `brief.json` as the canonical requirements source, `fixtures/analytics.json` as the canonical deterministic data, `SHARED-CONTROLS.md` as binding execution controls, and every other file supplied in this bundle as binding context. Do not ask follow-up design questions. Produce a real runnable implementation, expose every required state URL, stay within the material-attempt and active-time limits, do not use paid external services or generators, and record any unmet requirement rather than hiding it.
-
-No additional ByJTT instruction, design critique, comparison against the baseline, external product research, or rescue instruction may be added after generation begins.
+Do not prepend, append, paraphrase, explain, or customize the shared generator instruction.
 
 ## During generation
 
@@ -49,6 +43,8 @@ Operational retries caused solely by provider/network/runtime failure do not cou
 Human visual editing is prohibited. Non-design operational intervention is allowed only when required to unblock execution and must be logged.
 
 Paid external services, credits, or generators are prohibited.
+
+No additional ByJTT instruction, design critique, comparison against the baseline, external product research, or rescue instruction may be added after generation begins.
 
 ## Completion
 
