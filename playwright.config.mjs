@@ -1,5 +1,9 @@
 import { defineConfig, devices } from '@playwright/test';
 
+const referenceBaseURL = 'http://127.0.0.1:4173';
+const targetBaseURL = process.env.BENCHMARK_TARGET_URL || referenceBaseURL;
+const externalTarget = Boolean(process.env.BENCHMARK_TARGET_URL);
+
 export default defineConfig({
   testDir: './harness/tests',
   fullyParallel: true,
@@ -7,14 +11,16 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? [['html', { open: 'never' }], ['list']] : 'list',
   use: {
-    baseURL: 'http://127.0.0.1:4173',
+    baseURL: targetBaseURL,
     trace: 'retain-on-failure'
   },
-  webServer: {
-    command: 'node harness/server.mjs',
-    url: 'http://127.0.0.1:4173/health',
-    reuseExistingServer: !process.env.CI
-  },
+  webServer: externalTarget
+    ? undefined
+    : {
+        command: 'node harness/server.mjs',
+        url: `${referenceBaseURL}/health`,
+        reuseExistingServer: !process.env.CI
+      },
   projects: [
     {
       name: 'chromium-320x800',

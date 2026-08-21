@@ -26,6 +26,8 @@ async function expectStateSpecificOutput(page, state) {
 }
 
 test.describe('benchmark harness reference app', () => {
+  test.skip(Boolean(process.env.BENCHMARK_TARGET_URL), 'Reference-app assertions must not run against an external candidate.');
+
   for (const state of states) {
     test(`${state} state is renderable, responsive and axe-clean`, async ({ page }, testInfo) => {
       await page.goto(`/?state=${state}`);

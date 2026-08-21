@@ -1,6 +1,11 @@
 node_modules/
 playwright-report/
+playwright-report-candidate/
+playwright-report-candidate-smoke/
 test-results/
+test-results-candidate/
+test-results-candidate-smoke/
 benchmark-contexts/
+benchmark-run-evidence/
 .DS_Store
 *.log

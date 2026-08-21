@@ -38,8 +38,11 @@ jobs:
       - name: Validate benchmark contracts
         run: npm run benchmark:validate
 
-      - name: Run benchmark harness
+      - name: Run reference harness
         run: npm run benchmark:test
+
+      - name: Smoke test generic candidate evaluator
+        run: npm run benchmark:candidate:smoke
 
       - name: Upload baseline context
         if: always()
@@ -59,7 +62,7 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
-      - name: Upload Playwright report
+      - name: Upload reference Playwright report
         if: always()
         uses: actions/upload-artifact@v6
         with:
@@ -68,11 +71,29 @@ jobs:
           if-no-files-found: ignore
           retention-days: 14
 
-      - name: Upload test evidence
+      - name: Upload reference test evidence
         if: always()
         uses: actions/upload-artifact@v6
         with:
           name: benchmark-test-results
           path: test-results/
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Upload candidate evaluator smoke report
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: candidate-evaluator-smoke-report
+          path: playwright-report-candidate-smoke/
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Upload candidate evaluator smoke evidence
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: candidate-evaluator-smoke-results
+          path: test-results-candidate-smoke/
           if-no-files-found: ignore
           retention-days: 14
