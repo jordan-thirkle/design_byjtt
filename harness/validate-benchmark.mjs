@@ -1,4 +1,5 @@
 import { access, readFile, readdir } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { isAbsolute, join, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Ajv2020 from 'ajv/dist/2020.js';
@@ -62,10 +63,15 @@ if (invalidDateProbe('2026-99-99')) {
 
 const scoreSchema = await readJson('score.schema.json');
 const validateScore = ajv.compile(scoreSchema);
+const runSchema = await readJson('run.schema.json');
+const validateRun = ajv.compile(runSchema);
+const contextManifestBytes = await readFile(new URL('context-sources.json', benchmarkRoot));
+const currentContextManifestDigest = createHash('sha256').update(contextManifestBytes).digest('hex');
 const runsDir = new URL('runs/', benchmarkRoot);
 const runsDirPath = fileURLToPath(runsDir);
 const runEntries = await readdir(runsDir, { withFileTypes: true });
 let scoreCount = 0;
+let manifestCount = 0;
 
 const viewportKey = ({ name, width, height }) => `${name}:${width}x${height}`;
 const requiredViewportKeys = briefValid ? new Set(brief.viewports.map(viewportKey)) : new Set();
@@ -129,11 +135,83 @@ const validateEvidenceCoverage = (score, runName) => {
   }
 };
 
+const validateRunLifecycle = (run, runName) => {
+  if (run.runId !== runName) {
+    failed = true;
+    console.error(`${runName}/run.json runId must match its directory name`);
+  }
+  if (briefValid && (run.benchmarkId !== brief.id || run.benchmarkVersion !== brief.version)) {
+    failed = true;
+    console.error(`${runName}/run.json benchmark identity does not match brief.json`);
+  }
+
+  const expectedBundleId = run.workflowRole === 'baseline' ? 'baseline-v0' : 'byjtt-guided-v0';
+  if (run.context.bundleId !== expectedBundleId) {
+    failed = true;
+    console.error(`${runName}/run.json bundleId must be ${expectedBundleId} for ${run.workflowRole}`);
+  }
+  if (run.context.sourceManifestDigestSha256 !== currentContextManifestDigest) {
+    failed = true;
+    console.error(`${runName}/run.json context manifest digest does not match the pre-registered benchmark manifest`);
+  }
+
+  if (run.attempts.length > run.controls.maxMaterialAttempts) {
+    failed = true;
+    console.error(`${runName}/run.json exceeds its material-attempt budget`);
+  }
+  run.attempts.forEach((attempt, index) => {
+    if (attempt.number !== index + 1) {
+      failed = true;
+      console.error(`${runName}/run.json attempt numbers must be contiguous from 1`);
+    }
+  });
+
+  const activeStatuses = new Set(['generating', 'generated', 'evaluated']);
+  if (activeStatuses.has(run.status)) {
+    const generatorFields = [run.generator.provider, run.generator.tool, run.generator.versionOrDate];
+    if (generatorFields.some((value) => value === null) || !run.generator.freshContextConfirmed || run.timing.startedAt === null) {
+      failed = true;
+      console.error(`${runName}/run.json active run is missing contemporaneous generator/fresh-context/start metadata`);
+    }
+  }
+
+  if (run.status === 'evaluated') {
+    if (run.cost.source === 'pending') {
+      failed = true;
+      console.error(`${runName}/run.json evaluated run cannot leave cost provenance pending`);
+    }
+    if (run.timing.endedAt === null || run.timing.activeMinutes === null) {
+      failed = true;
+      console.error(`${runName}/run.json evaluated run requires completed timing metadata`);
+    }
+    const evaluationValues = [run.evaluation.evaluatorRunId, run.evaluation.evidenceRoot, run.evaluation.evidenceDigestSha256, run.evaluation.scorePath, run.evaluation.objectiveGatePassed];
+    if (evaluationValues.some((value) => value === null)) {
+      failed = true;
+      console.error(`${runName}/run.json evaluated run requires complete evaluation binding`);
+    }
+  }
+};
+
 for (const entry of runEntries) {
   if (!entry.isDirectory()) continue;
-  const runPath = join(runsDirPath, entry.name, 'score.json');
+  const runJsonPath = join(runsDirPath, entry.name, 'run.json');
+  let run = null;
   try {
-    const score = JSON.parse(await readFile(runPath, 'utf8'));
+    run = JSON.parse(await readFile(runJsonPath, 'utf8'));
+    manifestCount += 1;
+    if (validateRun(run)) validateRunLifecycle(run, entry.name);
+    else {
+      failed = true;
+      console.error(`${entry.name}/run.json failed schema validation`);
+      console.error(validateRun.errors);
+    }
+  } catch (error) {
+    if (error?.code !== 'ENOENT') throw error;
+  }
+
+  const scorePath = join(runsDirPath, entry.name, 'score.json');
+  try {
+    const score = JSON.parse(await readFile(scorePath, 'utf8'));
     scoreCount += 1;
     if (!validateScore(score)) {
       failed = true;
@@ -141,14 +219,31 @@ for (const entry of runEntries) {
       console.error(validateScore.errors);
       continue;
     }
+    if (score.runId !== entry.name) {
+      failed = true;
+      console.error(`${entry.name}/score.json runId must match its directory name`);
+    }
+    if (run && score.runId !== run.runId) {
+      failed = true;
+      console.error(`${entry.name}/score.json does not bind to run.json`);
+    }
+    if (run?.status === 'evaluated' && run.evaluation.scorePath !== 'score.json') {
+      failed = true;
+      console.error(`${entry.name}/run.json evaluated scorePath must be score.json`);
+    }
     validateEvidenceReferences(score, entry.name);
     await validateEvidenceLocations(score, entry.name);
     validateEvidenceCoverage(score, entry.name);
   } catch (error) {
     if (error?.code !== 'ENOENT') throw error;
+    if (run?.status === 'evaluated') {
+      failed = true;
+      console.error(`${entry.name}/run.json is evaluated but score.json is missing`);
+    }
   }
 }
 
+console.log(manifestCount ? `✓ validated ${manifestCount} benchmark run manifest(s)` : 'ℹ no executed benchmark run manifests yet; none fabricated');
 console.log(scoreCount ? `✓ validated ${scoreCount} benchmark score file(s)` : 'ℹ no executed benchmark score files yet; none fabricated');
 
 if (failed) process.exitCode = 1;
