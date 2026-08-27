@@ -3,7 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import Ajv from 'ajv';
+import Ajv from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
 import { createProject } from './model.js';
 import { compileContextPackage } from './context-package.js';
