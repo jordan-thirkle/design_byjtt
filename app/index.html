@@ -29,17 +29,17 @@
 
       <main class="main-stage">
         <section class="stage-toolbar" aria-label="Preview controls">
-          <div class="stage-title"><span id="stage-label">Live website</span><small>Interactive specimen</small></div>
+          <div class="stage-title"><h1 id="stage-label">Live website</h1><small>Interactive specimen</small></div>
           <div class="viewport-switch" role="group" aria-label="Preview size">
             <button class="viewport active" data-preview="desktop">Desktop</button><button class="viewport" data-preview="tablet">Tablet</button><button class="viewport" data-preview="mobile">Mobile</button>
           </div>
           <button class="inspect-button" id="inspect-button">Inspect <span>⌘↵</span></button>
         </section>
-        <div class="preview-wrap" id="preview-wrap"><div class="browser-bar"><span></span><span></span><span></span><label>northshore-landscapes.byjtt.design</label><button aria-label="Open preview">↗</button></div><div class="preview-frame desktop" id="preview" aria-label="Live website preview"></div></div>
+        <div class="preview-wrap" id="preview-wrap"><div class="browser-bar"><span></span><span></span><span></span><label>northshore-landscapes.byjtt.design</label><button aria-label="Open preview">↗</button></div><div class="preview-frame desktop" id="preview" role="region" aria-label="Live website preview"></div></div>
       </main>
 
       <aside class="right-panel" aria-label="Design assistant">
-        <div class="panel-head"><div><span class="panel-eyebrow">ByJTT Studio</span><h1 id="panel-title">Direct the design</h1></div><button class="panel-close" id="panel-close" aria-label="Close assistant panel">×</button></div>
+        <div class="panel-head"><div><span class="panel-eyebrow">ByJTT Studio</span><h2 id="panel-title">Direct the design</h2></div><button class="panel-close" id="panel-close" aria-label="Close assistant panel">×</button></div>
         <div id="studio-panel" class="panel-content">
           <div class="assistant-intro"><div class="assistant-avatar">B</div><div><p id="assistant-message">I've started with a local landscaping business whose visitors need to trust the work and request a quote. I've chosen a warm, editorial direction rather than a generic trades-site template.</p><button class="text-action" id="why-button">Why this direction?</button></div></div>
           <div class="suggestions"><button data-prompt="Make it feel more premium">More premium</button><button data-prompt="Make the purpose clearer">Clearer purpose</button><button data-prompt="Make it work better on mobile">Better mobile</button></div>
@@ -47,7 +47,7 @@
           <form class="prompt-form" id="prompt-form"><label for="prompt">Tell ByJTT what to change</label><div class="prompt-box"><textarea id="prompt" rows="3" placeholder="e.g. Make it feel more premium, but still local and human."></textarea><button type="submit" aria-label="Send instruction">↗</button></div><small>Plain English is enough. ByJTT translates intent into design decisions.</small></form>
         </div>
         <div id="evidence-panel" class="panel-content hidden">
-          <div class="evidence-summary"><div><strong>Verified</strong><span>7 checks passed</span></div><div class="score-ring">✓</div></div>
+          <div class="evidence-summary"><div><strong>Tested</strong><span>0 of 7 checks passed</span></div><div class="score-ring">✓</div></div>
           <div class="check-list" id="check-list"></div>
           <div class="provenance"><span>PROVENANCE</span><p>Generated in ByJTT Design Studio. The specimen, design intent and checks are stored together.</p></div>
           <label class="publish-consent"><input id="publish-consent" type="checkbox"> I want to publish this design to the ByJTT Resource Library.</label>
