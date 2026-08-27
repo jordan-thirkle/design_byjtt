@@ -1,0 +1,86 @@
+{
+  "$schema": "./brief.schema.json",
+  "id": "saas-analytics-v0",
+  "version": "0.1.0",
+  "title": "Operational analytics workspace",
+  "problem": "A small online business needs to understand business health quickly, investigate anomalies and compare recent performance without drowning in dashboard chrome.",
+  "users": [
+    {
+      "id": "owner-operator",
+      "description": "Time-poor owner/operator who checks performance several times per day and is not a specialist data analyst.",
+      "primaryJobs": [
+        "Understand current business health in under 30 seconds",
+        "Identify meaningful anomalies",
+        "Compare the current period with the previous period",
+        "Inspect the source of a change without leaving the workspace"
+      ]
+    }
+  ],
+  "productGoals": [
+    "Make the most important change and its likely cause obvious",
+    "Support fast scanning followed by progressive drill-down",
+    "Remain usable with imperfect, empty and delayed data",
+    "Avoid generic card-wall dashboard composition"
+  ],
+  "requiredData": {
+    "headlineMetrics": ["revenue", "orders", "conversionRate", "averageOrderValue"],
+    "trend": "daily revenue for 30 days",
+    "segments": ["channel", "device"],
+    "anomalies": true,
+    "recentEvents": true
+  },
+  "requiredFlows": [
+    "Review current status",
+    "Change comparison period",
+    "Inspect an anomaly",
+    "Filter or inspect a meaningful segment"
+  ],
+  "requiredStates": ["loading", "populated", "empty", "partial", "error"],
+  "viewports": [
+    {"name": "mobile-small", "width": 320, "height": 800},
+    {"name": "mobile", "width": 390, "height": 844},
+    {"name": "tablet", "width": 768, "height": 1024},
+    {"name": "desktop", "width": 1440, "height": 1000}
+  ],
+  "accessibility": {
+    "target": "WCAG 2.2 AA where applicable",
+    "requirements": [
+      "Keyboard-operable core flow",
+      "Visible focus",
+      "Status and trend information not conveyed by color alone",
+      "Charts have accessible textual meaning",
+      "Usable at 200% zoom",
+      "Reduced-motion preference respected"
+    ]
+  },
+  "contentStress": [
+    "Long anomaly title",
+    "Missing comparison value",
+    "Zero revenue day",
+    "Large currency value",
+    "No anomalies",
+    "Delayed segment data"
+  ],
+  "constraints": [
+    "Web implementation",
+    "No authentication required for the benchmark",
+    "Use deterministic local fixtures; no live commercial data dependency",
+    "Prefer mature accessible UI/charting infrastructure over bespoke primitives when it improves the result"
+  ],
+  "antiGoals": [
+    "No invented social proof",
+    "No meaningless decorative KPI cards",
+    "No charts whose purpose is only visual polish",
+    "No hidden mobile horizontal overflow for core content",
+    "No reliance on hover for essential information"
+  ],
+  "acceptanceCriteria": [
+    "A first-time evaluator can identify whether performance is improving or declining",
+    "At least one anomaly can be inspected from summary to supporting context",
+    "All required states render deliberately",
+    "Core interaction works by keyboard",
+    "All required viewports produce reviewable screenshots",
+    "Automated accessibility scan output is recorded",
+    "The result can be judged from a real rendered implementation"
+  ]
+}

@@ -1,0 +1,521 @@
+{
+  "benchmarkId": "saas-analytics-v0",
+  "benchmarkVersion": "0.1.0",
+  "runId": "saas-v0-baseline-001",
+  "workflow": {
+    "name": "Baseline fresh-context generation",
+    "tools": [
+      {
+        "name": "Codex CLI with OpenAI GPT-5.5",
+        "versionOrDate": "0.135.0 / 2026-08-27"
+      }
+    ],
+    "contextNotes": "Received only the frozen baseline bundle."
+  },
+  "runDate": "2026-08-27",
+  "dimensions": {
+    "requirementCoverage": {
+      "score": 12,
+      "max": 15,
+      "rationale": "Covers required metrics, trend, segments, anomalies, events, and all required states, with complete rendered evidence; meaningful deduction because no comparison-period control is implemented.",
+      "evidenceRefs": [
+        "implementation",
+        "objective-evaluation",
+        "blind-review"
+      ],
+      "confidence": "high"
+    },
+    "ux": {
+      "score": 8,
+      "max": 12,
+      "rationale": "Status, anomaly cause, supporting context, and segment inspection are quickly scannable, but the missing period-change flow blocks one required evaluator task.",
+      "evidenceRefs": [
+        "implementation",
+        "objective-evaluation",
+        "blind-review"
+      ],
+      "confidence": "high"
+    },
+    "visualDesign": {
+      "score": 7,
+      "max": 10,
+      "rationale": "Clear hierarchy and restrained operational styling, but still leans on dashboard panels/cards and leaves some desktop space underused.",
+      "evidenceRefs": [
+        "implementation",
+        "objective-evaluation",
+        "blind-review"
+      ],
+      "confidence": "high"
+    },
+    "distinctiveness": {
+      "score": 5,
+      "max": 8,
+      "rationale": "Cause-first language is brief-specific, but the overall information architecture remains conventional SaaS dashboard grammar.",
+      "evidenceRefs": [
+        "implementation",
+        "objective-evaluation",
+        "blind-review"
+      ],
+      "confidence": "high"
+    },
+    "accessibility": {
+      "score": 9,
+      "max": 12,
+      "rationale": "Native controls, visible focus styles, textual chart meaning, and reduced-motion CSS are present; uncertainty remains because no real automated axe output is recorded.",
+      "evidenceRefs": [
+        "implementation",
+        "objective-evaluation",
+        "blind-review"
+      ],
+      "confidence": "high"
+    },
+    "responsiveQuality": {
+      "score": 7,
+      "max": 8,
+      "rationale": "Objective gate was 28/28 and screenshots exist for all required viewports/states; mobile layouts are usable though vertically long and somewhat cramped.",
+      "evidenceRefs": [
+        "implementation",
+        "objective-evaluation",
+        "blind-review"
+      ],
+      "confidence": "high"
+    },
+    "stateResilience": {
+      "score": 7,
+      "max": 8,
+      "rationale": "Loading, populated, empty, partial, and error render deliberately, with missing comparison/no anomaly/zero revenue/large value stress cases handled.",
+      "evidenceRefs": [
+        "implementation",
+        "objective-evaluation",
+        "blind-review"
+      ],
+      "confidence": "high"
+    },
+    "designSystemConformance": {
+      "score": 6,
+      "max": 7,
+      "rationale": "Consistent tokens, focus treatment, panels, and segmented controls are used across states.",
+      "evidenceRefs": [
+        "implementation",
+        "objective-evaluation",
+        "blind-review"
+      ],
+      "confidence": "high"
+    },
+    "engineeringQuality": {
+      "score": 6,
+      "max": 8,
+      "rationale": "Small dependency-free implementation with escaped fixture output and a local check script, but limited tests and no comparison-period logic.",
+      "evidenceRefs": [
+        "implementation",
+        "objective-evaluation",
+        "blind-review"
+      ],
+      "confidence": "high"
+    },
+    "performance": {
+      "score": 4,
+      "max": 4,
+      "rationale": "Static dependency-free app with successful rendered evidence and no heavy runtime assets observed.",
+      "evidenceRefs": [
+        "implementation",
+        "objective-evaluation",
+        "blind-review"
+      ],
+      "confidence": "high"
+    },
+    "mutationFidelity": {
+      "score": 2,
+      "max": 3,
+      "rationale": "Handles required content stress cases, but fidelity is reduced by the absent period mutation/control.",
+      "evidenceRefs": [
+        "implementation",
+        "objective-evaluation",
+        "blind-review"
+      ],
+      "confidence": "high"
+    },
+    "provenance": {
+      "score": 2,
+      "max": 2,
+      "rationale": "Uses deterministic local fixture data with no live commercial data dependency observed.",
+      "evidenceRefs": [
+        "implementation",
+        "objective-evaluation",
+        "blind-review"
+      ],
+      "confidence": "high"
+    },
+    "productionReadiness": {
+      "score": 3,
+      "max": 3,
+      "rationale": "Frozen evidence shows the app is inspectable across the full objective matrix, with Candidate A recorded at 28/28 objective gates.",
+      "evidenceRefs": [
+        "implementation",
+        "objective-evaluation",
+        "blind-review"
+      ],
+      "confidence": "high"
+    }
+  },
+  "efficiency": {
+    "activeMinutes": 3.03,
+    "toolCalls": 11,
+    "retries": 0,
+    "humanInterventions": 0,
+    "knownCost": null,
+    "knownCostCurrency": null,
+    "replacedGeneratedCodePercent": 0,
+    "unexpectedRegressions": 0
+  },
+  "evidence": [
+    {
+      "id": "screenshot-populated-mobile-small",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--dfaca-ies-objective-runtime-gates-chromium-320x800/candidate-populated.png"
+      },
+      "description": "Automated evaluator capture of populated at mobile-small.",
+      "state": "populated",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 320,
+        "height": 800
+      }
+    },
+    {
+      "id": "screenshot-populated-mobile",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--dfaca-ies-objective-runtime-gates-chromium-390x844/candidate-populated.png"
+      },
+      "description": "Automated evaluator capture of populated at mobile.",
+      "state": "populated",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "screenshot-populated-tablet",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--dfaca-ies-objective-runtime-gates-chromium-768x1024/candidate-populated.png"
+      },
+      "description": "Automated evaluator capture of populated at tablet.",
+      "state": "populated",
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "screenshot-populated-desktop",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--dfaca-ies-objective-runtime-gates-chromium-1440x1000/candidate-populated.png"
+      },
+      "description": "Automated evaluator capture of populated at desktop.",
+      "state": "populated",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "id": "screenshot-loading-mobile-small",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--de466-ies-objective-runtime-gates-chromium-320x800/candidate-loading.png"
+      },
+      "description": "Automated evaluator capture of loading at mobile-small.",
+      "state": "loading",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 320,
+        "height": 800
+      }
+    },
+    {
+      "id": "screenshot-loading-mobile",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--de466-ies-objective-runtime-gates-chromium-390x844/candidate-loading.png"
+      },
+      "description": "Automated evaluator capture of loading at mobile.",
+      "state": "loading",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "screenshot-loading-tablet",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--de466-ies-objective-runtime-gates-chromium-768x1024/candidate-loading.png"
+      },
+      "description": "Automated evaluator capture of loading at tablet.",
+      "state": "loading",
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "screenshot-loading-desktop",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--de466-ies-objective-runtime-gates-chromium-1440x1000/candidate-loading.png"
+      },
+      "description": "Automated evaluator capture of loading at desktop.",
+      "state": "loading",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "id": "screenshot-empty-mobile-small",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--c43ed-ies-objective-runtime-gates-chromium-320x800/candidate-empty.png"
+      },
+      "description": "Automated evaluator capture of empty at mobile-small.",
+      "state": "empty",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 320,
+        "height": 800
+      }
+    },
+    {
+      "id": "screenshot-empty-mobile",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--c43ed-ies-objective-runtime-gates-chromium-390x844/candidate-empty.png"
+      },
+      "description": "Automated evaluator capture of empty at mobile.",
+      "state": "empty",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "screenshot-empty-tablet",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--c43ed-ies-objective-runtime-gates-chromium-768x1024/candidate-empty.png"
+      },
+      "description": "Automated evaluator capture of empty at tablet.",
+      "state": "empty",
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "screenshot-empty-desktop",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--c43ed-ies-objective-runtime-gates-chromium-1440x1000/candidate-empty.png"
+      },
+      "description": "Automated evaluator capture of empty at desktop.",
+      "state": "empty",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "id": "screenshot-partial-mobile-small",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--91dac-ies-objective-runtime-gates-chromium-320x800/candidate-partial.png"
+      },
+      "description": "Automated evaluator capture of partial at mobile-small.",
+      "state": "partial",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 320,
+        "height": 800
+      }
+    },
+    {
+      "id": "screenshot-partial-mobile",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--91dac-ies-objective-runtime-gates-chromium-390x844/candidate-partial.png"
+      },
+      "description": "Automated evaluator capture of partial at mobile.",
+      "state": "partial",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "screenshot-partial-tablet",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--91dac-ies-objective-runtime-gates-chromium-768x1024/candidate-partial.png"
+      },
+      "description": "Automated evaluator capture of partial at tablet.",
+      "state": "partial",
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "screenshot-partial-desktop",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--91dac-ies-objective-runtime-gates-chromium-1440x1000/candidate-partial.png"
+      },
+      "description": "Automated evaluator capture of partial at desktop.",
+      "state": "partial",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "id": "screenshot-error-mobile-small",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--6f49d-ies-objective-runtime-gates-chromium-320x800/candidate-error.png"
+      },
+      "description": "Automated evaluator capture of error at mobile-small.",
+      "state": "error",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 320,
+        "height": 800
+      }
+    },
+    {
+      "id": "screenshot-error-mobile",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--6f49d-ies-objective-runtime-gates-chromium-390x844/candidate-error.png"
+      },
+      "description": "Automated evaluator capture of error at mobile.",
+      "state": "error",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "screenshot-error-tablet",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--6f49d-ies-objective-runtime-gates-chromium-768x1024/candidate-error.png"
+      },
+      "description": "Automated evaluator capture of error at tablet.",
+      "state": "error",
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "screenshot-error-desktop",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--6f49d-ies-objective-runtime-gates-chromium-1440x1000/candidate-error.png"
+      },
+      "description": "Automated evaluator capture of error at desktop.",
+      "state": "error",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "id": "implementation",
+      "type": "implementation",
+      "location": {
+        "kind": "local",
+        "path": "candidate"
+      },
+      "description": "Frozen generated candidate source.",
+      "state": null,
+      "viewport": null
+    },
+    {
+      "id": "objective-evaluation",
+      "type": "accessibility",
+      "location": {
+        "kind": "local",
+        "path": "evaluation"
+      },
+      "description": "28/28 objective runtime checks passed.",
+      "state": null,
+      "viewport": null
+    },
+    {
+      "id": "blind-review",
+      "type": "manual-review",
+      "location": {
+        "kind": "local",
+        "path": "blind-review.json"
+      },
+      "description": "Treatment-blind frozen scorecard.",
+      "state": null,
+      "viewport": null
+    },
+    {
+      "id": "generation-record",
+      "type": "other",
+      "location": {
+        "kind": "local",
+        "path": "generation"
+      },
+      "description": "Generation event log and final response.",
+      "state": null,
+      "viewport": null
+    }
+  ],
+  "uncertainty": [
+    "Automated accessibility scan output is missing, so accessibility success is not inferred beyond observable source and screenshots."
+  ],
+  "conclusion": "Candidate A is the stronger frozen submission overall: it misses the comparison-period flow but has complete objective render evidence and no recorded serious axe failures."
+}

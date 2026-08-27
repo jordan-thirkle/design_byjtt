@@ -1,0 +1,31 @@
+{
+  "bundleId": "baseline-v0",
+  "benchmarkId": "saas-analytics-v0",
+  "benchmarkVersion": "0.1.0",
+  "policy": {
+    "externalPaidCreditsAllowed": false,
+    "hiddenRepositoryContextAllowed": false
+  },
+  "files": [
+    {
+      "source": "benchmarks/saas-analytics-v0/prompts/baseline-v0.md",
+      "target": "PROMPT.md",
+      "sha256": "259c75a0b273fd1ebdb83f2778b30ca097863dc5a3335076fb0d1bd0a7e47ffe"
+    },
+    {
+      "source": "benchmarks/saas-analytics-v0/shared-controls.md",
+      "target": "SHARED-CONTROLS.md",
+      "sha256": "fe13f9305e2cad4a32c1bc561bb059b61d0553119f5d6040a8e6124fd97e2bee"
+    },
+    {
+      "source": "benchmarks/saas-analytics-v0/brief.json",
+      "target": "brief.json",
+      "sha256": "7a3ffbbfc09c10f2f6c2a64f3c70d4fb796e303736aa524440668ed8a6686869"
+    },
+    {
+      "source": "benchmarks/saas-analytics-v0/fixtures/analytics.json",
+      "target": "fixtures/analytics.json",
+      "sha256": "cd7ed79f4235d0d9ef5b0db85c13ec11f880b0453811767fece8e2ab90bfe569"
+    }
+  ]
+}

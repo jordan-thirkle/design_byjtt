@@ -1,0 +1,61 @@
+{
+  "bundleId": "byjtt-guided-v0",
+  "benchmarkId": "saas-analytics-v0",
+  "benchmarkVersion": "0.1.0",
+  "policy": {
+    "externalPaidCreditsAllowed": false,
+    "hiddenRepositoryContextAllowed": false
+  },
+  "files": [
+    {
+      "source": "benchmarks/saas-analytics-v0/prompts/byjtt-guided-v0.md",
+      "target": "PROMPT.md",
+      "sha256": "ad670a5a1835d7d094239319eecf50e366f9fc56ee38801f25d283ee17631d5c"
+    },
+    {
+      "source": "benchmarks/saas-analytics-v0/shared-controls.md",
+      "target": "SHARED-CONTROLS.md",
+      "sha256": "fe13f9305e2cad4a32c1bc561bb059b61d0553119f5d6040a8e6124fd97e2bee"
+    },
+    {
+      "source": "benchmarks/saas-analytics-v0/brief.json",
+      "target": "brief.json",
+      "sha256": "7a3ffbbfc09c10f2f6c2a64f3c70d4fb796e303736aa524440668ed8a6686869"
+    },
+    {
+      "source": "benchmarks/saas-analytics-v0/fixtures/analytics.json",
+      "target": "fixtures/analytics.json",
+      "sha256": "cd7ed79f4235d0d9ef5b0db85c13ec11f880b0453811767fece8e2ab90bfe569"
+    },
+    {
+      "source": "PRODUCT.md",
+      "target": "PRODUCT.md",
+      "sha256": "41892e936ccac5dad79111248988bf23ba296fa4f4755bd53be2d1abd856c40f"
+    },
+    {
+      "source": "DESIGN.md",
+      "target": "DESIGN.md",
+      "sha256": "18974c872b33bccf6415daf6c81552b9502f43c9f4ac0c9fc7cc58c3ba486be3"
+    },
+    {
+      "source": "docs/REQUIREMENTS.md",
+      "target": "docs/REQUIREMENTS.md",
+      "sha256": "fad2b255f940adcdecfefb4b84a5c9beeb109ba26604058a7ea6edf3fb332eab"
+    },
+    {
+      "source": "docs/research/AI-SLOP-AND-USER-PAIN.md",
+      "target": "docs/research/AI-SLOP-AND-USER-PAIN.md",
+      "sha256": "9b66a6f0056db437be3099dd7a255d0fafd7236871c4409c0600f62819bab1e9"
+    },
+    {
+      "source": "docs/decisions/0002-best-available-system-first.md",
+      "target": "docs/decisions/0002-best-available-system-first.md",
+      "sha256": "6de9891e6f328f07fc2b3a772023f7e5d890c2153aa89a2c3eb61bb18b716139"
+    },
+    {
+      "source": "benchmarks/saas-analytics-v0/gauntlet.md",
+      "target": "gauntlet.md",
+      "sha256": "4a4e84a83b2e2856617a9e87d0a566ffb772c566e08d633e9b84057a91dacb84"
+    }
+  ]
+}

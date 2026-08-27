@@ -1,0 +1,143 @@
+{
+  "dimensions": [
+    {
+      "id": "requirementCoverage",
+      "score": 12,
+      "max": 15,
+      "rationale": "Covers required metrics, trend, segments, anomalies, events, and all required states, with complete rendered evidence; meaningful deduction because no comparison-period control is implemented.",
+      "evidence": [
+        "brief.json",
+        "candidate-a-app/src/app.js",
+        "evidence-a/test-results/candidate-runtime-generic--dfaca-ies-objective-runtime-gates-chromium-1440x1000/candidate-populated.png"
+      ]
+    },
+    {
+      "id": "ux",
+      "score": 8,
+      "max": 12,
+      "rationale": "Status, anomaly cause, supporting context, and segment inspection are quickly scannable, but the missing period-change flow blocks one required evaluator task.",
+      "evidence": [
+        "candidate-a-app/src/app.js",
+        "evidence-a/test-results/candidate-runtime-generic--dfaca-ies-objective-runtime-gates-chromium-320x800/candidate-populated.png"
+      ]
+    },
+    {
+      "id": "visualDesign",
+      "score": 7,
+      "max": 10,
+      "rationale": "Clear hierarchy and restrained operational styling, but still leans on dashboard panels/cards and leaves some desktop space underused.",
+      "evidence": [
+        "candidate-a-app/src/styles.css",
+        "evidence-a/test-results/candidate-runtime-generic--dfaca-ies-objective-runtime-gates-chromium-1440x1000/candidate-populated.png"
+      ]
+    },
+    {
+      "id": "distinctiveness",
+      "score": 5,
+      "max": 8,
+      "rationale": "Cause-first language is brief-specific, but the overall information architecture remains conventional SaaS dashboard grammar.",
+      "evidence": [
+        "candidate-a-app/src/app.js",
+        "evidence-a/test-results/candidate-runtime-generic--dfaca-ies-objective-runtime-gates-chromium-1440x1000/candidate-populated.png"
+      ]
+    },
+    {
+      "id": "accessibility",
+      "score": 9,
+      "max": 12,
+      "rationale": "Native controls, visible focus styles, textual chart meaning, and reduced-motion CSS are present; uncertainty remains because no real automated axe output is recorded.",
+      "evidence": [
+        "candidate-a-app/src/app.js",
+        "candidate-a-app/src/styles.css",
+        "candidate-a-app/ACCESSIBILITY-SCAN.md"
+      ]
+    },
+    {
+      "id": "responsiveQuality",
+      "score": 7,
+      "max": 8,
+      "rationale": "Objective gate was 28/28 and screenshots exist for all required viewports/states; mobile layouts are usable though vertically long and somewhat cramped.",
+      "evidence": [
+        "evidence-a/test-results",
+        "events.jsonl"
+      ]
+    },
+    {
+      "id": "stateResilience",
+      "score": 7,
+      "max": 8,
+      "rationale": "Loading, populated, empty, partial, and error render deliberately, with missing comparison/no anomaly/zero revenue/large value stress cases handled.",
+      "evidence": [
+        "candidate-a-app/src/app.js",
+        "candidate-a-app/fixtures/analytics.json",
+        "evidence-a/test-results"
+      ]
+    },
+    {
+      "id": "designSystemConformance",
+      "score": 6,
+      "max": 7,
+      "rationale": "Consistent tokens, focus treatment, panels, and segmented controls are used across states.",
+      "evidence": [
+        "candidate-a-app/src/styles.css"
+      ]
+    },
+    {
+      "id": "engineeringQuality",
+      "score": 6,
+      "max": 8,
+      "rationale": "Small dependency-free implementation with escaped fixture output and a local check script, but limited tests and no comparison-period logic.",
+      "evidence": [
+        "candidate-a-app/src/app.js",
+        "candidate-a-app/scripts/check.js",
+        "candidate-a-app/package.json"
+      ]
+    },
+    {
+      "id": "performance",
+      "score": 4,
+      "max": 4,
+      "rationale": "Static dependency-free app with successful rendered evidence and no heavy runtime assets observed.",
+      "evidence": [
+        "candidate-a-app/package.json",
+        "evidence-a/test-results"
+      ]
+    },
+    {
+      "id": "mutationFidelity",
+      "score": 2,
+      "max": 3,
+      "rationale": "Handles required content stress cases, but fidelity is reduced by the absent period mutation/control.",
+      "evidence": [
+        "candidate-a-app/src/app.js",
+        "candidate-a-app/fixtures/analytics.json"
+      ]
+    },
+    {
+      "id": "provenance",
+      "score": 2,
+      "max": 2,
+      "rationale": "Uses deterministic local fixture data with no live commercial data dependency observed.",
+      "evidence": [
+        "candidate-a-app/fixtures/analytics.json",
+        "candidate-a-app/UNMET-REQUIREMENTS.md"
+      ]
+    },
+    {
+      "id": "productionReadiness",
+      "score": 3,
+      "max": 3,
+      "rationale": "Frozen evidence shows the app is inspectable across the full objective matrix, with Candidate A recorded at 28/28 objective gates.",
+      "evidence": [
+        "events.jsonl",
+        "evidence-a/test-results"
+      ]
+    }
+  ],
+  "total": 78,
+  "confidence": "high",
+  "uncertainty": [
+    "Automated accessibility scan output is missing, so accessibility success is not inferred beyond observable source and screenshots."
+  ],
+  "conclusion": "Candidate A is the stronger frozen submission overall: it misses the comparison-period flow but has complete objective render evidence and no recorded serious axe failures."
+}
