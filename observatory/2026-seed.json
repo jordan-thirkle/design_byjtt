@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "0.1.0",
+  "title": "AI Design Pain Observatory — 2026 seed taxonomy",
+  "methodNote": "This seed consolidates researched community pain themes. A reported experience is a signal, not proof of prevalence or causation. Each future record should link to evidence records with explicit strength.",
+  "signals": [
+    {"id": "BJT-PAIN-001", "theme": "Generic visual convergence", "summary": "Outputs repeatedly converge on familiar card, gradient, glow, pill, hero and dashboard grammars.", "evidenceStrength": "weak", "status": "observed-community-signal", "benchmarks": ["BJT-SLOP-01", "BJT-WHY-01"]},
+    {"id": "BJT-PAIN-002", "theme": "Missing product intent", "summary": "Generation begins before audience, job, goal and consequence are resolved.", "evidenceStrength": "moderate", "status": "synthesized-signal", "benchmarks": ["BJT-INTENT-01", "BJT-UNKNOWN-01"]},
+    {"id": "BJT-PAIN-003", "theme": "Brand and art-direction dilution", "summary": "Repeated generation drifts toward model defaults and weakens coherent identity.", "evidenceStrength": "weak", "status": "observed-community-signal", "benchmarks": ["BJT-SLOP-01", "BJT-REGRESS-01"]},
+    {"id": "BJT-PAIN-004", "theme": "Design-system drift", "summary": "Agents fabricate tokens, clone components, mutate variants and use stale APIs.", "evidenceStrength": "moderate", "status": "corroborated-signal", "benchmarks": ["BJT-DS-01", "BJT-ROUNDTRIP-01"]},
+    {"id": "BJT-PAIN-005", "theme": "Source-of-truth fragmentation", "summary": "Design, code, tokens, docs and prompts become competing authorities.", "evidenceStrength": "moderate", "status": "synthesized-signal", "benchmarks": ["BJT-DS-01", "BJT-ROUNDTRIP-01"]},
+    {"id": "BJT-PAIN-006", "theme": "Demo-perfect state and content bias", "summary": "Polished defaults hide missing states, long-content failures and extreme-data fragility.", "evidenceStrength": "moderate", "status": "corroborated-signal", "benchmarks": ["BJT-STATE-01", "BJT-CONTENT-01"]},
+    {"id": "BJT-PAIN-007", "theme": "Localization and accessibility assumed", "summary": "English defaults and automated scans are mistaken for localization and accessibility evidence.", "evidenceStrength": "strong", "status": "mixed-normative-and-observed", "benchmarks": ["BJT-I18N-01", "BJT-A11Y-01"]},
+    {"id": "BJT-PAIN-008", "theme": "Shrunk-desktop responsiveness", "summary": "Responsive work is reduced to a few widths rather than content, input and preference adaptation.", "evidenceStrength": "moderate", "status": "synthesized-signal", "benchmarks": ["BJT-RESP-01"]},
+    {"id": "BJT-PAIN-009", "theme": "Unbounded mutation and regressions", "summary": "Small requested changes trigger unrelated redesign or behavior changes.", "evidenceStrength": "moderate", "status": "corroborated-signal", "benchmarks": ["BJT-REGRESS-01"]},
+    {"id": "BJT-PAIN-010", "theme": "Correction overhead", "summary": "Prompt loops spend time, tokens and credits repairing generated mistakes.", "evidenceStrength": "weak", "status": "observed-community-signal", "benchmarks": ["BJT-COST-01"]},
+    {"id": "BJT-PAIN-011", "theme": "Prototype-production gap", "summary": "Screenshot polish obscures runtime, performance, SEO, security and maintainability gaps.", "evidenceStrength": "strong", "status": "corroborated-signal", "benchmarks": ["BJT-PROD-01"]},
+    {"id": "BJT-PAIN-012", "theme": "Post-hoc rationale and fabricated certainty", "summary": "Plausible explanations and invented assumptions obscure what was actually known and decided.", "evidenceStrength": "moderate", "status": "synthesized-signal", "benchmarks": ["BJT-WHY-01", "BJT-UNKNOWN-01"]},
+    {"id": "BJT-PAIN-013", "theme": "Premature convergence and lost exploration", "summary": "An attractive first output discourages materially different concepts and research.", "evidenceStrength": "weak", "status": "hypothesis", "benchmarks": ["BJT-SLOP-01", "BJT-INTENT-01"]},
+    {"id": "BJT-PAIN-014", "theme": "Invisible expertise gap", "summary": "Surface polish makes design omissions harder for non-designers to recognize or prompt for.", "evidenceStrength": "moderate", "status": "product-hypothesis", "benchmarks": ["BJT-INTENT-01", "BJT-STATE-01", "BJT-A11Y-01"]}
+  ]
+}

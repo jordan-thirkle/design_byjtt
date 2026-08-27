@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "0.1.0",
+  "id": "byjtt://product/byjtt-design",
+  "version": "0.1.0",
+  "lifecycle": "candidate",
+  "intent": {"problem": "AI execution can look complete while essential product and design reasoning remains absent.", "primaryOutcome": "Raise the design-quality floor for non-designers and the ceiling for professionals.", "nonGoals": ["Replace designers", "Become a prompt-to-app generator"]},
+  "audiences": ["vibe coders and non-designers", "professional designers and engineers", "AI agents"],
+  "mode": "both",
+  "constraints": [{"id": "HC-001", "statement": "Do not claim production readiness without relevant validation evidence.", "rationale": "Apparent completeness is not verified completeness.", "evidence": ["BJT-EV-0001"]}],
+  "creativeTerritory": [{"id": "CT-001", "statement": "Explore product-specific visual directions that avoid unjustified model defaults.", "rationale": "Distinctive work requires bounded creative judgment.", "evidence": []}],
+  "tokens": {"format": "DTCG-2025.10", "source": "tokens/v0.1/byjtt.tokens.json"},
+  "components": [],
+  "states": ["default", "loading", "empty", "partial", "error"],
+  "accessibility": ["Keyboard access and visible focus are required", "Automated checks do not prove accessibility"],
+  "responsive": ["Adapt to content, viewport, input and user preferences"],
+  "content": ["Test long, short, missing, localized and RTL content where applicable"],
+  "decisions": ["BDR-0001"],
+  "unresolvedQuestions": [{"id": "UQ-001", "question": "Which visual direction should become canonical?", "blocking": false}]
+}

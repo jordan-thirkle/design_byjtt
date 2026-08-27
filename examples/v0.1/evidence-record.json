@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "0.1.0",
+  "id": "BJT-EV-0001",
+  "title": "Generated interfaces frequently omit non-default states",
+  "source": {"kind": "community-signal", "locator": "docs/research/AI-SLOP-AND-USER-PAIN.md", "publisher": "ByJTT Design research synthesis"},
+  "claim": "Community reports repeatedly identify missing empty, loading, error and degraded states in generated interfaces.",
+  "classification": "observed",
+  "strength": "weak",
+  "status": "candidate",
+  "observedAt": "2026-08-20",
+  "verifiedAt": null,
+  "applicability": ["AI-generated digital products"],
+  "limitations": ["Community evidence describes experience but does not establish prevalence."],
+  "conflictingEvidence": [],
+  "reviewDue": "2027-02-20",
+  "links": {"decisions": ["BDR-0001"], "contracts": ["byjtt://product/byjtt-design@0.1.0"], "benchmarks": ["BJT-STATE-01"], "painSignals": ["BJT-PAIN-006"]}
+}

@@ -46,7 +46,7 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Validate benchmark contracts and run intake
-        run: npm run benchmark:validate
+        run: npm test
 
       - name: Remove ephemeral run-registration smoke record
         run: rm -rf benchmarks/saas-analytics-v0/runs/ci-registration-smoke

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "0.1.0",
+  "id": "BDR-0001",
+  "title": "Separate hard constraints from creative territory",
+  "status": "accepted",
+  "problem": "Undifferentiated instructions cause agents either to violate requirements or to over-constrain useful exploration.",
+  "evidence": ["BJT-EV-0001"],
+  "alternatives": [{"option": "Single flat instruction list", "outcome": "Rejected because requirement priority and creative freedom remain ambiguous."}],
+  "criteria": ["Machine readability", "Human clarity", "Provider independence"],
+  "decision": "Every design contract and compiled context package identifies non-negotiable constraints separately from bounded creative opportunities.",
+  "tradeoffs": ["Authors must classify instructions explicitly."],
+  "risks": ["Teams may incorrectly label subjective preference as a hard constraint."],
+  "exceptions": ["Exploratory studies may contain no production hard constraints beyond safety and scope."],
+  "implementation": ["Represent both collections in the v0.1 contract schemas."],
+  "validation": ["Schema examples must include and validate both collections."],
+  "reviewTriggers": ["Benchmark evidence shows the distinction reduces output quality or is misunderstood."],
+  "supersedes": []
+}

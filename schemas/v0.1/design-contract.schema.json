@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design.byjtt.com/schemas/v0.1/design-contract.schema.json",
+  "title": "ByJTT Versioned Design Contract v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "version", "lifecycle", "intent", "audiences", "mode", "constraints", "creativeTerritory", "tokens", "components", "states", "accessibility", "responsive", "content", "decisions", "unresolvedQuestions"],
+  "properties": {
+    "schemaVersion": {"const": "0.1.0"},
+    "id": {"type": "string", "pattern": "^byjtt://(product|foundation|component|pattern)/[a-z0-9-]+$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?$"},
+    "lifecycle": {"enum": ["experimental", "candidate", "verified", "canonical", "deprecated", "retired"]},
+    "intent": {"type": "object", "additionalProperties": false, "required": ["problem", "primaryOutcome", "nonGoals"], "properties": {"problem": {"type": "string", "minLength": 1}, "primaryOutcome": {"type": "string", "minLength": 1}, "nonGoals": {"type": "array", "items": {"type": "string", "minLength": 1}}}},
+    "audiences": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "mode": {"enum": ["guided", "professional", "both"]},
+    "constraints": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/rule"}},
+    "creativeTerritory": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/rule"}},
+    "tokens": {"type": "object", "additionalProperties": false, "required": ["format", "source"], "properties": {"format": {"const": "DTCG-2025.10"}, "source": {"type": "string", "minLength": 1}}},
+    "components": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["id", "version", "rules"], "properties": {"id": {"type": "string", "minLength": 1}, "version": {"type": "string", "minLength": 1}, "rules": {"type": "array", "items": {"type": "string", "minLength": 1}}}}},
+    "states": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "accessibility": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "responsive": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "content": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "decisions": {"type": "array", "items": {"type": "string", "pattern": "^BDR-[0-9]{4}$"}, "uniqueItems": true},
+    "unresolvedQuestions": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["id", "question", "blocking"], "properties": {"id": {"type": "string", "minLength": 1}, "question": {"type": "string", "minLength": 1}, "blocking": {"type": "boolean"}}}}
+  },
+  "$defs": {"rule": {"type": "object", "additionalProperties": false, "required": ["id", "statement", "rationale"], "properties": {"id": {"type": "string", "minLength": 1}, "statement": {"type": "string", "minLength": 1}, "rationale": {"type": "string", "minLength": 1}, "evidence": {"type": "array", "items": {"type": "string", "pattern": "^BJT-EV-[0-9]{4}$"}, "uniqueItems": true}}}}
+}

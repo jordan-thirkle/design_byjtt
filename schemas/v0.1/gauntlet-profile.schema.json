@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design.byjtt.com/schemas/v0.1/gauntlet-profile.schema.json",
+  "title": "ByJTT Gauntlet Profile v0.1",
+  "type": "object", "additionalProperties": false,
+  "required": ["schemaVersion", "id", "version", "name", "checks", "releasePolicy"],
+  "properties": {
+    "schemaVersion": {"const": "0.1.0"},
+    "id": {"type": "string", "pattern": "^bjt-gauntlet:[a-z0-9-]+$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "name": {"type": "string", "minLength": 1},
+    "checks": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["benchmarkId", "conformance", "required", "evaluator", "evidenceRequired"], "properties": {"benchmarkId": {"type": "string", "pattern": "^BJT-[A-Z0-9]+-[0-9]{2}$"}, "conformance": {"enum": ["static", "runtime", "human-experiential"]}, "required": {"type": "boolean"}, "evaluator": {"enum": ["deterministic", "assisted", "human"]}, "evidenceRequired": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}}}},
+    "releasePolicy": {"type": "object", "additionalProperties": false, "required": ["requiredChecksMustPass", "humanReviewRequired", "unknownsBlockRelease"], "properties": {"requiredChecksMustPass": {"type": "boolean"}, "humanReviewRequired": {"type": "boolean"}, "unknownsBlockRelease": {"type": "boolean"}}}
+  }
+}

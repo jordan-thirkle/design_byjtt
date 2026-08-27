@@ -7,6 +7,9 @@
     "node": ">=22"
   },
   "scripts": {
+    "test": "npm run foundation:validate && npm run benchmark:validate",
+    "build": "npm run benchmark:check",
+    "foundation:validate": "node harness/validate-foundation.mjs",
     "benchmark:validate": "node harness/validate-benchmark.mjs",
     "benchmark:export-contexts": "node harness/export-benchmark-contexts.mjs",
     "benchmark:run:init": "node harness/init-benchmark-run.mjs",

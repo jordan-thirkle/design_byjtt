@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "0.1.0",
+  "id": "bjt-dcp:byjtt-design-foundation",
+  "version": "0.1.0",
+  "generatedAt": "2026-08-27T00:00:00Z",
+  "target": {"kind": "agent", "name": "generic coding agent", "adapter": null},
+  "mode": "guided",
+  "sources": {"evidence": ["BJT-EV-0001"], "decisions": ["BDR-0001"], "contracts": ["byjtt://product/byjtt-design@0.1.0"], "patterns": [], "benchmarks": ["BJT-INTENT-01", "BJT-STATE-01"]},
+  "hardConstraints": [{"id": "HC-001", "instruction": "Preserve all required non-default states.", "verification": "Run BJT-STATE-01."}],
+  "creativeTerritory": [{"id": "CT-001", "opportunity": "Develop a product-specific visual language.", "boundaries": ["Do not invent product evidence", "Meet accessibility constraints"]}],
+  "unresolvedQuestions": [{"id": "UQ-001", "question": "Which primary task deserves strongest visual emphasis?", "blocking": true, "owner": "human"}],
+  "validationTargets": ["BJT-INTENT-01", "BJT-STATE-01", "BJT-A11Y-01"],
+  "integrity": {"sourceDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000", "compilerVersion": "contract-only-0.1.0"}
+}

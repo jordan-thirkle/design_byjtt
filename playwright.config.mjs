@@ -1,6 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const referenceBaseURL = 'http://127.0.0.1:4173';
+const referenceBaseURL = process.env.BENCHMARK_REFERENCE_URL || 'http://127.0.0.1:4173';
 const targetBaseURL = process.env.BENCHMARK_TARGET_URL || referenceBaseURL;
 const externalTarget = Boolean(process.env.BENCHMARK_TARGET_URL);
 
