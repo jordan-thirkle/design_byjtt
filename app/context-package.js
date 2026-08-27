@@ -1,12 +1,14 @@
-import { createHash } from 'node:crypto';
 import { createDesignContract } from './design-contract.js';
 
-function digest(value) {
-  return createHash('sha256').update(JSON.stringify(value)).digest('hex');
+async function digest(value) {
+  const bytes = new TextEncoder().encode(JSON.stringify(value));
+  const hash = await globalThis.crypto.subtle.digest('SHA-256', bytes);
+  return [...new Uint8Array(hash)].map((byte) => byte.toString(16).padStart(2, '0')).join('');
 }
 
-export function compileContextPackage(project) {
+export async function compileContextPackage(project) {
   const contract = createDesignContract(project);
+  const sourceDigest = await digest(contract);
   const now = new Date().toISOString();
   return {
     schemaVersion: '0.1.0',
@@ -26,6 +28,6 @@ export function compileContextPackage(project) {
     creativeTerritory: contract.creativeTerritory.map((item) => ({ id: item.id, opportunity: item.statement, boundaries: [item.rationale] })),
     unresolvedQuestions: contract.unresolvedQuestions.map((item) => ({ ...item, owner: 'human' })),
     validationTargets: ['BJT-PRODUCT-01', 'BJT-UX-01', 'BJT-A11Y-01', 'BJT-RESPONSIVE-01', 'BJT-CONTENT-01', 'BJT-ENGINEERING-01', 'BJT-PROVENANCE-01'],
-    integrity: { sourceDigest: `sha256:${digest(contract)}`, compilerVersion: '0.1.0' },
+    integrity: { sourceDigest: `sha256:${sourceDigest}`, compilerVersion: '0.1.0' },
   };
 }
