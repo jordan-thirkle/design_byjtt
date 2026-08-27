@@ -29,6 +29,6 @@ test('publication requires explicit consent and then records the resource', asyn
   await publish.click();
   await expect(page.getByRole('button', { name: /Published to Library/ })).toBeVisible();
   await page.getByRole('button', { name: 'Library' }).first().click();
-  await expect(page.getByText('Northshore Landscapes')).toBeVisible();
-  await expect(page.getByText('Verified').first()).toBeVisible();
+  await expect(page.locator('#resource-card')).toContainText('Northshore Landscapes');
+  await expect(page.locator('#resource-card')).toContainText('Verified');
 });
