@@ -35,6 +35,8 @@ Game-specific product/design research belongs to **games.byjtt.com** and should 
 
 Humans: read [`PRODUCT.md`](./PRODUCT.md).
 
+To try the first public-facing prototype locally, run `npm run site:serve` and open [http://127.0.0.1:4175](http://127.0.0.1:4175). It is intentionally simple: start a brief, get clear direction for an AI builder, or begin a plain-language design check. The benchmark and schema machinery stays in the repository as internal quality infrastructure.
+
 AI agents: read [`AGENTS.md`](./AGENTS.md) first, then follow its context pointers.
 
 ## Repository map
@@ -49,6 +51,8 @@ AI agents: read [`AGENTS.md`](./AGENTS.md) first, then follow its context pointe
 - [`docs/ROADMAP.md`](./docs/ROADMAP.md) — sequenced delivery plan.
 - [`docs/decisions/`](./docs/decisions/) — durable architecture/product decisions.
 - [`docs/architecture/V0.1-FOUNDATION.md`](./docs/architecture/V0.1-FOUNDATION.md) — evidence, decisions, contracts, context packages, adapters and conformance.
+- [`site/`](./site/) — public-facing v0 guided brief and design check prototype.
+- [`docs/concepts/BYJTT-PUBLIC-V0-FIDELITY.md`](./docs/concepts/BYJTT-PUBLIC-V0-FIDELITY.md) — concept, design system and visual verification ledger.
 - [`docs/concepts/PLAUSIBILITY-DEBT.md`](./docs/concepts/PLAUSIBILITY-DEBT.md) — public definitions of plausibility debt, the Demo Trap and design slop.
 - [`schemas/v0.1/`](./schemas/v0.1/) — validated interoperable record contracts and examples.
 

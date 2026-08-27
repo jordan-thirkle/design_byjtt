@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="ByJTT Design turns product ideas into clear design decisions that people and AI builders can follow." />
+    <title>ByJTT Design — Build something worth using</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="module" src="./app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="ByJTT Design home">ByJTT Design</a>
+      <nav class="primary-nav" aria-label="Primary navigation">
+        <a href="#how-it-works">How it works</a>
+        <a href="#research">Research</a>
+        <a href="#for-teams">For teams</a>
+      </nav>
+      <a class="button button-blue header-action" href="#brief-form">Start a brief</a>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <h1 id="hero-title">Build something<br />worth using.</h1>
+          <p class="hero-lede">Turn an idea into clear design decisions an AI builder can follow.</p>
+
+          <div class="process-intro" aria-label="The ByJTT Design approach">
+            <div class="process-item">
+              <span class="icon-circle" aria-hidden="true">
+                <svg viewBox="0 0 24 24" role="img"><path d="M6 3.75h8.1L18 7.65v12.6H6z"/><path d="M14 3.75v4h4M8.75 12h6.5M8.75 15.25h6.5"/></svg>
+              </span>
+              <span>Shape the brief</span>
+            </div>
+            <span class="process-arrow" aria-hidden="true">→</span>
+            <div class="process-item">
+              <span class="icon-circle" aria-hidden="true">
+                <svg viewBox="0 0 24 24" role="img"><circle cx="12" cy="12" r="8.3"/><path d="m8.1 12.2 2.5 2.5 5.35-5.45"/></svg>
+              </span>
+              <span>Make the<br />decisions clear</span>
+            </div>
+            <span class="process-arrow" aria-hidden="true">→</span>
+            <div class="process-item">
+              <span class="icon-circle" aria-hidden="true">
+                <svg viewBox="0 0 24 24" role="img"><path d="M3.4 12s3.1-5.1 8.6-5.1 8.6 5.1 8.6 5.1-3.1 5.1-8.6 5.1S3.4 12 3.4 12Z"/><circle cx="12" cy="12" r="2.35"/></svg>
+              </span>
+              <span>Check what<br />gets built</span>
+            </div>
+          </div>
+          <p class="quiet-note">Clear reasons. Fewer surprises.</p>
+        </div>
+
+        <form class="brief-panel" id="brief-form" novalidate aria-labelledby="brief-title">
+          <h2 id="brief-title">Start with the product, not the prompt</h2>
+          <p class="form-intro">A few plain questions give your builder something real to work from.</p>
+
+          <div class="field-group">
+            <label for="product">What are you building?</label>
+            <textarea id="product" name="product" rows="2" required autocomplete="off" data-question="product"></textarea>
+            <p class="field-error" id="product-error" aria-live="polite"></p>
+          </div>
+          <div class="field-group">
+            <label for="audience">Who is it for?</label>
+            <textarea id="audience" name="audience" rows="2" required autocomplete="off" data-question="audience"></textarea>
+            <p class="field-error" id="audience-error" aria-live="polite"></p>
+          </div>
+          <div class="field-group">
+            <label for="job">What must users be able to do?</label>
+            <textarea id="job" name="job" rows="2" required autocomplete="off" data-question="job"></textarea>
+            <p class="field-error" id="job-error" aria-live="polite"></p>
+          </div>
+
+          <button class="button button-dark submit-button" type="submit">Continue</button>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="result-section is-hidden" id="brief-result" aria-labelledby="result-title" tabindex="-1">
+        <div class="result-heading">
+          <p class="section-kicker">Your next step</p>
+          <h2 id="result-title">A clearer starting point.</h2>
+          <p>Here is the direction your answers give an AI builder. You can copy it, refine it, or check a design when you have one.</p>
+        </div>
+        <dl class="decision-sheet">
+          <div class="decision-row">
+            <dt>Product</dt>
+            <dd id="result-product"></dd>
+          </div>
+          <div class="decision-row">
+            <dt>People</dt>
+            <dd id="result-audience"></dd>
+          </div>
+          <div class="decision-row">
+            <dt>Core job</dt>
+            <dd id="result-job"></dd>
+          </div>
+          <div class="decision-row decision-row-highlight">
+            <dt>Design direction</dt>
+            <dd>Make the important action obvious first. Keep supporting detail close by, and let the interface explain its choices when something is missing or uncertain.</dd>
+          </div>
+        </dl>
+        <div class="result-actions">
+          <button class="button button-dark" id="copy-brief" type="button">Copy for an AI builder</button>
+          <a class="button button-outline" href="#check">Check a design</a>
+          <button class="text-button" id="reset-brief" type="button">Start another brief</button>
+        </div>
+        <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="steps-section" id="how-it-works" aria-labelledby="steps-title">
+        <div class="section-rule"></div>
+        <div class="steps-heading">
+          <p class="section-kicker">How it works</p>
+          <h2 id="steps-title">A little more thinking<br />before the making.</h2>
+        </div>
+        <div class="steps-list">
+          <article class="step-item">
+            <span class="step-number">1</span>
+            <div>
+              <h3>Shape the brief</h3>
+              <p>Tell us what you’re building and who it’s for. We ask a few clear questions.</p>
+            </div>
+          </article>
+          <article class="step-item">
+            <span class="step-number">2</span>
+            <div>
+              <h3>Make the decisions clear</h3>
+              <p>Turn your answers into practical direction your builder can follow and explain.</p>
+            </div>
+          </article>
+          <article class="step-item">
+            <span class="step-number">3</span>
+            <div>
+              <h3>Check what gets built</h3>
+              <p>Review a real design for gaps in usability, accessibility, states and content before it ships.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="research-section" id="research" aria-labelledby="research-title">
+        <div class="research-copy">
+          <p class="section-kicker">The idea behind ByJTT</p>
+          <h2 id="research-title">Good-looking is only the beginning.</h2>
+          <p>AI can make a screen look finished before the hard decisions have been made. ByJTT helps people notice what is missing, make the reasoning visible, and keep the useful parts of human judgment in the loop.</p>
+        </div>
+        <div class="research-quote">“The goal isn’t to make more screens. It’s to make better decisions before the screen exists.”</div>
+      </section>
+
+      <section class="check-section" id="check" aria-labelledby="check-title">
+        <div class="check-copy">
+          <p class="section-kicker">When you have a first version</p>
+          <h2 id="check-title">Check a design without needing design vocabulary.</h2>
+          <p>Describe what you made or paste a local link. This quick reflection helps you find the gaps worth fixing first. It is a starting point, not a score.</p>
+        </div>
+        <form class="check-form" id="check-form" novalidate>
+          <label for="design-description">What did you make?</label>
+          <textarea id="design-description" rows="4" placeholder="For example: a mobile booking page for a small clinic"></textarea>
+          <button class="button button-blue" type="submit">Start a quick check</button>
+          <p class="check-status" id="check-status" role="status" aria-live="polite"></p>
+        </form>
+        <div class="check-result is-hidden" id="check-result" aria-live="polite">
+          <h3>Look for these three things first</h3>
+          <ul>
+            <li>Can someone tell what to do next without being taught?</li>
+            <li>Does the design still make sense when content is long, missing or slow?</li>
+            <li>Can a keyboard user reach the important actions and understand the result?</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="teams-section" id="for-teams" aria-labelledby="teams-title">
+        <div>
+          <p class="section-kicker">For teams</p>
+          <h2 id="teams-title">A shared language for people and AI.</h2>
+        </div>
+        <p>Keep product intent, design decisions and checks in one place so every tool can work from the same understanding.</p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <a class="brand" href="#top">ByJTT Design</a>
+      <p>Research, design, build, and validate excellent digital products with AI.</p>
+      <a href="#research">Why this exists</a>
+    </footer>
+  </body>
+</html>
