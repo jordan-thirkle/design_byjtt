@@ -25,14 +25,14 @@ test('plain-language iteration updates the live preview and records a decision',
   expect(state.project.decisions[0].affectedPaths).toContain('/design/direction');
 });
 
-test('mobile viewport has no horizontal overflow and passes Studio accessibility audit', async ({ page }) => {
+test('mobile viewport has no horizontal overflow and passes Studio WCAG audit', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto(appUrl);
   await page.getByRole('button', { name: 'Mobile' }).click();
   await expect(page.getByLabel('Live website preview')).toBeVisible();
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth);
   expect(overflow).toBe(true);
-  const results = await new AxeBuilder({ page }).exclude('.preview-wrap').analyze();
+  const results = await new AxeBuilder({ page }).configure({ runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa'] } }).analyze();
   expect(results.violations).toEqual([]);
 });
 
