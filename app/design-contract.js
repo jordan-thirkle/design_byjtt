@@ -1,16 +1,3 @@
-import fs from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-import Ajv from 'ajv/dist/2020.js';
-import addFormats from 'ajv-formats';
-
-const here = path.dirname(fileURLToPath(import.meta.url));
-const schemaPath = path.join(here, '..', 'schemas', 'v0.1', 'design-contract.schema.json');
-const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf8'));
-const ajv = new Ajv({ allErrors: true, strict: false });
-addFormats(ajv);
-const validate = ajv.compile(schema);
-
 const rule = (id, statement, rationale, evidence = []) => ({ id, statement, rationale, ...(evidence.length ? { evidence } : {}) });
 
 export function createDesignContract(project) {
@@ -65,7 +52,23 @@ export function createDesignContract(project) {
   };
 }
 
-export function validateDesignContract(contract) {
-  const valid = validate(contract);
-  return { valid, errors: validate.errors ? [...validate.errors] : [] };
+export function isDesignContractComplete(contract) {
+  return Boolean(
+    contract?.schemaVersion === '0.1.0' &&
+    contract?.id &&
+    contract?.version === '0.1.0' &&
+    contract?.intent?.problem &&
+    contract?.intent?.primaryOutcome &&
+    contract?.audiences?.length &&
+    contract?.constraints?.length &&
+    contract?.creativeTerritory?.length &&
+    contract?.tokens?.source &&
+    contract?.components &&
+    contract?.states?.length &&
+    contract?.accessibility?.length &&
+    contract?.responsive?.length &&
+    contract?.content?.length &&
+    Array.isArray(contract?.decisions) &&
+    Array.isArray(contract?.unresolvedQuestions)
+  );
 }
