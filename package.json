@@ -7,8 +7,10 @@
     "node": ">=22"
   },
   "scripts": {
-    "test": "npm run foundation:validate && npm run benchmark:validate",
-    "build": "npm run benchmark:check",
+    "test": "npm run site:check && npm run foundation:validate && npm run benchmark:validate",
+    "build": "npm run site:check && npm run benchmark:check",
+    "site:check": "node site/verify.mjs",
+    "site:serve": "python3 -m http.server 4175 --directory site",
     "foundation:validate": "node harness/validate-foundation.mjs",
     "benchmark:validate": "node harness/validate-benchmark.mjs",
     "benchmark:export-contexts": "node harness/export-benchmark-contexts.mjs",
