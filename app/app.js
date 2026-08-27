@@ -77,7 +77,8 @@ $('#publish-button').addEventListener('click', () => {
 });
 
 $('#resource-details').addEventListener('click', () => { state = selectPanel(state, 'evidence'); render(); });
-$('#remix-button').addEventListener('click', () => { state = selectPanel(state, 'studio'); render(); $('#prompt').focus(); });
+$('#remix-button').addEventListener('click', () => { state = selectPanel(state, 'studio'); $('.right-panel').classList.remove('mobile-open'); render(); $('#prompt').focus(); });
 $('#inspect-button').addEventListener('click', () => { state = selectPanel(state, 'evidence'); render(); });
+$('#panel-close').addEventListener('click', () => { $('.right-panel').classList.remove('mobile-open'); state = selectPanel(state, 'studio'); render(); });
 
 render();
