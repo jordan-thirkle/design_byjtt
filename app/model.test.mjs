@@ -34,11 +34,11 @@ test('evidence checks do not claim verification before browser-backed checks run
   assert.ok(evidence.checks.some((check) => check.status === 'not_run'));
 });
 
-test('publication is opt-in, verified-only, and carries the complete project artefact', () => {
+test('publication is opt-in, verified-only, and carries the complete project artefact', async () => {
   const project = createProject();
-  assert.throws(() => publishProject(project, false, verifiedEvidence()), /opt-in/i);
-  assert.throws(() => publishProject(project, true, runEvidenceChecks(project)), /verification/i);
-  const resource = publishProject(project, true, verifiedEvidence());
+  await assert.rejects(() => publishProject(project, false, verifiedEvidence()), /opt-in/i);
+  await assert.rejects(() => publishProject(project, true, runEvidenceChecks(project)), /verification/i);
+  const resource = await publishProject(project, true, verifiedEvidence());
   assert.equal(resource.status, 'verified');
   assert.equal(resource.license, 'ByJTT Resource License');
   assert.equal(resource.provenance.source, 'ByJTT Design Studio');
