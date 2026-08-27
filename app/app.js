@@ -76,6 +76,5 @@ $('#publish-button').addEventListener('click', () => {
 $('#resource-details').addEventListener('click', () => { state = selectPanel(state, 'evidence'); render(); });
 $('#remix-button').addEventListener('click', () => { state = selectPanel(state, 'studio'); render(); $('#prompt').focus(); });
 $('#inspect-button').addEventListener('click', () => { state = selectPanel(state, 'evidence'); render(); });
-$('#panel-close').addEventListener?.('click', () => {});
 
 render();
