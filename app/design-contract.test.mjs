@@ -14,6 +14,7 @@ test('compiles a project into the complete v0.1 design contract shape', () => {
   assert.ok(contract.constraints.length > 0);
   assert.ok(contract.creativeTerritory.length > 0);
   assert.ok(contract.states.includes('populated'));
+  assert.equal(validateDesignContract(contract).valid, true);
 });
 
 test('rejects a compiled contract when a required field is removed', () => {
