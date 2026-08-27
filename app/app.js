@@ -1,14 +1,17 @@
 import { publishToLibrary } from './library.js';
 import { createStudioState, submitInstruction, setPreviewMode, selectPanel } from './studio-state.js';
 import { renderSpecimen } from './specimen.js';
+import { collectBrowserEvidence } from './evidence.js';
 
 let state = createStudioState();
 const $ = (selector) => document.querySelector(selector);
 
 function render() {
   $('#project-name').textContent = state.project.business.name;
-  $('#status-text').textContent = state.published ? 'Published' : state.project.status === 'draft' ? 'Draft' : 'Verified';
   renderSpecimen(state.project, $('#preview'));
+  const browserEvidence = collectBrowserEvidence(document, window);
+  state = { ...state, project: { ...state.project, evidence: browserEvidence } };
+  $('#status-text').textContent = state.published ? 'Published' : state.project.evidence.overall === 'verified' ? 'Verified' : 'Tested';
   $('#preview').className = `preview-frame ${state.preview}`;
   document.querySelectorAll('[data-preview]').forEach((button) => button.classList.toggle('active', button.dataset.preview === state.preview));
   document.querySelectorAll('[data-panel]').forEach((button) => button.classList.toggle('active', button.dataset.panel === state.panel));
@@ -21,6 +24,7 @@ function render() {
   $('#published-count').textContent = state.published ? '1' : '0';
   renderConversation();
   renderEvidence();
+  updatePublishButton();
   document.querySelectorAll('.mobile-tabs button').forEach((button) => button.classList.toggle('active', button.dataset.panel === state.panel));
 }
 
@@ -29,7 +33,17 @@ function renderConversation() {
 }
 
 function renderEvidence() {
-  $('#check-list').innerHTML = state.project.evidence.checks.map((check) => `<div class="check"><span class="check-mark">✓</span><div><strong>${check.label}</strong><p>${check.note}</p></div></div>`).join('');
+  const checks = state.project.evidence?.checks ?? [];
+  const passed = checks.filter((check) => check.status === 'pass').length;
+  $('#check-list').innerHTML = checks.map((check) => `<div class="check"><span class="check-mark">${check.status === 'pass' ? '✓' : check.status === 'fail' ? '!' : '—'}</span><div><strong>${check.label}</strong><p>${escapeHtml(check.summary)}</p></div></div>`).join('');
+  const summary = $('#evidence-panel .evidence-summary');
+  if (summary) summary.querySelector('span').textContent = `${passed} of ${checks.length} checks passed`;
+  if (summary) summary.querySelector('strong').textContent = state.project.evidence?.overall === 'verified' ? 'Verified' : 'Tested';
+}
+
+function updatePublishButton() {
+  const consent = $('#publish-consent').checked;
+  $('#publish-button').disabled = !(consent && state.project.evidence?.overall === 'verified');
 }
 
 function escapeHtml(value) {
@@ -66,10 +80,10 @@ $('#why-button').addEventListener('click', () => {
   render();
 });
 
-$('#publish-consent').addEventListener('change', (event) => { $('#publish-button').disabled = !event.target.checked; });
+$('#publish-consent').addEventListener('change', updatePublishButton);
 
 $('#publish-button').addEventListener('click', () => {
-  if (!$('#publish-consent').checked) return;
+  if (!$('#publish-consent').checked || state.project.evidence?.overall !== 'verified') return;
   state = { ...state, published: publishToLibrary(state.project) };
   $('#publish-button').textContent = 'Published to Library ✓';
   $('#publish-button').disabled = true;
