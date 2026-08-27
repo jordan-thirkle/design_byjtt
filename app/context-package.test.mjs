@@ -14,10 +14,10 @@ const ajv = new Ajv({ allErrors: true, strict: false });
 addFormats(ajv);
 const validate = ajv.compile(schema);
 
-test('compiles a provider-neutral context package from the canonical contract', () => {
+test('compiles a provider-neutral context package from the canonical contract', async () => {
   const project = createProject();
   project.decisions = [{ id: 'BDR-0001', summary: 'raised the visual tone toward premium editorial design' }];
-  const pkg = compileContextPackage(project);
+  const pkg = await compileContextPackage(project);
   assert.equal(validate(pkg), true);
   assert.equal(pkg.hardConstraints[0].instruction.length > 0, true);
   assert.equal(pkg.sources.decisions[0], 'BDR-0001');
