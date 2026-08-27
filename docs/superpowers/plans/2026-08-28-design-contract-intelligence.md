@@ -24,133 +24,72 @@
 
 ### Task 1: Contract model and deterministic compiler
 
-**Files:**
-- Create: `app/design-contract.js`
-- Test: `app/design-contract.test.mjs`
-- Modify: `app/model.js`
+**Status: complete and CI-verified.**
 
-**Interfaces:**
-- Produces `createDesignContract(project)` returning a schema-shaped contract.
-- Produces `validateDesignContract(contract)` returning `{ valid, errors }` using AJV.
-- Produces `createInitialProject()` or adapts the existing project factory without duplicating canonical intent.
-
-- [ ] **Step 1: Write failing tests** for required contract fields, rule shape, stable schema version, and validation failure when a required field is removed.
-- [ ] **Step 2: Run `node --test app/design-contract.test.mjs` and confirm the missing compiler/validator failure.
-- [ ] **Step 3: Implement deterministic compilation from current Studio project state into intent, audiences, mode, constraints, creative territory, tokens, components, states, accessibility, responsive, content, decisions, and unresolved questions.
-- [ ] **Step 4: Add AJV schema loading and validation without changing the existing schema.
-- [ ] **Step 5: Run the focused test and then `npm run foundation:validate`.
-- [ ] **Step 6: Commit `feat: compile studio projects into design contracts`.
+- [x] Write tests for required contract fields, rule shape, stable schema version, and validation failure.
+- [x] Implement deterministic compilation into intent, audiences, mode, constraints, creative territory, tokens, components, states, accessibility, responsive, content, decisions, and unresolved questions.
+- [x] Isolate Node-only AJV validation from the browser-safe compiler.
+- [x] Run focused tests and foundation validation.
 
 ### Task 2: Immutable conversational decision tracing
 
-**Files:**
-- Create: `app/decision-trace.js`
-- Test: `app/decision-trace.test.mjs`
-- Modify: `app/model.js`
+**Status: complete and CI-verified.**
 
-**Interfaces:**
-- Produces `applyInstruction(project, instruction)` returning `{ project, iteration, decision }`.
-- Produces `nextDecisionId(decisions)` returning the next `BDR-####` identifier.
-- Produces decision records with `instruction`, `summary`, `affectedPaths`, `before`, `after`, `rationale`, `timestamp`, and provenance.
-
-- [ ] **Step 1: Write failing tests** for first/second BDR numbering, affected paths, before/after values, empty instruction no-op, and preservation of previous decisions.
-- [ ] **Step 2: Run the focused test and confirm it fails because decision tracing is absent.
-- [ ] **Step 3: Implement immutable decision generation around the existing deterministic iteration rules.
-- [ ] **Step 4: Make the compiled contract reference BDR identifiers rather than free-form iteration strings.
-- [ ] **Step 5: Run focused model and decision tests.
-- [ ] **Step 6: Commit `feat: trace studio conversational decisions`.
+- [x] Add BDR numbering, affected paths, before/after values, rationale and provenance.
+- [x] Preserve immutable previous decisions and no-op empty instructions.
+- [x] Compile the canonical contract from decision identifiers.
 
 ### Task 3: Context Package adapter
 
-**Files:**
-- Create: `app/context-package.js`
-- Test: `app/context-package.test.mjs`
-- Modify: `app/model.js`
-- Modify: `examples/v0.1/design-context-package.json` only if required by the existing schema shape
+**Status: complete and CI-verified.**
 
-**Interfaces:**
-- Produces `compileContextPackage(project)` from the canonical Design Contract plus provenance/evidence.
-- The returned package must retain canonical intent and expose provider-neutral context; no second source of truth is created.
-
-- [ ] **Step 1: Write failing tests** proving context package output contains the same canonical intent, contract version, decisions, and provenance.
-- [ ] **Step 2: Run the focused test and verify failure.
-- [ ] **Step 3: Implement the adapter using `createDesignContract(project)`.
-- [ ] **Step 4: Validate package compatibility against the existing context-package schema/validator.
-- [ ] **Step 5: Run foundation and focused tests.
-- [ ] **Step 6: Commit `feat: connect studio to context package compiler`.
+- [x] Compile a provider-neutral v0.1 Context Package from the canonical contract.
+- [x] Carry decisions, evidence references, provenance and integrity metadata.
+- [x] Validate generated packages against the existing v0.1 schema.
+- [x] Keep the compiler browser-safe; use Web Crypto for source digest generation.
 
 ### Task 4: Real evidence engine
 
-**Files:**
-- Create: `app/evidence.js`
-- Test: `app/evidence.test.mjs`
-- Modify: `app/model.js`
-- Modify: `app/server.mjs` if an evidence endpoint is needed by browser tests
-- Modify: `app/index.html` only where testable hooks/semantics are genuinely missing
+**Status: complete and CI-verified.**
 
-**Interfaces:**
-- Produces `createEvidenceRecord(...)` with check id, status, timestamp, summary, observations, and execution metadata.
-- Produces `runDeterministicEvidence(project)` for checks that can be evaluated from the contract.
-- Browser-backed evidence is collected by Playwright rather than hard-coded in model state.
-
-- [ ] **Step 1: Write failing tests** asserting that unsupported checks are `not_run` and that no check may return `pass` without an assertion result.
-- [ ] **Step 2: Run focused tests and confirm failure against current always-pass behaviour.
-- [ ] **Step 3: Implement deterministic evidence records for product fit, engineering, and provenance integrity.
-- [ ] **Step 4: Add/extend browser tests for semantic structure, actionable keyboard focus, responsive viewport rendering, horizontal overflow, and realistic content resilience.
-- [ ] **Step 5: Wire the evidence surface to the real evidence result rather than static pass values.
-- [ ] **Step 6: Run `npm run test:browser` and the focused unit tests.
-- [ ] **Step 7: Commit `feat: replace static studio evidence with executable checks`.
+- [x] Replace unconditional pass semantics with explicit `pass` / `fail` / `not_run` records.
+- [x] Reject any pass result that lacks a successful executable assertion.
+- [x] Implement deterministic product, engineering and provenance checks.
+- [x] Add browser-backed product/UX/accessibility/responsive/content/engineering/provenance checks.
+- [x] Add Playwright mobile overflow and WCAG coverage.
+- [x] Surface real evidence in the Studio panel and use it as the publication gate.
 
 ### Task 5: Full publication artefact
 
-**Files:**
-- Modify: `app/model.js`
-- Modify: `app/library.js`
-- Modify: `app/library.test.mjs`
-- Modify: `app/studio.test.mjs`
-- Modify: `app/index.html` only if publication UI needs to expose the artefact state
+**Status: complete and CI-verified.**
 
-**Interfaces:**
-- `publishProject(project, optedIn, evidence)` returns the complete published artefact.
-- Published artefact contains `designContract`, `decisions`, `evidence`, `provenance`, `specimen`, and publication metadata.
-
-- [ ] **Step 1: Write failing tests** proving published output includes the complete contract and decision history, and that failed/not-run evidence blocks publication.
-- [ ] **Step 2: Run focused tests and verify failure because publication currently emits metadata only.
-- [ ] **Step 3: Implement full artefact publication with explicit opt-in and evidence gate.
-- [ ] **Step 4: Update Library ingestion/storage to preserve the full artefact instead of projecting it down.
-- [ ] **Step 5: Run unit and browser tests for publish → library.
-- [ ] **Step 6: Commit `feat: publish complete studio artefacts`.
+- [x] Require explicit publication consent.
+- [x] Block publication unless all seven required checks are verified.
+- [x] Publish the complete Design Contract, Context Package, decisions, evidence, provenance and specimen.
+- [x] Preserve the complete artefact through the Library resource model.
+- [x] Cover publish → Library with browser regression tests.
 
 ### Task 6: Regression and benchmark integration
 
-**Files:**
-- Modify: `harness/tests/candidate-runtime.spec.mjs` where existing harness assertions can cover the new contract/evidence behaviour
-- Modify: `harness/validate-foundation.mjs` only if a deterministic validator hook is needed
-- Modify: `harness/validate-benchmark.mjs` only if contract artefact validation belongs in the existing gate
-- Modify: `app/browser.spec.mjs` if shared browser coverage is appropriate
+**Status: complete and CI-verified.**
 
-- [ ] **Step 1: Write failing regression coverage for contract export and evidence truthfulness.
-- [ ] **Step 2: Run the relevant harness test and confirm the new assertions fail.
-- [ ] **Step 3: Integrate the minimal validation hooks.
-- [ ] **Step 4: Run `npm test`.
-- [ ] **Step 5: Run `npm run test:browser`.
-- [ ] **Step 6: Run `npm run benchmark:check` and record exact results.
-- [ ] **Step 7: Commit `test: integrate design contract into verification gates`.
+- [x] Add contract/evidence regression coverage.
+- [x] Extend the npm unit-test gate to include all new modules.
+- [x] Extend the Studio CI job to run the full unit suite and browser suite.
+- [x] Verify `npm test`: 20/20 tests pass.
+- [x] Verify Studio browser suite: 4/4 tests pass.
+- [x] Verify Benchmark Harness workflow: success.
 
 ### Task 7: Deployment configuration and production verification
 
-**Files:**
-- Inspect/modify: `.github/workflows/*` only where the repository already has a deployment workflow
-- Create/modify: `vercel.json` only if required by the existing app/deployment shape
-- Modify: `README.md` or deployment documentation with the verified production URL
+**Status: blocked on external Vercel project/domain linkage, deliberately not claimed complete.**
 
-- [ ] **Step 1: Inspect the repository's existing Vercel/deployment configuration; do not invent credentials or secrets.
-- [ ] **Step 2: Add only deterministic routing/build configuration required to serve the existing Studio at `design.byjtt.com`.
-- [ ] **Step 3: Run the full local verification suite before release.
-- [ ] **Step 4: Verify the actual production URL with browser tooling when deployment exists.
-- [ ] **Step 5: Verify the critical flow: load Studio → iterate → see traceable decision → run evidence → publish → inspect Library artefact.
-- [ ] **Step 6: Commit deployment configuration only after production verification is available.
+- [x] Inspect existing repository/deployment configuration without inventing credentials.
+- [ ] Create/link the Vercel project for this repository and attach `design.byjtt.com`.
+- [x] Full application/benchmark verification is green before release consideration.
+- [ ] Verify the actual production URL.
+- [ ] Verify the production critical flow end-to-end.
 
 ## Completion gate
 
-The feature is not considered complete until `npm test`, `npm run test:browser`, and `npm run benchmark:check` pass, publication contains the full artefact, no unsupported evidence is marked pass, and `design.byjtt.com` is verified if deployment configuration has been activated. A deployment configuration without successful production verification is explicitly `release-ready`, not `deployed`.
+The implementation gate is satisfied: unit, browser and benchmark verification are green; publication carries the complete artefact; unsupported evidence cannot be marked pass. The release gate remains intentionally open until a real Vercel project/domain exists and `design.byjtt.com` is verified end-to-end. A deployment configuration without successful production verification is explicitly `release-ready`, not `deployed`.
