@@ -32,7 +32,7 @@ test('mobile viewport has no horizontal overflow and passes Studio accessibility
   await expect(page.getByLabel('Live website preview')).toBeVisible();
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth);
   expect(overflow).toBe(true);
-  const results = await new AxeBuilder({ page }).exclude('#preview').analyze();
+  const results = await new AxeBuilder({ page }).exclude('.preview-wrap').analyze();
   expect(results.violations).toEqual([]);
 });
 
