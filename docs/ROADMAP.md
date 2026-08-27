@@ -18,6 +18,8 @@ Deliverables:
 
 **Exit:** a new agent can explain what ByJTT is, what it is not, how it decides build-vs-integrate, and how quality will be measured without reading chat history.
 
+**v0.1 repository evidence:** record schemas, DTCG baseline, compiler contract, usage modes, Observatory seed, benchmark catalog and initial Gauntlet profile are implemented and validated. They remain candidate contracts until exercised against real projects.
+
 ## Phase 1 — Evidence-backed benchmark prototype
 
 **Goal:** prove or disprove the core thesis with a small controlled experiment.

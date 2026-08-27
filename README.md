@@ -48,6 +48,9 @@ AI agents: read [`AGENTS.md`](./AGENTS.md) first, then follow its context pointe
 - [`docs/BENCHMARKS.md`](./docs/BENCHMARKS.md) — benchmark methodology and scorecard.
 - [`docs/ROADMAP.md`](./docs/ROADMAP.md) — sequenced delivery plan.
 - [`docs/decisions/`](./docs/decisions/) — durable architecture/product decisions.
+- [`docs/architecture/V0.1-FOUNDATION.md`](./docs/architecture/V0.1-FOUNDATION.md) — evidence, decisions, contracts, context packages, adapters and conformance.
+- [`docs/concepts/PLAUSIBILITY-DEBT.md`](./docs/concepts/PLAUSIBILITY-DEBT.md) — public definitions of plausibility debt, the Demo Trap and design slop.
+- [`schemas/v0.1/`](./schemas/v0.1/) — validated interoperable record contracts and examples.
 
 ## Status
 

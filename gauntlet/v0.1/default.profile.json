@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "0.1.0", "id": "bjt-gauntlet:default", "version": "0.1.0", "name": "ByJTT Design Integrity Gauntlet v0.1",
+  "checks": [
+    {"benchmarkId": "BJT-INTENT-01", "conformance": "human-experiential", "required": true, "evaluator": "assisted", "evidenceRequired": ["brief", "unresolved-question log"]},
+    {"benchmarkId": "BJT-DS-01", "conformance": "static", "required": true, "evaluator": "deterministic", "evidenceRequired": ["token and component conformance report"]},
+    {"benchmarkId": "BJT-STATE-01", "conformance": "runtime", "required": true, "evaluator": "deterministic", "evidenceRequired": ["state matrix screenshots", "runtime assertions"]},
+    {"benchmarkId": "BJT-A11Y-01", "conformance": "runtime", "required": true, "evaluator": "assisted", "evidenceRequired": ["automated scan", "keyboard and zoom review"]},
+    {"benchmarkId": "BJT-SLOP-01", "conformance": "human-experiential", "required": true, "evaluator": "human", "evidenceRequired": ["rationale-linked rubric observations"]},
+    {"benchmarkId": "BJT-UNKNOWN-01", "conformance": "human-experiential", "required": true, "evaluator": "assisted", "evidenceRequired": ["decision and uncertainty trace"]}
+  ],
+  "releasePolicy": {"requiredChecksMustPass": true, "humanReviewRequired": true, "unknownsBlockRelease": true}
+}
