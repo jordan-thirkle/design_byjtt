@@ -1,4 +1,4 @@
-import { createDesignContract, validateDesignContract } from './design-contract.js';
+import { createDesignContract, isDesignContractComplete } from './design-contract.js';
 import { applyInstruction } from './decision-trace.js';
 import { runDeterministicEvidence } from './evidence.js';
 import { compileContextPackage } from './context-package.js';
@@ -33,15 +33,14 @@ export function runEvidenceChecks(project) {
   return runDeterministicEvidence(project);
 }
 
-export function publishProject(project, optedIn, evidence = project.evidence) {
+export async function publishProject(project, optedIn, evidence = project.evidence) {
   if (!optedIn) throw new Error('Publication requires explicit opt-in.');
   const contract = createDesignContract(project);
-  const contractValidation = validateDesignContract(contract);
-  if (!contractValidation.valid) throw new Error('Project has an invalid Design Contract.');
+  if (!isDesignContractComplete(contract)) throw new Error('Project has an incomplete Design Contract.');
   if (!evidence || evidence.overall !== 'verified' || evidence.checks.some((check) => check.status !== 'pass')) {
     throw new Error('Project must pass all executable verification checks before publication.');
   }
-  const contextPackage = compileContextPackage({ ...project, evidence });
+  const contextPackage = await compileContextPackage({ ...project, evidence });
   return {
     id: project.id,
     title: `${project.business.name} — Local Service`,
