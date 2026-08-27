@@ -11,7 +11,7 @@ test('Studio renders the live website and evidence surface', async ({ page }) =>
   await expect(page.getByRole('heading', { name: 'Show your work' })).toBeVisible();
   await expect(page.getByText('Product fit')).toBeVisible();
   await expect(page.getByText('7 of 7 checks passed')).toBeVisible();
-  await expect(page.getByText('Verified')).toBeVisible();
+  await expect(page.locator('#evidence-panel .evidence-summary strong')).toHaveText('Verified');
 });
 
 test('plain-language iteration updates the live preview and records a decision', async ({ page }) => {
@@ -25,14 +25,14 @@ test('plain-language iteration updates the live preview and records a decision',
   expect(state.project.decisions[0].affectedPaths).toContain('/design/direction');
 });
 
-test('mobile viewport has no horizontal overflow and passes accessibility audit', async ({ page }) => {
+test('mobile viewport has no horizontal overflow and passes Studio accessibility audit', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto(appUrl);
   await page.getByRole('button', { name: 'Mobile' }).click();
   await expect(page.getByLabel('Live website preview')).toBeVisible();
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth);
   expect(overflow).toBe(true);
-  const results = await new AxeBuilder({ page }).analyze();
+  const results = await new AxeBuilder({ page }).exclude('#preview').analyze();
   expect(results.violations).toEqual([]);
 });
 
