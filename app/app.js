@@ -83,12 +83,20 @@ $('#why-button').addEventListener('click', () => {
 
 $('#publish-consent').addEventListener('change', updatePublishButton);
 
-$('#publish-button').addEventListener('click', () => {
+$('#publish-button').addEventListener('click', async () => {
   if (!$('#publish-consent').checked || state.project.evidence?.overall !== 'verified') return;
-  state = { ...state, published: publishToLibrary(state.project) };
-  $('#publish-button').textContent = 'Published to Library ✓';
   $('#publish-button').disabled = true;
-  render();
+  $('#publish-button').textContent = 'Compiling artefact…';
+  try {
+    const published = await publishToLibrary(state.project);
+    state = { ...state, published };
+    $('#publish-button').textContent = 'Published to Library ✓';
+    render();
+  } catch (error) {
+    $('#publish-button').disabled = false;
+    $('#publish-button').textContent = 'Publish to Library';
+    throw error;
+  }
 });
 
 $('#resource-details').addEventListener('click', () => { state = selectPanel(state, 'evidence'); render(); });
