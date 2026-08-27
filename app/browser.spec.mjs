@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
 
 const appUrl = 'http://127.0.0.1:4173/';
 
@@ -22,6 +23,17 @@ test('plain-language iteration updates the live preview and records a decision',
   const state = await page.evaluate(() => window.__BYJTT_STATE__);
   expect(state.project.decisions[0].id).toBe('BDR-0001');
   expect(state.project.decisions[0].affectedPaths).toContain('/design/direction');
+});
+
+test('mobile viewport has no horizontal overflow and passes accessibility audit', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(appUrl);
+  await page.getByRole('button', { name: 'Mobile' }).click();
+  await expect(page.getByLabel('Live website preview')).toBeVisible();
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth);
+  expect(overflow).toBe(true);
+  const results = await new AxeBuilder({ page }).analyze();
+  expect(results.violations).toEqual([]);
 });
 
 test('publication requires explicit consent and then records the complete artefact', async ({ page }) => {
