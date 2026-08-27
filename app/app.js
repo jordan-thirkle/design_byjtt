@@ -11,6 +11,7 @@ function render() {
   renderSpecimen(state.project, $('#preview'));
   const browserEvidence = collectBrowserEvidence(document, window);
   state = { ...state, project: { ...state.project, evidence: browserEvidence } };
+  window.__BYJTT_STATE__ = state;
   $('#status-text').textContent = state.published ? 'Published' : state.project.evidence.overall === 'verified' ? 'Verified' : 'Tested';
   $('#preview').className = `preview-frame ${state.preview}`;
   document.querySelectorAll('[data-preview]').forEach((button) => button.classList.toggle('active', button.dataset.preview === state.preview));
