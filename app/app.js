@@ -16,6 +16,9 @@ function render() {
   $('#evidence-panel').classList.toggle('hidden', state.panel !== 'evidence');
   $('#library-panel').classList.toggle('hidden', state.panel !== 'library');
   $('#panel-title').textContent = state.panel === 'studio' ? 'Direct the design' : state.panel === 'evidence' ? 'Show your work' : 'Resource Library';
+  $('#library-empty').classList.toggle('hidden', Boolean(state.published));
+  $('#resource-card').classList.toggle('hidden', !state.published);
+  $('#published-count').textContent = state.published ? '1' : '0';
   renderConversation();
   renderEvidence();
   document.querySelectorAll('.mobile-tabs button').forEach((button) => button.classList.toggle('active', button.dataset.panel === state.panel));
