@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createProject } from './model.js';
-import { createDesignContract, validateDesignContract } from './design-contract.js';
+import { createDesignContract } from './design-contract.js';
+import { validateDesignContract } from './design-contract-validator.js';
 
 test('compiles a project into the complete v0.1 design contract shape', () => {
   const contract = createDesignContract(createProject());
