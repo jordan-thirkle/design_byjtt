@@ -21,11 +21,9 @@ export function createProject() {
 export function applyIteration(project, instruction) {
   const text = String(instruction || '').trim();
   if (!text) return { project, iteration: null };
-
   const next = structuredClone(project);
   const lower = text.toLowerCase();
   const changes = [];
-
   if (lower.includes('premium')) {
     next.design.direction = 'More premium and editorial, with stronger typography, calmer spacing and fewer decorative elements.';
     changes.push('raised the visual tone toward premium editorial design');
@@ -36,14 +34,8 @@ export function applyIteration(project, instruction) {
   }
   if (lower.includes('mobile')) changes.push('prioritised mobile-first hierarchy and thumb-friendly actions');
   if (lower.includes('clear') || lower.includes('purpose')) changes.push('strengthened the primary action and value proposition');
-
   if (!changes.length) changes.push('refined the design direction while preserving the project goal');
-
-  const iteration = {
-    id: `iteration-${next.iterations.length + 1}`,
-    instruction: text,
-    summary: `ByJTT ${changes.join('; ')}.`,
-  };
+  const iteration = { id: `iteration-${next.iterations.length + 1}`, instruction: text, summary: `ByJTT ${changes.join('; ')}.` };
   next.iterations.push(iteration);
   return { project: next, iteration };
 }
@@ -73,10 +65,6 @@ export function publishProject(project, optedIn) {
     category: 'local-services',
     license: 'ByJTT Resource License',
     evidence,
-    provenance: {
-      source: 'ByJTT Design Studio vertical slice',
-      generated: true,
-      iterationCount: project.iterations.length,
-    },
+    provenance: { source: 'ByJTT Design Studio vertical slice', generated: true, iterationCount: project.iterations.length },
   };
 }
