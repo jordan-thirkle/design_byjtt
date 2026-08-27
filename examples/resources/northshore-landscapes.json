@@ -1,0 +1,22 @@
+{
+  "id": "northshore-landscapes",
+  "title": "Northshore Landscapes — Local Service",
+  "type": "website",
+  "category": "local-services",
+  "status": "verified",
+  "useCase": "Local landscaping business focused on quote requests",
+  "designIntent": ["trustworthy", "premium", "local", "approachable"],
+  "primaryAction": "Request a quote",
+  "evidence": {
+    "overall": "verified",
+    "checks": ["product", "ux", "accessibility", "responsive", "content", "engineering", "provenance"]
+  },
+  "provenance": {
+    "source": "ByJTT Design Studio vertical slice",
+    "generated": true,
+    "aiRole": "Design direction and implementation assistance",
+    "publication": "Explicit opt-in"
+  },
+  "license": "ByJTT Resource License",
+  "remix": true
+}
