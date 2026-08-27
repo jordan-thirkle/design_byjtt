@@ -1,8 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { pathToFileURL } from 'node:url';
-import { resolve } from 'node:path';
 
-const appUrl = pathToFileURL(resolve('app/index.html')).href;
+const appUrl = 'http://127.0.0.1:4173/';
 
 test('Studio renders the live website and evidence surface', async ({ page }) => {
   await page.goto(appUrl);
