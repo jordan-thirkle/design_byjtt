@@ -1,4 +1,4 @@
-import { publishProject } from './model.js';
+import { publishToLibrary } from './library.js';
 import { createStudioState, submitInstruction, setPreviewMode, selectPanel } from './studio-state.js';
 import { renderSpecimen } from './specimen.js';
 
@@ -70,7 +70,7 @@ $('#publish-consent').addEventListener('change', (event) => { $('#publish-button
 
 $('#publish-button').addEventListener('click', () => {
   if (!$('#publish-consent').checked) return;
-  state = { ...state, published: publishProject(state.project, true) };
+  state = { ...state, published: publishToLibrary(state.project) };
   $('#publish-button').textContent = 'Published to Library ✓';
   $('#publish-button').disabled = true;
   render();
