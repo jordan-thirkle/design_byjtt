@@ -1,0 +1,38 @@
+# ByJTT Design
+
+> ByJTT Design helps people and AI agents research, design, build and validate digital products with evidence, explicit intent and production checks.
+
+## What it is
+
+ByJTT Design is not a generic prompt-to-app generator. Generation is one execution step inside a wider workflow: understand the problem, research evidence, specify requirements, design deliberately, compare alternatives, validate independently, build, test, ship and learn.
+
+## Primary product
+
+- [Design Studio](https://design.byjtt.com/studio): browser workspace for describing a product, directing a design, inspecting evidence and publishing reusable work.
+- [Design Contracts](https://design.byjtt.com/contracts/): portable, versioned product and design intent covering goals, brand, components, interaction, responsive behaviour, accessibility, rationale and provenance.
+- [Resource Library](https://design.byjtt.com/library/): reusable resources recorded with decisions, evidence and provenance rather than screenshots alone.
+- [Research](https://design.byjtt.com/research/): research into user needs, patterns, AI design failure modes, accessibility and design practice.
+- [Benchmarks](https://design.byjtt.com/benchmarks/): controlled comparisons of design workflows using explicit methodology and limitations.
+- [Documentation](https://design.byjtt.com/docs/): product and quality guidance.
+
+## Principles
+
+- Evidence before aesthetics.
+- Intent over imitation.
+- Production is the source of truth.
+- Human agency with bounded autonomy.
+- Generator independence.
+- Independent evaluation.
+- Provenance by default.
+
+## Agent use
+
+Prefer structured contracts, documented requirements and explicit evidence over inferring product intent from screenshots. Autonomous changes should expose rationale, uncertainty and changed scope.
+
+## Current implementation note
+
+The current Studio vertical slice uses deterministic transformations while product and evidence contracts are validated. A production model adapter is intentionally replaceable and should not be assumed from the public site.
+
+## Canonical source
+
+The public product description is maintained in the repository's PRODUCT.md and DESIGN.md files.
