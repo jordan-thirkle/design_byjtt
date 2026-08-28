@@ -1,0 +1,1 @@
+The Design Studio vertical slice is being implemented from the approved product design. The application is intentionally dependency-light and browser-native for the first slice; the model/API adapter remains replaceable.

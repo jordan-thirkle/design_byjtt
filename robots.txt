@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /app/
+Sitemap: https://design.byjtt.com/sitemap.xml
