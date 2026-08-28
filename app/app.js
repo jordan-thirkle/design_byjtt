@@ -3,8 +3,35 @@ import { createStudioState, submitInstruction, setPreviewMode, selectPanel } fro
 import { renderSpecimen } from './specimen.js';
 import { collectBrowserEvidence } from './evidence.js';
 
-let state = createStudioState();
+const STORAGE_KEY = 'byjtt-design-studio:v1';
 const $ = (selector) => document.querySelector(selector);
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved) return createStudioState();
+    const parsed = JSON.parse(saved);
+    if (!parsed?.project?.business || !Array.isArray(parsed.messages)) return createStudioState();
+    return { ...createStudioState(), ...parsed, project: { ...createStudioState().project, ...parsed.project } };
+  } catch {
+    return createStudioState();
+  }
+}
+
+let state = loadState();
+let saveTimer;
+
+function persist() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...state, project: { ...state.project, evidence: undefined } }));
+      $('#save-button').textContent = 'Saved locally';
+    } catch {
+      $('#save-button').textContent = 'Session only';
+    }
+  }, 100);
+}
 
 function render() {
   $('#project-name').textContent = state.project.business.name;
@@ -12,7 +39,7 @@ function render() {
   const browserEvidence = collectBrowserEvidence(document, window);
   state = { ...state, project: { ...state.project, evidence: browserEvidence } };
   window.__BYJTT_STATE__ = state;
-  $('#status-text').textContent = state.published ? 'Published' : state.project.evidence.overall === 'verified' ? 'Verified' : 'Tested';
+  $('#status-text').textContent = state.published ? 'Published' : 'Saved locally';
   $('#preview').className = `preview-frame ${state.preview}`;
   document.querySelectorAll('[data-preview]').forEach((button) => button.classList.toggle('active', button.dataset.preview === state.preview));
   document.querySelectorAll('[data-panel]').forEach((button) => button.classList.toggle('active', button.dataset.panel === state.panel));
@@ -27,6 +54,7 @@ function render() {
   renderEvidence();
   updatePublishButton();
   document.querySelectorAll('.mobile-tabs button').forEach((button) => button.classList.toggle('active', button.dataset.panel === state.panel));
+  persist();
 }
 
 function renderConversation() {
@@ -73,7 +101,8 @@ document.querySelectorAll('[data-prompt]').forEach((button) => button.addEventLi
 
 $('#prompt-form').addEventListener('submit', (event) => {
   event.preventDefault();
-  send($('#prompt').value);
+  const instruction = $('#prompt').value.trim();
+  if (instruction) send(instruction);
 });
 
 $('#why-button').addEventListener('click', () => {
@@ -95,7 +124,7 @@ $('#publish-button').addEventListener('click', async () => {
   } catch (error) {
     $('#publish-button').disabled = false;
     $('#publish-button').textContent = 'Publish to Library';
-    throw error;
+    console.error(error);
   }
 });
 
@@ -103,5 +132,13 @@ $('#resource-details').addEventListener('click', () => { state = selectPanel(sta
 $('#remix-button').addEventListener('click', () => { state = selectPanel(state, 'studio'); $('.right-panel').classList.remove('mobile-open'); render(); $('#prompt').focus(); });
 $('#inspect-button').addEventListener('click', () => { state = selectPanel(state, 'evidence'); render(); });
 $('#panel-close').addEventListener('click', () => { $('.right-panel').classList.remove('mobile-open'); state = selectPanel(state, 'studio'); render(); });
+
+$('#account-button').addEventListener('click', () => $('#account-popover').classList.toggle('hidden'));
+$('#clear-workspace').addEventListener('click', () => {
+  localStorage.removeItem(STORAGE_KEY);
+  state = createStudioState();
+  $('#account-popover').classList.add('hidden');
+  render();
+});
 
 render();
