@@ -48,6 +48,8 @@ Deliver:
 - validation/linting;
 - example contract generated from a real product.
 
+**Studio milestone — canonical authoring slice:** the Studio now compiles its project state into the existing v0.1 Design Contract, records every accepted conversational change as a BDR decision with before/after paths, and compiles the same canonical contract into a provider-neutral Design Context Package. Publication carries the compiled contract, decision history, evidence, provenance, specimen and context package together.
+
 **Exit:** two different agents/providers can use the same contract and produce measurably more consistent output than a prompt-only baseline.
 
 ## Phase 3 — Gauntlet v0
@@ -64,6 +66,8 @@ Start with checks that are objective or strongly evidence-backed:
 - mutation-scope checks.
 
 Add subjective visual/brand/slop critics only with transparent rubrics and calibration examples.
+
+**Studio milestone — executable evidence:** Studio no longer treats the seven evidence dimensions as unconditional passes. Deterministic checks and browser-backed checks produce explicit pass/fail/not-run records; Playwright covers the live specimen, mobile overflow and accessibility baseline, and publication is blocked unless all required checks pass.
 
 **Exit:** Gauntlet catches real defects that baseline generators/reviewers miss and has known false-positive/false-negative behavior.
 

@@ -1,0 +1,12 @@
+{
+  "outputDirectory": ".",
+  "rewrites": [
+    { "source": "/studio", "destination": "/app/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=300, must-revalidate" }]
+    }
+  ]
+}
