@@ -1,8 +1,6 @@
 {
-  "outputDirectory": "app",
   "rewrites": [
-    { "source": "/", "destination": "/index.html" },
-    { "source": "/studio", "destination": "/index.html" }
+    { "source": "/studio", "destination": "/app/index.html" }
   ],
   "headers": [
     {
