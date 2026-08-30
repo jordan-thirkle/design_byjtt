@@ -118,84 +118,28 @@ Do not make interaction depend on hover, animation, colour perception, precise p
 
 ## 6. Visual foundations
 
-Use semantic design tokens rather than scattered raw values.
+Visual values should be semantic and reusable. Prefer a token model compatible with established design-token interoperability standards rather than inventing incompatible primitives.
 
-The standard defines roles, not a mandatory universal palette:
+Define and version:
 
-- canvas/background;
-- surface/raised surface;
-- primary and secondary text;
-- border/divider;
-- action/accent;
-- focus;
-- success;
-- warning;
-- error;
-- information where needed.
+- semantic colour tokens;
+- typography roles and scale;
+- spacing and layout primitives;
+- radius and elevation rules;
+- iconography;
+- motion tokens and reduced-motion alternatives;
+- responsive container and breakpoint behavior;
+- focus and interaction states;
+- data-visualisation conventions where applicable.
 
-Token systems should encode relationships, states and intent. ByJTT implementations should interoperate with the stable DTCG v2025.10 format where practical rather than inventing incompatible token exchange formats.
+Use the native web platform where it provides a more robust semantic foundation. Prefer standards-based HTML/CSS behavior and established accessible primitives before custom interaction infrastructure.
 
-Typography, spacing, layout, radii, elevation, icons and motion must be governed by named semantic roles. Exceptions should be deliberate and explainable.
+## 7. Content and editorial integrity
 
-## 7. Component contracts
+Public copy is part of the design system. It must be specific, evidence-aligned, readable without decorative context, and written for actual users rather than to signal generic sophistication.
 
-Every reusable component should define:
-
-- purpose;
-- when to use;
-- when not to use;
-- semantics;
-- variants;
-- default/hover/focus/active/disabled states;
-- loading/empty/success/error states where applicable;
-- keyboard and assistive-technology behavior;
-- responsive behavior;
-- content constraints;
-- localization/RTL behavior where applicable;
-- reduced-motion behavior;
-- implementation mapping;
-- provenance and dependencies where relevant.
-
-Design the complete state space, not just the hero state.
-
-## 8. Content resilience
-
-Treat copy, data and media as variable inputs rather than decorative filler.
-
-Test:
-
-- short and long strings;
-- realistic names and values;
-- missing media;
-- unusual but valid data;
-- localization expansion;
-- error and recovery messages;
-- user-authored or AI-generated content where the product accepts it.
-
-Never use invented testimonials, metrics, customer proof or status claims to make a design look complete.
-
-## 9. Editorial integrity and anti-slop
-
-Public copy is part of the product. It must follow the same standard of intent, evidence, accessibility and provenance as interface design.
-
-### Write the actual thing
-Prefer concrete nouns and verbs. Name the actual user, product, action, result, constraint, source or uncertainty whenever it matters. Do not use fashionable language as a substitute for meaning.
-
-### No synthetic polish as a goal
-Avoid copy that sounds interchangeable with generic AI/startup writing. Common symptoms include:
-
-- vague prestige phrases such as “innovative solutions” without a concrete claim;
-- repeated “where X meets Y” or “at the intersection of” constructions;
-- generic “redefining”, “reimagining” or “shaping the future” language;
-- ornamental phrases such as “crafting digital experiences” when a direct description is clearer;
-- repeated sentence templates, forced three-part rhythms, or artificial symmetry used only to sound polished;
-- excessive parenthetical asides, colon-heavy prose or punctuation used as a stylistic signature rather than for meaning;
-- unnecessary eyebrow text, headings or labels added to make a layout feel complete;
-- broad claims such as “best”, “seamless”, “revolutionary”, “effortless” or “10/10” without evidence;
-- manufactured certainty when the actual state is a hypothesis, prototype, experiment or incomplete result.
-
-### Punctuation is meaning, not branding
-Use punctuation where it improves meaning or readability. Do not use em dashes as a default AI-looking cadence marker. A single deliberate em dash is not inherently a defect; repeated or ornamental use should be reviewed and may be linted as a warning.
+### Avoid synthetic polish
+Do not generate generic startup/AI language, empty superlatives, repeated rhetorical structures, unnecessary jargon, fake certainty, interchangeable positioning, or decorative punctuation whose purpose is merely to make copy look polished.
 
 ### Preserve human variation
 Do not force every section to have identical sentence lengths, three-card structures, parallel headings or symmetrical prose. Variety is acceptable when it reflects the content. Structure should serve comprehension, not the appearance of systemisation.
@@ -221,7 +165,47 @@ Before publishing, ask:
 7. Could the sentence be pasted onto many unrelated AI/startup sites unchanged? If yes, rewrite it.
 8. Does the copy accurately represent who acted, what happened, what was checked and what remains uncertain?
 
-## 10. AI/agent safety and trust
+## 8. Canonical public site shell
+
+The public ByJTT Design site uses one canonical global shell across documentation, research, library, contracts, agent guidance and other public information surfaces.
+
+### Global navigation
+
+Navigation destinations, labels and ordering are canonical data. Public routes must not invent page-local variants of the global navigation.
+
+The canonical public shell provides, as applicable:
+
+- ByJTT Design home;
+- Standard;
+- Research;
+- Contracts;
+- Agents;
+- Library;
+- Open Studio as the primary product action.
+
+Product or workspace surfaces may add a local navigation layer when the task requires it, but they must preserve the global brand, escape path and accessible semantics.
+
+### Current location
+
+The active destination must be programmatically represented using appropriate semantic state such as `aria-current="page"`, remain understandable without colour alone, and continue to work at keyboard focus, zoom and narrow viewports.
+
+### Mobile navigation
+
+Mobile and desktop navigation express the same intended information architecture. A responsive implementation may change presentation, but not silently remove core destinations without an explicit product reason.
+
+### Accessibility and landmarks
+
+The global shell includes an accessible skip path to main content, a named navigation landmark, a single primary page main landmark, visible keyboard focus and predictable focus behavior for responsive/navigation interactions.
+
+### Footer
+
+The footer is functional information architecture, not decorative repetition. Its primary groups, legal/brand links and key cross-product links are canonical data and should remain consistent across public routes.
+
+### Exceptions
+
+A route may use a distinct shell only when it represents a substantively different product context, such as the Studio workspace. Such exceptions must be explicit in implementation and documentation rather than arising from copied page templates.
+
+## 9. AI/agent safety and trust
 
 AI-generated content and actions need provenance and boundaries appropriate to the risk.
 
@@ -239,13 +223,13 @@ Where an interface enables agents to operate on behalf of a person or system, pr
 
 Do not imply that verification occurred when a result was merely generated or reviewed heuristically.
 
-## 11. Performance and progressive enhancement
+## 10. Performance and progressive enhancement
 
 Prefer resilient foundations that work before optional enhancement. Do not make critical user tasks depend on non-essential client code, decorative effects or network calls when a robust fallback is possible.
 
 Measure actual performance and interaction quality in the target environment. Avoid optimizing solely for synthetic appearance or a framework's default score.
 
-## 12. Research and evaluation
+## 11. Research and evaluation
 
 ByJTT distinguishes evidence classes:
 
@@ -257,7 +241,7 @@ Quality evaluation should separate product fit, UX, visual quality, accessibilit
 
 Agent critique is pre-validation, not user research. Material product decisions should progress to real usability or user validation where appropriate.
 
-## 13. Anti-patterns
+## 12. Anti-patterns
 
 The standard flags, rather than universally bans:
 
@@ -280,13 +264,13 @@ The standard flags, rather than universally bans:
 
 A warning becomes a defect when it harms product intent, user needs, accessibility, trust, maintainability, performance or deliberate brand intent.
 
-## 14. Design-to-code continuity
+## 13. Design-to-code continuity
 
 A design concept should map to a durable implementation concept where practical. Preserve semantic identity across design, contracts, tokens, components and production code.
 
 Avoid dead-end outputs that exist only as screenshots. Important decisions should have a durable representation in a Design Contract, structured data, documented component, token, code or compatible export.
 
-## 15. Machine-readable representation
+## 14. Machine-readable representation
 
 The public standard must be consumable by agents without requiring visual interpretation of the website.
 
@@ -305,7 +289,7 @@ Machine-readable surfaces should expose:
 
 The machine-readable representation is an interface to the human-readable standard, not a second competing source of truth.
 
-## 16. By JTT production relationship
+## 15. By JTT production relationship
 
 `design.byjtt.com` is the public design standard, intelligence and Studio product. `byjtt.com` is its flagship production implementation.
 
@@ -313,7 +297,7 @@ Material changes to the By JTT production design should consume the standard and
 
 The broader By JTT ecosystem may reuse the standard without requiring identical frontend stacks.
 
-## 17. Governance
+## 16. Governance
 
 The standard is versioned. Breaking semantic changes require a new major version. Additive and clarifying changes may use minor/patch increments according to impact.
 
@@ -329,7 +313,7 @@ Every material standard change should record:
 
 The standard should evolve through research, benchmarks, real-world production evidence and community feedback rather than aesthetic churn.
 
-## 18. Validation gate
+## 17. Validation gate
 
 A design should not be described as production-ready until applicable evidence exists across:
 
@@ -348,6 +332,6 @@ A design should not be described as production-ready until applicable evidence e
 
 The exact checks depend on the product, but claims must always match the evidence actually collected.
 
-## 19. What this standard does not claim
+## 18. What this standard does not claim
 
 ByJTT Design v0.1 is a working public standard, not a claim that every product built with it will automatically be excellent. It provides a stronger decision, design, implementation and validation framework. Outcomes still depend on product understanding, evidence quality, implementation quality, testing and real users.
