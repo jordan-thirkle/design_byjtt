@@ -4,6 +4,7 @@
     { "source": "/studio", "destination": "/app/index.html" },
     { "source": "/standard", "destination": "/standard.html" },
     { "source": "/standard/", "destination": "/standard.html" },
+    { "source": "/standard.md", "destination": "/standard.md" },
     { "source": "/agents", "destination": "/agents/index.html" },
     { "source": "/agents/", "destination": "/agents/index.html" }
   ],
