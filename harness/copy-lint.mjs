@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = process.cwd();
 export const SKIP_DIRS = new Set(['.git', '.next', 'node_modules', '.vercel', 'dist', 'coverage']);
+export const SKIP_FILES = new Set(['harness/copy-lint.mjs', 'harness/copy-lint.test.mjs']);
 export const TEXT_EXTENSIONS = new Set(['.html', '.htm', '.md', '.mdx', '.txt', '.json', '.js', '.mjs', '.css']);
 
 export const RETIRED_PHRASES = [
@@ -58,7 +59,8 @@ export function collectFiles(root = ROOT) {
         continue;
       }
       const ext = path.extname(entry.name).toLowerCase();
-      if (TEXT_EXTENSIONS.has(ext)) files.push(path.join(dir, entry.name));
+      const relative = path.relative(root, path.join(dir, entry.name)).replaceAll(path.sep, '/');
+      if (TEXT_EXTENSIONS.has(ext) && !SKIP_FILES.has(relative)) files.push(path.join(dir, entry.name));
     }
   }
   walk(root);
