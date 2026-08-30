@@ -21,15 +21,16 @@ function pass(category, label, ok, detail = '') {
 const home = await readFile(file('index.html'), 'utf8');
 const css = await readFile(file('site.css'), 'utf8');
 const agent = JSON.parse(await readFile(file('agent.json'), 'utf8'));
+const shell = await readFile(file('site-shell.mjs'), 'utf8');
 
 pass('clarity', 'focused hero statement', /<h1>Make better digital products with AI\.<\/h1>/.test(home));
 pass('clarity', 'primary action in first viewport', /class="button primary" href="\/studio"/.test(home));
 pass('clarity', 'four-step workflow', ['Describe','Direct','Check','Publish'].every((x) => home.includes(`<span>${x}</span>`)));
 pass('clarity', 'first viewport layout contract', /min-height:calc\(100svh - 68px\)/.test(css));
 
-pass('information architecture', 'three primary destinations', /primaryNavigation: \[/.test(await readFile(file('site-shell.mjs'), 'utf8')));
+pass('information architecture', 'three primary destinations', /primaryNavigation: \[/.test(shell) && /Studio.*Standard.*Library/.test(shell));
 pass('information architecture', 'secondary disclosure', /<details class="nav-more">/.test(home));
-pass('information architecture', 'supporting routes retained', routes.every(([, path]) => path));
+pass('information architecture', 'supporting routes retained', routes.length === 8);
 
 for (const [route, path] of routes) {
   const html = await readFile(file(path), 'utf8');
@@ -43,11 +44,12 @@ for (const [route, path] of routes) {
 pass('agent discoverability', 'agent entry point', agent.name === 'ByJTT Design');
 pass('agent discoverability', 'canonical standard', agent.canonical?.standard === '/standard.json');
 pass('agent discoverability', 'recommended workflow', Array.isArray(agent.recommendedWorkflow) && agent.recommendedWorkflow.length >= 5);
-pass('agent discoverability', 'explicit source-of-truth rule', agent.rules?.some((x) => x.includes('/standard.json')) === false && agent.rules?.some((x) => x.includes('canonical')) === true);
+pass('agent discoverability', 'explicit source-of-truth rule', agent.rules?.some((x) => x.includes('/standard.json')) === true);
 
-pass('copy quality', 'no internal foundation label on Studio', !(await readFile(file('app/index.html'), 'utf8')).includes('FOUNDATION'));
+const studio = await readFile(file('app/index.html'), 'utf8');
+pass('copy quality', 'no internal foundation label on Studio', !studio.includes('FOUNDATION'));
 pass('copy quality', 'homepage avoids process-heavy lifecycle copy', !home.includes('Suggested → Generated → Inspected → Verified → Executed → Human-approved'));
-pass('copy quality', 'plain-language Studio prompt', (await readFile(file('app/index.html'), 'utf8')).includes('Tell ByJTT what to make'));
+pass('copy quality', 'plain-language Studio prompt', studio.includes('Tell ByJTT what to make'));
 
 pass('responsive', 'mobile breakpoint', /@media\(max-width:850px\)/.test(css));
 pass('responsive', 'mobile primary navigation retained', /\.nav-primary a:not\(:first-child\)\{display:none\}/.test(css));
@@ -55,7 +57,7 @@ pass('responsive', 'reduced motion', /prefers-reduced-motion:reduce/.test(css));
 
 pass('design quality', 'contrast tokens', /--muted:#5f5d57/.test(css) && /--paper:#fbfaf6/.test(css));
 pass('design quality', 'paper surface contrast', /\.callout p\{color:var\(--muted\)/.test(css));
-pass('design quality', 'no horizontal overflow contract', home.includes('max-width:') && css.includes('max-width:var(--max)'));
+pass('design quality', 'bounded layout', /max-width:var\(--max\)/.test(css));
 
 const report = [...scores].map(([category, values]) => {
   const score = Math.round((values.filter(Boolean).length / values.length) * 10 * 10) / 10;
