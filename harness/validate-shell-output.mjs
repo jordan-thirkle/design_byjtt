@@ -15,6 +15,7 @@ const routes = [
   ['/docs/','docs/index.html']
 ];
 const navLabels = ['Standard','Research','Contracts','Agents','Library','Benchmarks','Open Studio'];
+const navRoutes = new Set(['/standard/','/research/','/contracts/','/agents/','/library/','/benchmarks/']);
 let baseline = null;
 
 for (const [route, file] of routes) {
@@ -29,7 +30,7 @@ for (const [route, file] of routes) {
   assert.equal((header.match(/<a /g) ?? []).length, navLabels.length + 1, `${file}: unexpected public nav link count`);
   for (const label of navLabels) assert.match(header, new RegExp(`>${label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}<`), `${file}: missing ${label}`);
   const currentCount = (header.match(/aria-current="page"/g) ?? []).length;
-  assert.equal(currentCount, route === '/' ? 0 : 1, `${file}: invalid current-page state count`);
+  assert.equal(currentCount, navRoutes.has(route) ? 1 : 0, `${file}: invalid current-page state count`);
   assert.equal((footer.match(/<div class="footer-group">/g) ?? []).length, 3, `${file}: footer group count drifted`);
   const shellFingerprint = `${header.replace(/\saria-current="page"/g, '').replace(/aria-current="page"\s/g, '')}\n${footer}`;
   if (baseline === null) baseline = shellFingerprint;
