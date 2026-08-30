@@ -285,3 +285,69 @@ A warning becomes a defect when it harms product intent, user needs, accessibili
 A design concept should map to a durable implementation concept where practical. Preserve semantic identity across design, contracts, tokens, components and production code.
 
 Avoid dead-end outputs that exist only as screenshots. Important decisions should have a durable representation in a Design Contract, structured data, documented component, token, code or compatible export.
+
+## 15. Machine-readable representation
+
+The public standard must be consumable by agents without requiring visual interpretation of the website.
+
+Machine-readable surfaces should expose:
+
+- standard version;
+- principles;
+- design requirements;
+- component/pattern contracts;
+- accessibility expectations;
+- AI/agent interaction rules;
+- evidence definitions;
+- prohibited/undesired patterns;
+- provenance expectations;
+- links to current research and supporting specifications.
+
+The machine-readable representation is an interface to the human-readable standard, not a second competing source of truth.
+
+## 16. By JTT production relationship
+
+`design.byjtt.com` is the public design standard, intelligence and Studio product. `byjtt.com` is its flagship production implementation.
+
+Material changes to the By JTT production design should consume the standard and record meaningful exceptions. Production experience may create evidence for improving the standard, but the standard is changed deliberately through its own versioned workflow.
+
+The broader By JTT ecosystem may reuse the standard without requiring identical frontend stacks.
+
+## 17. Governance
+
+The standard is versioned. Breaking semantic changes require a new major version. Additive and clarifying changes may use minor/patch increments according to impact.
+
+Every material standard change should record:
+
+- what changed;
+- why;
+- evidence class;
+- affected users/products;
+- migration implications;
+- unresolved uncertainty;
+- implementation examples where useful.
+
+The standard should evolve through research, benchmarks, real-world production evidence and community feedback rather than aesthetic churn.
+
+## 18. Validation gate
+
+A design should not be described as production-ready until applicable evidence exists across:
+
+- product requirements;
+- UX/task flow;
+- visual hierarchy;
+- accessibility/inclusion;
+- responsive/adaptive behavior;
+- content resilience;
+- real interaction states;
+- engineering/build/runtime health;
+- performance;
+- provenance/licensing;
+- design-system conformance;
+- relevant user validation.
+
+The exact checks depend on the product, but claims must always match the evidence actually collected.
+
+## 19. What this standard does not claim
+
+ByJTT Design v0.1 is a working public standard, not a claim that every product built with it will automatically be excellent. It provides a stronger decision, design, implementation and validation framework. Outcomes still depend on product understanding, evidence quality, implementation quality, testing and real users.
