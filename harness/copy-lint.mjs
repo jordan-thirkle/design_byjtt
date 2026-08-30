@@ -1,11 +1,12 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const ROOT = process.cwd();
-const SKIP_DIRS = new Set(['.git', '.next', 'node_modules', '.vercel', 'dist', 'coverage']);
-const TEXT_EXTENSIONS = new Set(['.html', '.htm', '.md', '.mdx', '.txt', '.json', '.js', '.mjs', '.css']);
+export const SKIP_DIRS = new Set(['.git', '.next', 'node_modules', '.vercel', 'dist', 'coverage']);
+export const TEXT_EXTENSIONS = new Set(['.html', '.htm', '.md', '.mdx', '.txt', '.json', '.js', '.mjs', '.css']);
 
-const RETIRED_PHRASES = [
+export const RETIRED_PHRASES = [
   'Independent studio. JTT.',
   'Make the useful thing.',
   'Games with a point of view.',
@@ -13,7 +14,7 @@ const RETIRED_PHRASES = [
   'Evidence-Driven AI Product Development',
 ];
 
-const GENERIC_AI_PHRASES = [
+export const GENERIC_AI_PHRASES = [
   'at the intersection of',
   'where X meets Y',
   'crafting digital experiences',
@@ -23,31 +24,16 @@ const GENERIC_AI_PHRASES = [
   'shaping the future',
 ];
 
-const files = [];
-function walk(dir) {
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    if (entry.isDirectory()) {
-      if (!SKIP_DIRS.has(entry.name)) walk(path.join(dir, entry.name));
-      continue;
-    }
-    const ext = path.extname(entry.name).toLowerCase();
-    if (TEXT_EXTENSIONS.has(ext)) files.push(path.join(dir, entry.name));
-  }
-}
-walk(ROOT);
-
-const findings = [];
-for (const file of files) {
-  const relative = path.relative(ROOT, file).replaceAll(path.sep, '/');
-  const text = fs.readFileSync(file, 'utf8');
+export function analyseText(text, file = '<text>') {
+  const findings = [];
   for (const phrase of RETIRED_PHRASES) {
     if (text.toLowerCase().includes(phrase.toLowerCase())) {
-      findings.push({ severity: 'error', rule: 'retired-phrase', file: relative, phrase });
+      findings.push({ severity: 'error', rule: 'retired-phrase', file, phrase });
     }
   }
   for (const phrase of GENERIC_AI_PHRASES) {
     if (text.toLowerCase().includes(phrase.toLowerCase())) {
-      findings.push({ severity: 'warning', rule: 'generic-ai-phrase', file: relative, phrase });
+      findings.push({ severity: 'warning', rule: 'generic-ai-phrase', file, phrase });
     }
   }
 
@@ -56,18 +42,46 @@ for (const file of files) {
     findings.push({
       severity: 'warning',
       rule: 'repeated-em-dash',
-      file: relative,
+      file,
       phrase: `em dash count: ${emDashCount}`,
     });
   }
+  return findings;
 }
 
-const errors = findings.filter((finding) => finding.severity === 'error');
-const warnings = findings.filter((finding) => finding.severity === 'warning');
-
-for (const finding of findings) {
-  console.log(`${finding.severity.toUpperCase()} ${finding.rule} ${finding.file}: ${finding.phrase}`);
+export function collectFiles(root = ROOT) {
+  const files = [];
+  function walk(dir) {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      if (entry.isDirectory()) {
+        if (!SKIP_DIRS.has(entry.name)) walk(path.join(dir, entry.name));
+        continue;
+      }
+      const ext = path.extname(entry.name).toLowerCase();
+      if (TEXT_EXTENSIONS.has(ext)) files.push(path.join(dir, entry.name));
+    }
+  }
+  walk(root);
+  return files;
 }
 
-console.log(`Copy lint: ${errors.length} error(s), ${warnings.length} warning(s).`);
-if (errors.length > 0) process.exit(1);
+export function analyseFiles(root = ROOT) {
+  return collectFiles(root).flatMap((file) => {
+    const relative = path.relative(root, file).replaceAll(path.sep, '/');
+    return analyseText(fs.readFileSync(file, 'utf8'), relative);
+  });
+}
+
+export function main() {
+  const findings = analyseFiles();
+  const errors = findings.filter((finding) => finding.severity === 'error');
+  const warnings = findings.filter((finding) => finding.severity === 'warning');
+  for (const finding of findings) {
+    console.log(`${finding.severity.toUpperCase()} ${finding.rule} ${finding.file}: ${finding.phrase}`);
+  }
+  console.log(`Copy lint: ${errors.length} error(s), ${warnings.length} warning(s).`);
+  process.exitCode = errors.length > 0 ? 1 : 0;
+}
+
+const invokedDirectly = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+if (invokedDirectly) main();
