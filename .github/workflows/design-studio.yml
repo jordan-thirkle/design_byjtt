@@ -2,10 +2,15 @@ name: Design Studio
 
 on:
   push:
-    branches: [main, 'feat/design-studio-*']
+    branches: [main, 'feat/design-studio-*', 'feat/design-simplification-*']
   pull_request:
     paths:
       - 'app/**'
+      - 'harness/**'
+      - 'public-shell.spec.mjs'
+      - 'site-shell.mjs'
+      - '*.html'
+      - '*/index.html'
       - 'package.json'
       - 'package-lock.json'
       - '.github/workflows/design-studio.yml'
