@@ -22,13 +22,14 @@ const home = await readFile(file('index.html'), 'utf8');
 const css = await readFile(file('site.css'), 'utf8');
 const agent = JSON.parse(await readFile(file('agent.json'), 'utf8'));
 const shell = await readFile(file('site-shell.mjs'), 'utf8');
+const studio = await readFile(file('app/index.html'), 'utf8');
 
 pass('clarity', 'focused hero statement', /<h1>Make better digital products with AI\.<\/h1>/.test(home));
 pass('clarity', 'primary action in first viewport', /class="button primary" href="\/studio"/.test(home));
 pass('clarity', 'four-step workflow', ['Describe','Direct','Check','Publish'].every((x) => home.includes(`<span>${x}</span>`)));
 pass('clarity', 'first viewport layout contract', /min-height:calc\(100svh - 68px\)/.test(css));
 
-pass('information architecture', 'three primary destinations', /primaryNavigation: \[/.test(shell) && /Studio.*Standard.*Library/.test(shell));
+pass('information architecture', 'three primary destinations', /primaryNavigation:\s*\[[\s\S]*?Studio[\s\S]*?Standard[\s\S]*?Library/.test(shell));
 pass('information architecture', 'secondary disclosure', /<details class="nav-more">/.test(home));
 pass('information architecture', 'supporting routes retained', routes.length === 8);
 
@@ -46,7 +47,6 @@ pass('agent discoverability', 'canonical standard', agent.canonical?.standard ==
 pass('agent discoverability', 'recommended workflow', Array.isArray(agent.recommendedWorkflow) && agent.recommendedWorkflow.length >= 5);
 pass('agent discoverability', 'explicit source-of-truth rule', agent.rules?.some((x) => x.includes('/standard.json')) === true);
 
-const studio = await readFile(file('app/index.html'), 'utf8');
 pass('copy quality', 'no internal foundation label on Studio', !studio.includes('FOUNDATION'));
 pass('copy quality', 'homepage avoids process-heavy lifecycle copy', !home.includes('Suggested → Generated → Inspected → Verified → Executed → Human-approved'));
 pass('copy quality', 'plain-language Studio prompt', studio.includes('Tell ByJTT what to make'));
