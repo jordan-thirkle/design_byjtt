@@ -1,7 +1,8 @@
 import { test, expect } from '@playwright/test';
 
 const routes = ['/', '/standard/', '/research/', '/contracts/', '/agents/', '/library/', '/benchmarks/', '/docs/'];
-const primaryLabels = ['Studio', 'Standard', 'Library', 'More', 'Open Studio'];
+const primaryLabels = ['Studio', 'Standard', 'Library'];
+const secondaryLabels = ['Research', 'Contracts', 'Benchmarks', 'Documentation'];
 const primaryRoutes = new Set(['/standard/', '/library/']);
 const secondaryRoutes = new Set(['/research/', '/contracts/', '/benchmarks/', '/docs/']);
 
@@ -11,7 +12,9 @@ for (const route of routes) {
     const nav = page.locator('nav[aria-label="Primary navigation"]');
     await expect(nav).toHaveCount(1);
     for (const label of primaryLabels) await expect(nav.getByRole('link', { name: label, exact: true })).toHaveCount(1);
-    for (const label of ['Research', 'Contracts', 'Benchmarks', 'Documentation']) await expect(nav.locator('.nav-more-links').getByRole('link', { name: label, exact: true })).toHaveCount(1);
+    await expect(nav.locator('.nav-more summary')).toHaveText('More');
+    for (const label of secondaryLabels) await expect(nav.locator('.nav-more-links').getByRole('link', { name: label, exact: true })).toHaveCount(1);
+    await expect(nav.getByRole('link', { name: 'Open Studio', exact: true })).toHaveCount(1);
     await expect(page.locator('a.skip[href="#main"]')).toHaveCount(1);
     await expect(page.locator('main#main')).toHaveCount(1);
     await expect(page.locator('footer.footer')).toHaveCount(1);
@@ -28,7 +31,7 @@ test('homepage explains the product in the first desktop viewport', async ({ pag
     expect(box, `${selector} should be rendered`).not.toBeNull();
     expect(box.y + box.height, `${selector} should be visible without scrolling`).toBeLessThanOrEqual(1000);
   }
-  await expect(page.getByRole('link', { name: 'Open Studio', exact: true })).toBeVisible();
+  await expect(page.locator('#main').getByRole('link', { name: 'Open Studio', exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Make better digital products with AI.' })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(1440);
 });
@@ -38,10 +41,9 @@ test('mobile public shell stays focused and usable', async ({ page }) => {
   await page.goto('/research/');
   const nav = page.locator('nav[aria-label="Primary navigation"]');
   await expect(nav).toHaveCount(1);
-  await expect(nav.getByRole('link', { name: 'Studio', exact: true })).toHaveCount(1);
-  await expect(nav.getByRole('link', { name: 'Standard', exact: true })).toHaveCount(1);
-  await expect(nav.getByRole('link', { name: 'Library', exact: true })).toHaveCount(1);
-  await expect(nav.getByRole('link', { name: 'More', exact: true })).toHaveCount(0);
+  for (const label of primaryLabels) await expect(nav.getByRole('link', { name: label, exact: true })).toHaveCount(1);
+  await expect(nav.getByRole('link', { name: 'Open Studio', exact: true })).toHaveCount(1);
+  await expect(nav.locator('.nav-more summary')).toHaveCount(0);
   await expect(page.locator('main#main')).toHaveCount(1);
   await expect(page.locator('footer.footer')).toHaveCount(1);
   await expect(page.locator('a.skip[href="#main"]')).toHaveCount(1);
