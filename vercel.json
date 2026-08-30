@@ -1,5 +1,8 @@
 {
   "outputDirectory": ".",
+  "git": {
+    "deploymentEnabled": false
+  },
   "rewrites": [
     { "source": "/studio", "destination": "/app/index.html" },
     { "source": "/standard", "destination": "/standard.html" },
