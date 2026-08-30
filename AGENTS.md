@@ -8,11 +8,12 @@ This repository is designed to be worked on by AI agents and humans together. Ke
 2. Read [`DESIGN.md`](./DESIGN.md) and [`STANDARD.md`](./STANDARD.md) before changing user-facing UI, visual behavior, or public copy.
 3. Preserve the boundary: ByJTT Design is for digital products; game-specific design belongs to games.byjtt.com.
 4. Treat [`STANDARD.md`](./STANDARD.md) as the canonical public 2026+ design standard. Supporting schemas, research, benchmarks and contracts extend it; do not silently create competing standards.
+5. Treat the public shell contract in `STANDARD.md` and `standard.json` as canonical. Do not create route-local public navigation/footer variants. Product-specific workspace chrome must be an explicit composition of the global brand contract.
 
 ## Route by task
 
 - **Requirements / feature planning / acceptance criteria:** read [`docs/REQUIREMENTS.md`](./docs/REQUIREMENTS.md).
-- **Competitor feature, build-vs-integrate, or market-positioning decision:** read [`docs/COMPETITIVE-MAP.md`](./docs/COMPETITIVE-MAP.md) and current primary documentation for affected tools.
+- **Competitor feature, build-vs-integrate, or market-positioning decision:** read current competitive research and current primary documentation for affected tools.
 - **AI-slop, copy quality, user pain, UX failure, or design-quality claim:** read [`STANDARD.md`](./STANDARD.md) and [`docs/research/AI-SLOP-AND-USER-PAIN.md`](./docs/research/AI-SLOP-AND-USER-PAIN.md); refresh external evidence when the claim may have changed.
 - **Public copy/content change:** apply the canonical editorial integrity and anti-slop rules in `STANDARD.md`, then run `npm run copy:lint` before considering the change complete.
 - **Benchmark methodology, evaluation, scoring, or comparison work:** read [`docs/BENCHMARKS.md`](./docs/BENCHMARKS.md).
@@ -23,7 +24,7 @@ This repository is designed to be worked on by AI agents and humans together. Ke
 ## Execution rules
 
 ### Research first when the world can change
-For current frameworks, AI products, APIs, standards, pricing, competitor capabilities, or library behavior, retrieve current documentation/evidence before deciding. Prefer primary documentation; use community sources such as Reddit for user experience and pain signals, not API truth.
+For current frameworks, AI products, APIs, standards, pricing, competitor capabilities, or library behavior, retrieve current documentation/evidence before deciding. Prefer primary documentation; use community sources such as Reddit for user experience and pain signals.
 
 ### Best available solved system first
 Before custom implementation, inspect in order:
