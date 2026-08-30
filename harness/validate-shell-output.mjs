@@ -28,10 +28,10 @@ for (const [route, file] of routes) {
   assert.match(header, /<nav class="nav" aria-label="Primary navigation">/i, `${file}: missing named primary navigation`);
   assert.equal((header.match(/<a /g) ?? []).length, navLabels.length + 1, `${file}: unexpected public nav link count`);
   for (const label of navLabels) assert.match(header, new RegExp(`>${label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}<`), `${file}: missing ${label}`);
-  if (route === '/') assert.doesNotMatch(header, /aria-current="page"/);
-  else assert.match(header, /aria-current="page"/);
+  const currentCount = (header.match(/aria-current="page"/g) ?? []).length;
+  assert.equal(currentCount, route === '/' ? 0 : 1, `${file}: invalid current-page state count`);
   assert.equal((footer.match(/<div class="footer-group">/g) ?? []).length, 3, `${file}: footer group count drifted`);
-  const shellFingerprint = `${header.replace(/aria-current="page"/g, 'aria-current="ACTIVE"')}\n${footer}`;
+  const shellFingerprint = `${header.replace(/\saria-current="page"/g, '').replace(/aria-current="page"\s/g, '')}\n${footer}`;
   if (baseline === null) baseline = shellFingerprint;
   else assert.equal(shellFingerprint, baseline, `${file}: public shell differs from canonical baseline`);
 }
