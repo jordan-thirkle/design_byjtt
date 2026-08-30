@@ -35,7 +35,8 @@ for (const relative of PUBLIC_PAGES) {
   const lower = text.toLowerCase();
 
   for (const term of INTERNAL_TERMS) {
-    if (lower.includes(term.toLowerCase())) findings.push(`${relative}: internal-facing term: ${term}`);
+    const pattern = new RegExp(`(^|\\W)${term.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&')}(?=\\W|$)`, 'i');
+    if (pattern.test(lower)) findings.push(`${relative}: internal-facing term: ${term}`);
   }
 
   const sentences = text.split(/(?<=[.!?])\s+/).map((s) => s.trim()).filter((s) => s.length >= 55);
