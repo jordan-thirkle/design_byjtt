@@ -17,6 +17,30 @@
     "Provenance by default"
   ],
   "interactionStates": ["suggested", "generated", "inspected", "verified", "executed", "human-approved"],
+  "publicSiteShell": {
+    "scope": "public-information-surfaces",
+    "canonicalNavigation": [
+      {"label": "Standard", "href": "/standard/"},
+      {"label": "Research", "href": "/research/"},
+      {"label": "Contracts", "href": "/contracts/"},
+      {"label": "Agents", "href": "/agents/"},
+      {"label": "Library", "href": "/library/"},
+      {"label": "Open Studio", "href": "/studio"}
+    ],
+    "requiredSemantics": {
+      "skipLink": "required",
+      "navigationLandmark": "named-primary-navigation",
+      "mainLandmark": "single-primary-main",
+      "activeState": "programmatic-and-perceivable",
+      "mobileParity": "same-information-architecture",
+      "visibleFocus": "required"
+    },
+    "footer": {
+      "strategy": "canonical-data",
+      "required": true,
+      "allowedProductExceptions": ["studio-workspace"]
+    }
+  },
   "validation": {
     "dimensions": ["product-fit", "ux", "visual-quality", "accessibility", "responsive-behaviour", "content-resilience", "engineering", "performance", "provenance"],
     "evidenceClasses": ["observed", "inferred", "hypothesis"]
