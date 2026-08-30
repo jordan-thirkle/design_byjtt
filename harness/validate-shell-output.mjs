@@ -32,7 +32,7 @@ for (const [route, file] of routes) {
   for (const label of primaryLabels) assert.match(header, new RegExp(`>${label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}<`), `${file}: missing primary ${label}`);
   for (const label of secondaryLabels) assert.match(header, new RegExp(`>${label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}<`), `${file}: missing secondary ${label}`);
   assert.match(header, />More<\/summary>/, `${file}: missing More disclosure`);
-  assert.match(header, /class="nav-cta"[^>]*>Open Studio</i, `${file}: missing primary action`);
+  assert.match(header, /<a class="nav-cta" href="\/studio">Open Studio<\/a>/, `${file}: missing primary action`);
   const currentCount = (header.match(/aria-current="page"/g) ?? []).length;
   assert.equal(currentCount, primaryRoutes.has(route) || secondaryRoutes.has(route) ? 1 : 0, `${file}: invalid current-page state count`);
   assert.equal((footer.match(/<div class="footer-group">/g) ?? []).length, 3, `${file}: footer group count drifted`);
