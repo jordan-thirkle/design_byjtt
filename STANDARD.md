@@ -174,7 +174,54 @@ Test:
 
 Never use invented testimonials, metrics, customer proof or status claims to make a design look complete.
 
-## 9. AI/agent safety and trust
+## 9. Editorial integrity and anti-slop
+
+Public copy is part of the product. It must follow the same standard of intent, evidence, accessibility and provenance as interface design.
+
+### Write the actual thing
+Prefer concrete nouns and verbs. Name the actual user, product, action, result, constraint, source or uncertainty whenever it matters. Do not use fashionable language as a substitute for meaning.
+
+### No synthetic polish as a goal
+Avoid copy that sounds interchangeable with generic AI/startup writing. Common symptoms include:
+
+- vague prestige phrases such as “innovative solutions” without a concrete claim;
+- repeated “where X meets Y” or “at the intersection of” constructions;
+- generic “redefining”, “reimagining” or “shaping the future” language;
+- ornamental phrases such as “crafting digital experiences” when a direct description is clearer;
+- repeated sentence templates, forced three-part rhythms, or artificial symmetry used only to sound polished;
+- excessive parenthetical asides, colon-heavy prose or punctuation used as a stylistic signature rather than for meaning;
+- unnecessary eyebrow text, headings or labels added to make a layout feel complete;
+- broad claims such as “best”, “seamless”, “revolutionary”, “effortless” or “10/10” without evidence;
+- manufactured certainty when the actual state is a hypothesis, prototype, experiment or incomplete result.
+
+### Punctuation is meaning, not branding
+Use punctuation where it improves meaning or readability. Do not use em dashes as a default AI-looking cadence marker. A single deliberate em dash is not inherently a defect; repeated or ornamental use should be reviewed and may be linted as a warning.
+
+### Preserve human variation
+Do not force every section to have identical sentence lengths, three-card structures, parallel headings or symmetrical prose. Variety is acceptable when it reflects the content. Structure should serve comprehension, not the appearance of systemisation.
+
+### Never invent evidence
+Do not create testimonials, metrics, customer claims, adoption figures, implementation status, validation results, source authority or quality claims that the evidence cannot support. AI generation is not verification.
+
+### Keep AI and agent provenance legible
+Where machine-generated or agent-produced public copy materially matters, record that involvement in the appropriate provenance/evidence system. Do not imply that a human researched, tested or approved something when that did not happen.
+
+### Lintable vs editorial rules
+Deterministic lint may block known prohibited phrases and other high-confidence regressions. Style heuristics such as repeated em dashes or generic phrasing should normally warn rather than fail automatically. Human/editorial review remains responsible for judging tone, clarity, specificity, evidence and whether copy sounds synthetic in context.
+
+### Copy review questions
+Before publishing, ask:
+
+1. Does the reader know what this is and why it matters?
+2. Does the wording name the actual thing instead of gesturing at a category?
+3. Is every claim supported by the evidence available?
+4. Is AI mentioned because it materially matters, not because it is fashionable?
+5. Does the prose remain clear without the surrounding visual layout?
+6. Is any punctuation or structure doing real work?
+7. Could the sentence be pasted onto many unrelated AI/startup sites unchanged? If yes, rewrite it.
+8. Does the copy accurately represent who acted, what happened, what was checked and what remains uncertain?
+
+## 10. AI/agent safety and trust
 
 AI-generated content and actions need provenance and boundaries appropriate to the risk.
 
@@ -192,13 +239,13 @@ Where an interface enables agents to operate on behalf of a person or system, pr
 
 Do not imply that verification occurred when a result was merely generated or reviewed heuristically.
 
-## 10. Performance and progressive enhancement
+## 11. Performance and progressive enhancement
 
 Prefer resilient foundations that work before optional enhancement. Do not make critical user tasks depend on non-essential client code, decorative effects or network calls when a robust fallback is possible.
 
 Measure actual performance and interaction quality in the target environment. Avoid optimizing solely for synthetic appearance or a framework's default score.
 
-## 11. Research and evaluation
+## 12. Research and evaluation
 
 ByJTT distinguishes evidence classes:
 
@@ -210,7 +257,7 @@ Quality evaluation should separate product fit, UX, visual quality, accessibilit
 
 Agent critique is pre-validation, not user research. Material product decisions should progress to real usability or user validation where appropriate.
 
-## 12. Anti-patterns
+## 13. Anti-patterns
 
 The standard flags, rather than universally bans:
 
@@ -233,74 +280,8 @@ The standard flags, rather than universally bans:
 
 A warning becomes a defect when it harms product intent, user needs, accessibility, trust, maintainability, performance or deliberate brand intent.
 
-## 13. Design-to-code continuity
+## 14. Design-to-code continuity
 
 A design concept should map to a durable implementation concept where practical. Preserve semantic identity across design, contracts, tokens, components and production code.
 
 Avoid dead-end outputs that exist only as screenshots. Important decisions should have a durable representation in a Design Contract, structured data, documented component, token, code or compatible export.
-
-## 14. Machine-readable representation
-
-The public standard must be consumable by agents without requiring visual interpretation of the website.
-
-Machine-readable surfaces should expose:
-
-- standard version;
-- principles;
-- design requirements;
-- component/pattern contracts;
-- accessibility expectations;
-- AI/agent interaction rules;
-- evidence definitions;
-- prohibited/undesired patterns;
-- provenance expectations;
-- links to current research and supporting specifications.
-
-The machine-readable representation is an interface to the human-readable standard, not a second competing source of truth.
-
-## 15. By JTT production relationship
-
-`design.byjtt.com` is the public design standard, intelligence and Studio product. `byjtt.com` is its flagship production implementation.
-
-Material changes to the By JTT production design should consume the standard and record meaningful exceptions. Production experience may create evidence for improving the standard, but the standard is changed deliberately through its own versioned workflow.
-
-The broader By JTT ecosystem may reuse the standard without requiring identical frontend stacks.
-
-## 16. Governance
-
-The standard is versioned. Breaking semantic changes require a new major version. Additive and clarifying changes may use minor/patch increments according to impact.
-
-Every material standard change should record:
-
-- what changed;
-- why;
-- evidence class;
-- affected users/products;
-- migration implications;
-- unresolved uncertainty;
-- implementation examples where useful.
-
-The standard should evolve through research, benchmarks, real-world production evidence and community feedback rather than aesthetic churn.
-
-## 17. Validation gate
-
-A design should not be described as production-ready until applicable evidence exists across:
-
-- product requirements;
-- UX/task flow;
-- visual hierarchy;
-- accessibility/inclusion;
-- responsive/adaptive behavior;
-- content resilience;
-- real interaction states;
-- engineering/build/runtime health;
-- performance;
-- provenance/licensing;
-- design-system conformance;
-- relevant user validation.
-
-The exact checks depend on the product, but claims must always match the evidence actually collected.
-
-## 18. What this standard does not claim
-
-ByJTT Design v0.1 is a working public standard, not a claim that every product built with it will automatically be excellent. It provides a stronger decision, design, implementation and validation framework. Outcomes still depend on product understanding, evidence quality, implementation quality, testing and real users.
