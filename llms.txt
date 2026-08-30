@@ -1,21 +1,31 @@
 # ByJTT Design
 
-> ByJTT Design is a public design standard, research system and Studio for people, designers, developers and AI agents building digital products from August 2026 onward.
+> ByJTT Design is a practical design system and Studio for people and AI building digital products from August 2026 onward.
 
-## Canonical standard
+## Start here
 
-- [ByJTT Design Standard v0.1](https://design.byjtt.com/standard/): the canonical human-readable public standard.
-- [Machine-readable standard index](https://design.byjtt.com/standard.json): structured discovery surface for agents and tooling.
+- [Agent entry point](https://design.byjtt.com/agent.json): canonical machine-readable orientation and workflow.
+- [ByJTT Design Standard v0.1](https://design.byjtt.com/standard/): canonical human-readable public standard.
+- [Machine-readable standard index](https://design.byjtt.com/standard.json): structured standard discovery surface.
 
 ## Product surfaces
 
-- [Design Studio](https://design.byjtt.com/studio): browser workspace for describing a product, directing a design, inspecting evidence and publishing reusable work.
-- [Design Contracts](https://design.byjtt.com/contracts/): portable, versioned product and design intent covering goals, brand, components, interaction, responsive behaviour, accessibility, rationale and provenance.
-- [Resource Library](https://design.byjtt.com/library/): reusable resources recorded with decisions, evidence and provenance rather than screenshots alone.
-- [Research](https://design.byjtt.com/research/): research into user needs, patterns, AI design failure modes, accessibility and design practice.
-- [Benchmarks](https://design.byjtt.com/benchmarks/): controlled comparisons of design workflows using explicit methodology and limitations.
+- [Design Studio](https://design.byjtt.com/studio): describe a product, direct the design, inspect the result and publish reusable work.
+- [Design Contracts](https://design.byjtt.com/contracts/): capture important product and design decisions so they remain clear as work changes.
+- [Resource Library](https://design.byjtt.com/library/): reusable work recorded with decisions, evidence and provenance.
+- [Research](https://design.byjtt.com/research/): research into user needs, patterns, accessibility and AI design failure modes.
+- [Benchmarks](https://design.byjtt.com/benchmarks/): controlled comparisons of design workflows with explicit methodology and limitations.
 - [Documentation](https://design.byjtt.com/docs/): product and quality guidance.
-- [Agent guidance](https://design.byjtt.com/agents/): practical guidance for agents consuming the standard and Design Contracts.
+- [Agent guidance](https://design.byjtt.com/agents/): practical guidance for agents consuming the standard and contracts.
+
+## Recommended workflow
+
+1. Understand the product goal, users and constraints.
+2. Read the relevant Standard guidance.
+3. Use a Design Contract when important decisions must remain true.
+4. Create or revise the interface in Studio when useful.
+5. Check accessibility, responsive behaviour, content, states and implementation reality.
+6. Publish reusable work with its decisions and evidence when appropriate.
 
 ## Standard principles
 
@@ -32,16 +42,12 @@
 
 ## AI and agent state model
 
-The standard distinguishes, where applicable: suggested, generated, inspected, verified, executed and human-approved. Material autonomous actions should expose scope, rationale, evidence, uncertainty, permission boundaries and reversibility appropriate to risk.
+Where applicable, distinguish suggested, generated, inspected, verified, executed and human-approved states. Material autonomous actions should expose scope, rationale, evidence, uncertainty, permission boundaries and reversibility appropriate to risk.
 
-## Evidence classes
+## Evidence
 
-ByJTT distinguishes observed evidence, inference and hypothesis. Do not describe generated output or heuristic review as verified evidence.
-
-## Current implementation note
-
-The current Studio vertical slice uses deterministic transformations while product and evidence contracts are validated. Production model adapters remain replaceable and should not be assumed from the public site.
+Distinguish observed evidence, inference and hypothesis. Generated output and heuristic review are not automatically verified evidence.
 
 ## Source of truth
 
-`STANDARD.md` is the canonical public standard. `PRODUCT.md`, `DESIGN.md`, requirements, research, benchmarks and Design Contracts provide supporting product, implementation and evidence context. Public pages and `standard.json` should expose or index this source rather than redefine it.
+`STANDARD.md` is the canonical public standard. `PRODUCT.md`, `DESIGN.md`, requirements, research, benchmarks and Design Contracts provide supporting context. Public pages and machine-readable resources should expose or index this source rather than silently redefine it.
