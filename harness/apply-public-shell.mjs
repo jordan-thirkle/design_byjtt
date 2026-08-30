@@ -1,10 +1,10 @@
 import { readFile, writeFile } from 'node:fs/promises';
-import { dirname, join, relative } from 'node:path';
+import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { renderPublicFooter, renderPublicHeader } from '../site-shell.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
-const routes = [
+export const routes = [
   ['/', 'index.html'],
   ['/standard/', 'standard.html'],
   ['/research/', 'research/index.html'],
@@ -17,34 +17,44 @@ const routes = [
 
 function replaceSingle(source, pattern, replacement, label, file) {
   const matches = source.match(pattern);
-  if (!matches || matches.length !== 1) {
-    throw new Error(`Expected exactly one ${label} in ${file}; found ${matches?.length ?? 0}`);
-  }
+  if (!matches || matches.length !== 1) throw new Error(`Expected exactly one ${label} in ${file}; found ${matches?.length ?? 0}`);
   return source.replace(pattern, replacement);
 }
 
-export async function applyShell() {
+export function applyShellToHtml(html, route, relativePath) {
+  const headerPattern = /(?:<a class="skip"[\s\S]*?<\/header>|<header class="site-header">[\s\S]*?<\/header>)/i;
+  const footerPattern = /<footer class="footer">[\s\S]*?<\/footer>/i;
+  let output = replaceSingle(html, headerPattern, renderPublicHeader(route), 'public header', relativePath);
+  output = replaceSingle(output, footerPattern, renderPublicFooter(), 'public footer', relativePath);
+  if (!/<main[^>]*\bid=["']main["']/i.test(output)) {
+    output = replaceSingle(output, /<main(?![^>]*\bid=)[^>]*>/i, (match) => match.replace('<main', '<main id="main"'), 'main landmark', relativePath);
+  }
+  output = output.replace(/<!-- ByJTT canonical public shell: [^>]+ -->\n?/i, '');
+  return output.replace(/<body>/i, `<body>\n<!-- ByJTT canonical public shell: ${route} -->`);
+}
+
+export async function applyShell({write = true} = {}) {
   for (const [route, relativePath] of routes) {
     const file = join(root, relativePath);
-    let html = await readFile(file, 'utf8');
-    html = replaceSingle(
-      html,
-      /(?:<a class="skip"[\s\S]*?<\/header>|<header class="site-header">[\s\S]*?<\/header>)/i,
-      renderPublicHeader(route),
-      'public header',
-      relativePath
-    );
-    html = replaceSingle(html, /<footer class="footer">[\s\S]*?<\/footer>/i, renderPublicFooter(), 'public footer', relativePath);
-    if (!/<main[^>]*\bid=["']main["']/i.test(html)) {
-      html = replaceSingle(html, /<main(?![^>]*\bid=)[^>]*>/i, (match) => match.replace('<main', '<main id="main"'), 'main landmark', relativePath);
-    }
-    html = html.replace(/<!-- ByJTT canonical public shell: [^>]+ -->\n?/i, '');
-    html = html.replace(/<body>/i, `<body>\n<!-- ByJTT canonical public shell: ${route} -->`);
-    await writeFile(file, html);
+    const source = await readFile(file, 'utf8');
+    const output = applyShellToHtml(source, route, relativePath);
+    if (write) await writeFile(file, output);
   }
 }
 
-if (process.argv[1] && relative(process.cwd(), process.argv[1]) === relative(process.cwd(), fileURLToPath(import.meta.url))) {
+export async function checkShellIdempotence() {
+  for (const [route, relativePath] of routes) {
+    const file = join(root, relativePath);
+    const source = await readFile(file, 'utf8');
+    const once = applyShellToHtml(source, route, relativePath);
+    const twice = applyShellToHtml(once, route, relativePath);
+    if (once !== twice) throw new Error(`canonical shell is not idempotent for ${relativePath}`);
+  }
+}
+
+const invokedDirectly = process.argv[1] && relative(process.cwd(), process.argv[1]) === relative(process.cwd(), fileURLToPath(import.meta.url));
+if (invokedDirectly) {
+  await checkShellIdempotence();
   await applyShell();
-  console.log(`✓ applied canonical public shell to ${routes.length} routes`);
+  console.log(`✓ canonical public shell applied to ${routes.length} routes`);
 }
