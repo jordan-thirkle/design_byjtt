@@ -14,8 +14,10 @@ const routes = [
   ['/benchmarks/','benchmarks/index.html'],
   ['/docs/','docs/index.html']
 ];
-const navLabels = ['Standard','Research','Contracts','Agents','Library','Benchmarks','Open Studio'];
-const navRoutes = new Set(['/standard/','/research/','/contracts/','/agents/','/library/','/benchmarks/']);
+const primaryLabels = ['Studio','Standard','Library'];
+const secondaryLabels = ['Research','Contracts','Benchmarks','Documentation'];
+const primaryRoutes = new Set(['/standard/','/library/']);
+const secondaryRoutes = new Set(['/research/','/contracts/','/benchmarks/','/docs/']);
 let baseline = null;
 
 for (const [route, file] of routes) {
@@ -27,14 +29,16 @@ for (const [route, file] of routes) {
   assert.match(html, /<a class="skip" href="#main">Skip to content<\/a>/i, `${file}: missing skip link`);
   assert.match(html, /<main[^>]*\bid=["']main["']/i, `${file}: missing main landmark`);
   assert.match(header, /<nav class="nav" aria-label="Primary navigation">/i, `${file}: missing named primary navigation`);
-  assert.equal((header.match(/<a /g) ?? []).length, navLabels.length + 1, `${file}: unexpected public nav link count`);
-  for (const label of navLabels) assert.match(header, new RegExp(`>${label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}<`), `${file}: missing ${label}`);
+  for (const label of primaryLabels) assert.match(header, new RegExp(`>${label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}<`), `${file}: missing primary ${label}`);
+  for (const label of secondaryLabels) assert.match(header, new RegExp(`>${label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}<`), `${file}: missing secondary ${label}`);
+  assert.match(header, />More<\/summary>/, `${file}: missing More disclosure`);
+  assert.match(header, /class="nav-cta"[^>]*>Open Studio</i, `${file}: missing primary action`);
   const currentCount = (header.match(/aria-current="page"/g) ?? []).length;
-  assert.equal(currentCount, navRoutes.has(route) ? 1 : 0, `${file}: invalid current-page state count`);
+  assert.equal(currentCount, primaryRoutes.has(route) || secondaryRoutes.has(route) ? 1 : 0, `${file}: invalid current-page state count`);
   assert.equal((footer.match(/<div class="footer-group">/g) ?? []).length, 3, `${file}: footer group count drifted`);
   const shellFingerprint = `${header.replace(/\saria-current="page"/g, '').replace(/aria-current="page"\s/g, '')}\n${footer}`;
   if (baseline === null) baseline = shellFingerprint;
   else assert.equal(shellFingerprint, baseline, `${file}: public shell differs from canonical baseline`);
 }
 
-console.log(`✓ rendered public shell is identical across ${routes.length} routes`);
+console.log(`✓ focused public shell is identical across ${routes.length} routes`);
