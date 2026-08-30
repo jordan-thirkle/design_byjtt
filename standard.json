@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design.byjtt.com/standard.json",
+  "title": "ByJTT Design Standard",
+  "description": "Machine-readable index for the public ByJTT Design Standard.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "status", "effective", "audiences", "principles", "interactionStates", "validation", "links"],
+  "properties": {
+    "version": { "type": "string", "const": "0.1" },
+    "status": { "type": "string", "const": "public-working-standard" },
+    "effective": { "type": "string", "const": "2026-08" },
+    "audiences": { "type": "array", "items": { "type": "string" }, "minItems": 4, "uniqueItems": true },
+    "principles": { "type": "array", "items": { "type": "string" }, "minItems": 8, "uniqueItems": true },
+    "interactionStates": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["suggested", "generated", "inspected", "verified", "executed", "human-approved"] },
+      "uniqueItems": true,
+      "minItems": 6,
+      "maxItems": 6
+    },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dimensions", "evidenceClasses"],
+      "properties": {
+        "dimensions": { "type": "array", "items": { "type": "string" }, "minItems": 6, "uniqueItems": true },
+        "evidenceClasses": { "type": "array", "items": { "type": "string", "enum": ["observed", "inferred", "hypothesis"] }, "minItems": 3, "maxItems": 3, "uniqueItems": true }
+      }
+    },
+    "links": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["human", "designContracts", "research", "studio", "library"],
+      "properties": {
+        "human": { "type": "string", "format": "uri" },
+        "designContracts": { "type": "string", "format": "uri-reference" },
+        "research": { "type": "string", "format": "uri-reference" },
+        "studio": { "type": "string", "format": "uri-reference" },
+        "library": { "type": "string", "format": "uri-reference" }
+      }
+    }
+  }
+}
