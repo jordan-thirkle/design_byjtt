@@ -1,12 +1,13 @@
 # ByJTT Design
 
-> ByJTT Design helps people and AI agents research, design, build and validate digital products with evidence, explicit intent and production checks.
+> ByJTT Design is a public design standard, research system and Studio for people, designers, developers and AI agents building digital products from August 2026 onward.
 
-## What it is
+## Canonical standard
 
-ByJTT Design is not a generic prompt-to-app generator. Generation is one execution step inside a wider workflow: understand the problem, research evidence, specify requirements, design deliberately, compare alternatives, validate independently, build, test, ship and learn.
+- [ByJTT Design Standard v0.1](https://design.byjtt.com/standard/): the canonical human-readable public standard.
+- [Machine-readable standard index](https://design.byjtt.com/standard.json): structured discovery surface for agents and tooling.
 
-## Primary product
+## Product surfaces
 
 - [Design Studio](https://design.byjtt.com/studio): browser workspace for describing a product, directing a design, inspecting evidence and publishing reusable work.
 - [Design Contracts](https://design.byjtt.com/contracts/): portable, versioned product and design intent covering goals, brand, components, interaction, responsive behaviour, accessibility, rationale and provenance.
@@ -14,25 +15,33 @@ ByJTT Design is not a generic prompt-to-app generator. Generation is one executi
 - [Research](https://design.byjtt.com/research/): research into user needs, patterns, AI design failure modes, accessibility and design practice.
 - [Benchmarks](https://design.byjtt.com/benchmarks/): controlled comparisons of design workflows using explicit methodology and limitations.
 - [Documentation](https://design.byjtt.com/docs/): product and quality guidance.
+- [Agent guidance](https://design.byjtt.com/agents/): practical guidance for agents consuming the standard and Design Contracts.
 
-## Principles
+## Standard principles
 
+- Human purpose before interface polish.
 - Evidence before aesthetics.
 - Intent over imitation.
+- Real conditions are the design.
+- Accessible by construction.
+- Best solved system first.
 - Production is the source of truth.
 - Human agency with bounded autonomy.
-- Generator independence.
-- Independent evaluation.
+- Provider independence.
 - Provenance by default.
 
-## Agent use
+## AI and agent state model
 
-Prefer structured contracts, documented requirements and explicit evidence over inferring product intent from screenshots. Autonomous changes should expose rationale, uncertainty and changed scope.
+The standard distinguishes, where applicable: suggested, generated, inspected, verified, executed and human-approved. Material autonomous actions should expose scope, rationale, evidence, uncertainty, permission boundaries and reversibility appropriate to risk.
+
+## Evidence classes
+
+ByJTT distinguishes observed evidence, inference and hypothesis. Do not describe generated output or heuristic review as verified evidence.
 
 ## Current implementation note
 
-The current Studio vertical slice uses deterministic transformations while product and evidence contracts are validated. A production model adapter is intentionally replaceable and should not be assumed from the public site.
+The current Studio vertical slice uses deterministic transformations while product and evidence contracts are validated. Production model adapters remain replaceable and should not be assumed from the public site.
 
-## Canonical source
+## Source of truth
 
-The public product description is maintained in the repository's PRODUCT.md and DESIGN.md files.
+`STANDARD.md` is the canonical public standard. `PRODUCT.md`, `DESIGN.md`, requirements, research, benchmarks and Design Contracts provide supporting product, implementation and evidence context. Public pages and `standard.json` should expose or index this source rather than redefine it.
