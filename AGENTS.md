@@ -5,7 +5,7 @@ This repository is designed to be worked on by AI agents and humans together. Ke
 ## Always load
 
 1. Read [`PRODUCT.md`](./PRODUCT.md) before making product, architecture, feature, positioning, or scope decisions.
-2. Read [`DESIGN.md`](./DESIGN.md) and [`STANDARD.md`](./STANDARD.md) before changing user-facing UI or visual behavior.
+2. Read [`DESIGN.md`](./DESIGN.md) and [`STANDARD.md`](./STANDARD.md) before changing user-facing UI, visual behavior, or public copy.
 3. Preserve the boundary: ByJTT Design is for digital products; game-specific design belongs to games.byjtt.com.
 4. Treat [`STANDARD.md`](./STANDARD.md) as the canonical public 2026+ design standard. Supporting schemas, research, benchmarks and contracts extend it; do not silently create competing standards.
 
@@ -13,7 +13,8 @@ This repository is designed to be worked on by AI agents and humans together. Ke
 
 - **Requirements / feature planning / acceptance criteria:** read [`docs/REQUIREMENTS.md`](./docs/REQUIREMENTS.md).
 - **Competitor feature, build-vs-integrate, or market-positioning decision:** read [`docs/COMPETITIVE-MAP.md`](./docs/COMPETITIVE-MAP.md) and current primary documentation for affected tools.
-- **AI-slop, user pain, UX failure, or design-quality claim:** read [`docs/research/AI-SLOP-AND-USER-PAIN.md`](./docs/research/AI-SLOP-AND-USER-PAIN.md) and refresh external evidence when the claim may have changed.
+- **AI-slop, copy quality, user pain, UX failure, or design-quality claim:** read [`STANDARD.md`](./STANDARD.md) and [`docs/research/AI-SLOP-AND-USER-PAIN.md`](./docs/research/AI-SLOP-AND-USER-PAIN.md); refresh external evidence when the claim may have changed.
+- **Public copy/content change:** apply the canonical editorial integrity and anti-slop rules in `STANDARD.md`, then run `npm run copy:lint` before considering the change complete.
 - **Benchmark methodology, evaluation, scoring, or comparison work:** read [`docs/BENCHMARKS.md`](./docs/BENCHMARKS.md).
 - **Executing a benchmark run:** also read the benchmark-specific `EXECUTION.md` and [`docs/decisions/0004-benchmark-spend-and-isolation.md`](./docs/decisions/0004-benchmark-spend-and-isolation.md). Never consume external paid credits/services without explicit user approval.
 - **Sequencing / what to build next:** read [`docs/ROADMAP.md`](./docs/ROADMAP.md).
@@ -39,16 +40,16 @@ Record material build-vs-adopt decisions in the relevant research/decision docum
 Do not turn an idea directly into implementation when product behavior is ambiguous. Resolve it against `PRODUCT.md` and `docs/REQUIREMENTS.md`; add testable acceptance criteria before substantial implementation.
 
 ### Evidence before completion
-A polished screenshot is not a completion criterion. Validate the actual implementation against relevant requirements: behavior, responsive states, content stress, accessibility, performance, design contract, tests, and build/runtime health.
+A polished screenshot is not a completion criterion. Validate the actual implementation against relevant requirements: behavior, responsive states, content stress, accessibility, performance, design contract, copy quality, tests, and build/runtime health.
 
 ### Bounded edits
-For targeted design changes, preserve unrelated approved behavior. Treat unexpected visual or behavioral mutation outside the requested scope as a regression to investigate, not creative freedom.
+For targeted design or copy changes, preserve unrelated approved behavior. Treat unexpected visual, textual, or behavioral mutation outside the requested scope as a regression to investigate, not creative freedom.
 
 ### Keep sources of truth singular
 Do not copy the same rules into multiple docs. Update the canonical document and link to it. Repository config/code is the source of truth for discoverable implementation details; docs should capture intent, rationale, workflow, evidence, and constraints that are not obvious from inspection.
 
 ### Document evidence, not lore
-When research affects a product decision, capture the finding, date, source class, implication, and uncertainty. Distinguish:
+When research affects a product or content decision, capture the finding, date, source class, implication, and uncertainty. Distinguish:
 
 - **Observed:** directly evidenced.
 - **Inferred:** reasoned from evidence.
@@ -62,8 +63,9 @@ Do not couple core architecture to whichever AI generator is currently fashionab
 A change is done when:
 
 - the relevant requirement/decision is satisfied;
-- implementation and documentation agree;
+- implementation, public copy, and documentation agree;
 - applicable tests/validation pass with fresh evidence;
+- copy lint passes for public copy changes;
 - no unrelated scope was silently changed;
 - durable new knowledge is captured in its canonical location;
 - remaining uncertainty or follow-up work is explicit.
