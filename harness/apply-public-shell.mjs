@@ -29,8 +29,7 @@ export function applyShellToHtml(html, route, relativePath) {
   if (!/<main[^>]*\bid=["']main["']/i.test(output)) {
     output = replaceSingle(output, /<main(?![^>]*\bid=)[^>]*>/i, (match) => match.replace('<main', '<main id="main"'), 'main landmark', relativePath);
   }
-  output = output.replace(/<!-- ByJTT canonical public shell: [^>]+ -->\s*/i, '');
-  return output.replace(/<body>/i, `<body>\n<!-- ByJTT canonical public shell: ${route} -->`);
+  return output.replace(/<!-- ByJTT canonical public shell: [^>]+ -->\s*/i, '').replace(/<body>/i, `<body>\n<!-- ByJTT canonical public shell: ${route} -->`);
 }
 
 export async function applyShell({write = true} = {}) {
