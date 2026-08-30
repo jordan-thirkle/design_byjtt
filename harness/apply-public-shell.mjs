@@ -27,21 +27,21 @@ export async function applyShell() {
   for (const [route, relativePath] of routes) {
     const file = join(root, relativePath);
     let html = await readFile(file, 'utf8');
-    html = replaceSingle(html, /<a class="skip"[\s\S]*?<\/header>/i, renderPublicHeader(route), 'public header', relativePath);
-    html = replaceSingle(html, /<header class="site-header">[\s\S]*?<\/header>/i, renderPublicHeader(route).replace(/^<a class="skip"[^>]*>[^<]*<\/a>/, ''), 'public header', relativePath);
+    html = replaceSingle(
+      html,
+      /(?:<a class="skip"[\s\S]*?<\/header>|<header class="site-header">[\s\S]*?<\/header>)/i,
+      renderPublicHeader(route),
+      'public header',
+      relativePath
+    );
     html = replaceSingle(html, /<footer class="footer">[\s\S]*?<\/footer>/i, renderPublicFooter(), 'public footer', relativePath);
-    html = replaceSingle(html, /<main(?![^>]*\bid=)[^>]*>/i, (match) => match.replace('<main', '<main id="main"'), 'main landmark', relativePath);
-    html = await ensureShellMarker(html, route, relativePath);
+    if (!/<main[^>]*\bid=["']main["']/i.test(html)) {
+      html = replaceSingle(html, /<main(?![^>]*\bid=)[^>]*>/i, (match) => match.replace('<main', '<main id="main"'), 'main landmark', relativePath);
+    }
+    html = html.replace(/<!-- ByJTT canonical public shell: [^>]+ -->\n?/i, '');
+    html = html.replace(/<body>/i, `<body>\n<!-- ByJTT canonical public shell: ${route} -->`);
     await writeFile(file, html);
   }
-}
-
-async function ensureShellMarker(html, route, relativePath) {
-  const marker = `<!-- ByJTT canonical public shell: ${route} -->`;
-  if (!html.includes(marker)) {
-    html = html.replace(/<body>/i, `<body>\n${marker}`);
-  }
-  return html;
 }
 
 if (process.argv[1] && relative(process.cwd(), process.argv[1]) === relative(process.cwd(), fileURLToPath(import.meta.url))) {
