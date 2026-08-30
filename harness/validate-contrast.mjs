@@ -33,6 +33,8 @@ const requiredPairs = [
   ['band muted on band background', '#dcd8cf', '#171714', 4.5],
   ['accent on bg', '#244b3a', '#f5f2eb', 4.5],
   ['accent-2 on band', '#d8a84e', '#171714', 3.0],
+  ['callout ink on paper', '#171714', '#fbfaf6', 4.5],
+  ['callout muted on paper', '#68665f', '#fbfaf6', 4.5],
 ];
 
 for (const [label, foreground, background, minimum] of requiredPairs) {
@@ -42,6 +44,7 @@ for (const [label, foreground, background, minimum] of requiredPairs) {
 
 assert.match(css, /--band-ink:#f8f6f0/);
 assert.match(css, /--band-muted:#dcd8cf/);
-assert.match(css, /\.band \.callout h3\{color:var\(--band-ink\)\}/);
+assert.match(css, /\.band \.callout h3\{color:var\(--ink\)\}/);
+assert.match(css, /\.band \.callout p\{color:var\(--muted\)\}/);
 
 console.log(`✓ required semantic colour pairs meet WCAG AA thresholds`);
