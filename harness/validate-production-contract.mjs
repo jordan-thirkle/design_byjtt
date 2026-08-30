@@ -35,7 +35,7 @@ assert.match(source, /# ByJTT Design Standard v0\.1/);
 assert.doesNotMatch(schema, /"const":\s*"0\.0"/);
 assert.match(standard, /"version"\s*:\s*"0\.1"/);
 assert.match(standard, /"publicSiteShell"/);
-assert.match(llms, /https:\/\/design\.byjtt\.com\/standard\.md/);
+assert.match(llms, /\(https:\/\/design\.byjtt\.com\/standard\/\)/);
 for (const relativePath of sourceFiles) await readFile(file(relativePath), 'utf8');
 
 const shellSource = await readFile(file('site-shell.mjs'), 'utf8');
