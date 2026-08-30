@@ -4,15 +4,8 @@ import path from 'node:path';
 
 const ROOT = process.cwd();
 const PUBLIC_PAGES = [
-  'index.html',
-  'standard.html',
-  'research/index.html',
-  'contracts/index.html',
-  'agents/index.html',
-  'library/index.html',
-  'benchmarks/index.html',
-  'docs/index.html',
-  'app/index.html',
+  'index.html', 'standard.html', 'research/index.html', 'contracts/index.html',
+  'agents/index.html', 'library/index.html', 'benchmarks/index.html', 'docs/index.html', 'app/index.html',
 ];
 
 const INTERNAL_TERMS = [
@@ -22,14 +15,14 @@ const INTERNAL_TERMS = [
 ];
 
 function visibleMain(html) {
-  const main = html.match(/<main\\b[^>]*>([\\s\\S]*?)<\\/main>/i)?.[1] ?? '';
+  const main = html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i)?.[1] ?? '';
   return main
-    .replace(/<script[\\s\\S]*?<\\/script>/gi, ' ')
-    .replace(/<style[\\s\\S]*?<\\/style>/gi, ' ')
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
     .replace(/<[^>]+>/g, ' ')
     .replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'")
     .replace(/&nbsp;/g, ' ')
-    .replace(/\\s+/g, ' ')
+    .replace(/\s+/g, ' ')
     .trim();
 }
 
@@ -45,9 +38,9 @@ for (const relative of PUBLIC_PAGES) {
     if (lower.includes(term.toLowerCase())) findings.push(`${relative}: internal-facing term: ${term}`);
   }
 
-  const sentences = text.split(/(?<=[.!?])\\s+/).map((s) => s.trim()).filter((s) => s.length >= 55);
+  const sentences = text.split(/(?<=[.!?])\s+/).map((s) => s.trim()).filter((s) => s.length >= 55);
   for (const sentence of sentences) {
-    const key = sentence.toLowerCase().replace(/[^a-z0-9 ]+/g, ' ').replace(/\\s+/g, ' ').trim();
+    const key = sentence.toLowerCase().replace(/[^a-z0-9 ]+/g, ' ').replace(/\s+/g, ' ').trim();
     if (!key) continue;
     const owners = sentenceOwners.get(key) ?? [];
     owners.push(relative);
@@ -59,5 +52,5 @@ for (const [sentence, owners] of sentenceOwners) {
   if (new Set(owners).size > 1) findings.push(`repeated main-content sentence across pages: ${owners.join(', ')}`);
 }
 
-assert.deepEqual(findings, [], findings.join('\\n'));
+assert.deepEqual(findings, [], findings.join('\n'));
 console.log(`✓ public copy audit passed for ${PUBLIC_PAGES.length} pages`);
