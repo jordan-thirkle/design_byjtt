@@ -5,8 +5,9 @@ This repository is designed to be worked on by AI agents and humans together. Ke
 ## Always load
 
 1. Read [`PRODUCT.md`](./PRODUCT.md) before making product, architecture, feature, positioning, or scope decisions.
-2. Read [`DESIGN.md`](./DESIGN.md) before changing user-facing UI or visual behavior.
+2. Read [`DESIGN.md`](./DESIGN.md) and [`STANDARD.md`](./STANDARD.md) before changing user-facing UI or visual behavior.
 3. Preserve the boundary: ByJTT Design is for digital products; game-specific design belongs to games.byjtt.com.
+4. Treat [`STANDARD.md`](./STANDARD.md) as the canonical public 2026+ design standard. Supporting schemas, research, benchmarks and contracts extend it; do not silently create competing standards.
 
 ## Route by task
 
@@ -21,7 +22,7 @@ This repository is designed to be worked on by AI agents and humans together. Ke
 ## Execution rules
 
 ### Research first when the world can change
-For current frameworks, AI products, APIs, standards, pricing, competitor capabilities, market claims, or library behavior, retrieve current documentation/evidence before deciding. Prefer primary documentation; use community sources such as Reddit for user experience and pain signals, not API truth.
+For current frameworks, AI products, APIs, standards, pricing, competitor capabilities, or library behavior, retrieve current documentation/evidence before deciding. Prefer primary documentation; use community sources such as Reddit for user experience and pain signals, not API truth.
 
 ### Best available solved system first
 Before custom implementation, inspect in order:
