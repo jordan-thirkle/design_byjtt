@@ -1,44 +1,31 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://design.byjtt.com/standard.json",
-  "title": "ByJTT Design Standard",
-  "description": "Machine-readable index for the public ByJTT Design Standard.",
-  "type": "object",
-  "additionalProperties": false,
-  "required": ["version", "status", "effective", "audiences", "principles", "interactionStates", "validation", "links"],
-  "properties": {
-    "version": { "type": "string", "const": "0.1" },
-    "status": { "type": "string", "const": "public-working-standard" },
-    "effective": { "type": "string", "const": "2026-08" },
-    "audiences": { "type": "array", "items": { "type": "string" }, "minItems": 4, "uniqueItems": true },
-    "principles": { "type": "array", "items": { "type": "string" }, "minItems": 8, "uniqueItems": true },
-    "interactionStates": {
-      "type": "array",
-      "items": { "type": "string", "enum": ["suggested", "generated", "inspected", "verified", "executed", "human-approved"] },
-      "uniqueItems": true,
-      "minItems": 6,
-      "maxItems": 6
-    },
-    "validation": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["dimensions", "evidenceClasses"],
-      "properties": {
-        "dimensions": { "type": "array", "items": { "type": "string" }, "minItems": 6, "uniqueItems": true },
-        "evidenceClasses": { "type": "array", "items": { "type": "string", "enum": ["observed", "inferred", "hypothesis"] }, "minItems": 3, "maxItems": 3, "uniqueItems": true }
-      }
-    },
-    "links": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["human", "designContracts", "research", "studio", "library"],
-      "properties": {
-        "human": { "type": "string", "format": "uri" },
-        "designContracts": { "type": "string", "format": "uri-reference" },
-        "research": { "type": "string", "format": "uri-reference" },
-        "studio": { "type": "string", "format": "uri-reference" },
-        "library": { "type": "string", "format": "uri-reference" }
-      }
-    }
+  "$schema": "https://design.byjtt.com/standard.schema.json",
+  "version": "0.1",
+  "status": "public-working-standard",
+  "effective": "2026-08",
+  "audiences": ["people", "designers", "developers", "AI agents"],
+  "principles": [
+    "Human purpose before interface polish",
+    "Evidence before aesthetics",
+    "Intent over imitation",
+    "Real conditions are the design",
+    "Accessible by construction",
+    "Best solved system first",
+    "Production is the source of truth",
+    "Human agency with bounded autonomy",
+    "Provider independence",
+    "Provenance by default"
+  ],
+  "interactionStates": ["suggested", "generated", "inspected", "verified", "executed", "human-approved"],
+  "validation": {
+    "dimensions": ["product-fit", "ux", "visual-quality", "accessibility", "responsive-behaviour", "content-resilience", "engineering", "performance", "provenance"],
+    "evidenceClasses": ["observed", "inferred", "hypothesis"]
+  },
+  "links": {
+    "human": "https://design.byjtt.com/standard/",
+    "designContracts": "https://design.byjtt.com/contracts/",
+    "research": "https://design.byjtt.com/research/",
+    "studio": "https://design.byjtt.com/studio",
+    "library": "https://design.byjtt.com/library/"
   }
 }
