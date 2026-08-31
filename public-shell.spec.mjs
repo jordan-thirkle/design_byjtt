@@ -4,7 +4,7 @@ const routes = ['/', '/standard/', '/research/', '/contracts/', '/agents/', '/li
 const primaryLabels = ['Studio', 'Standard', 'Library'];
 const secondaryLabels = ['Research', 'Contracts', 'Benchmarks', 'Documentation'];
 const primaryRoutes = new Set(['/standard/', '/library/']);
-const secondaryRoutes = new Set(['/research/', '/contracts/', '/benchmarks/', '/docs/']);
+const secondaryRoutes = new Set(['/research/', '/contracts/', '/agents/', '/benchmarks/', '/docs/']);
 
 for (const route of routes) {
   test(`canonical public shell: ${route}`, async ({ page }) => {
@@ -50,7 +50,9 @@ test('mobile public shell stays focused and usable', async ({ page }) => {
   await expect(nav).toHaveCount(1);
   for (const label of primaryLabels) await expect(nav.getByRole('link', { name: label, exact: true })).toHaveCount(1);
   await expect(nav.getByRole('link', { name: 'Open Studio', exact: true })).toHaveCount(0);
-  await expect(nav.locator('.nav-more summary')).toHaveCount(0);
+  await expect(nav.locator('.nav-more')).toBeVisible();
+  await nav.locator('.nav-more summary').click();
+  await expect(nav.locator('.nav-more-links').getByRole('link', { name: 'Research', exact: true })).toBeVisible();
   await expect(page.locator('main#main')).toHaveCount(1);
   await expect(page.locator('footer.footer')).toHaveCount(1);
   await expect(page.locator('a.skip[href="#main"]')).toHaveCount(1);
