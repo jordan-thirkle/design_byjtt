@@ -45,7 +45,7 @@ export const PUBLIC_SHELL = {
 
 export function normalisePath(pathname) {
   if (!pathname || pathname === '/') return '/';
-  const value = pathname.replace(/\/+/g, '/');
+  const value = pathname.replace(/\\+/g, '/');
   return value.endsWith('/') ? value : `${value}/`;
 }
 
@@ -82,7 +82,7 @@ export function renderPublicHeader(pathname) {
   const secondary = model.secondaryNavigation.map((item) =>
     `<a href="${item.href}"${item.current ? ' aria-current="page"' : ''}>${escapeHtml(item.label)}</a>`
   ).join('');
-  return `<a class="skip" href="#main">Skip to content</a><header class="site-header"><nav class="nav" aria-label="Primary navigation"><a class="wordmark" href="/" aria-label="${escapeHtml(model.brand.ariaLabel)}">By JTT <i>Design</i></a><div class="nav-links"><div class="nav-primary">${links}</div><details class="nav-more"><summary>More</summary><div class="nav-more-links">${secondary}</div></details><a class="nav-cta" href="${model.primaryAction.href}">${escapeHtml(model.primaryAction.label)}</a></div></nav></header>`;
+  return `<a class="skip" href="#main">Skip to content</a><header class="site-header"><nav class="nav" aria-label="Primary navigation"><a class="wordmark" href="/" aria-label="${escapeHtml(model.brand.ariaLabel)}">By JTT <i>Design</i></a><div class="nav-links"><div class="nav-primary">${links}</div><details class="nav-more"><summary>More</summary><div class="nav-more-links">${secondary}</div></details><a class="nav-cta" href="${model.primaryAction.href}">${escapeHtml(model.primaryAction.label)}</a></div></nav></header><style id="byjtt-shell-responsive">@media(max-width:850px){.nav{gap:.5rem}.nav-links{gap:.5rem}.nav-primary{gap:.5rem}.nav-links a,.nav-more summary{font-size:.8rem}.nav-primary a:not(:first-child){display:inline}.nav-more,.nav-cta{display:none}}</style>`;
 }
 
 export function renderPublicFooter() {
