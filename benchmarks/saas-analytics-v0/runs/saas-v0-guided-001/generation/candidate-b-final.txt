@@ -1,0 +1,21 @@
+Implemented the runnable static web product in `/private/tmp/byjtt-saas-v0.HY9wqF/candidate-b`.
+
+Key files:
+- [index.html](/private/tmp/byjtt-saas-v0.HY9wqF/candidate-b/index.html)
+- [src/main.js](/private/tmp/byjtt-saas-v0.HY9wqF/candidate-b/src/main.js)
+- [src/styles.css](/private/tmp/byjtt-saas-v0.HY9wqF/candidate-b/src/styles.css)
+- [RUN-RECORD.md](/private/tmp/byjtt-saas-v0.HY9wqF/candidate-b/RUN-RECORD.md)
+
+The app exposes:
+- `/`
+- `/?state=loading`
+- `/?state=empty`
+- `/?state=partial`
+- `/?state=error`
+
+Verification:
+- `npm test` passed
+- `npm run build` passed and produced `dist/`
+- `node --check` passed for the app and scripts
+
+Known limitation recorded in [RUN-RECORD.md](/private/tmp/byjtt-saas-v0.HY9wqF/candidate-b/RUN-RECORD.md): this sandbox rejected binding a local server with `listen EPERM`, so I could not live-probe URLs here. The product is dependency-free and should run locally with `npm run dev` in a normal environment. Automated axe/Playwright accessibility output was also not produced because those packages are not installed and network install is unavailable.

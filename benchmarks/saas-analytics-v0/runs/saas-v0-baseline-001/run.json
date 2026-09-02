@@ -1,0 +1,87 @@
+{
+  "benchmarkId": "saas-analytics-v0",
+  "benchmarkVersion": "0.1.0",
+  "runId": "saas-v0-baseline-001",
+  "candidateId": "candidate-a",
+  "workflowRole": "baseline",
+  "status": "evaluated",
+  "context": {
+    "bundleId": "baseline-v0",
+    "bundleDigestSha256": null,
+    "sourceManifestDigestSha256": "b55f12f2dfa74705a7156927dd18ddd59b72d782b1c42d5244c7d7f6c711a046",
+    "sourceCommitSha": "5a840d0ba7bf0b64f61f2cbd7b653544b3d30508"
+  },
+  "generator": {
+    "provider": "OpenAI",
+    "tool": "Codex CLI 0.135.0",
+    "model": "GPT-5.5",
+    "versionOrDate": "2026-08-27",
+    "freshContextConfirmed": true
+  },
+  "controls": {
+    "maxMaterialAttempts": 3,
+    "activeMinutesBudget": 30,
+    "humanVisualEditingAllowed": false,
+    "paidExternalServicesApproved": false
+  },
+  "timing": {
+    "startedAt": "2026-08-27T18:30:34Z",
+    "endedAt": "2026-08-27T18:33:36Z",
+    "activeMinutes": 3.03
+  },
+  "attempts": [
+    {
+      "number": 1,
+      "startedAt": "2026-08-27T18:30:34Z",
+      "endedAt": "2026-08-27T18:33:36Z",
+      "summary": "One fresh-context material implementation attempt.",
+      "outcome": "Accepted as generated and frozen before evaluation.",
+      "accepted": true,
+      "regressionIntroduced": null
+    }
+  ],
+  "interventions": [
+    {
+      "at": "2026-08-27T18:29:00Z",
+      "type": "provider-recovery",
+      "description": "Requested GPT-5.6 Sol was unavailable to Codex CLI 0.135.0; the run restarted in a fresh GPT-5.5 context before any candidate files were created.",
+      "material": false
+    }
+  ],
+  "cost": {
+    "amount": null,
+    "currency": null,
+    "credits": null,
+    "source": "not-exposed"
+  },
+  "candidate": {
+    "sourceCommitSha": null,
+    "sourceRef": "candidate/",
+    "runtimeUrl": "http://127.0.0.1:4181/",
+    "startCommand": "python3 -m http.server 4181",
+    "implementationDigestSha256": "b875d4d5c3931a665af81c518e6f5ca1cc86e2b43203d44771a95d846896f56f"
+  },
+  "evaluation": {
+    "evaluatorRunId": "saas-v0-eval-a-001",
+    "evidenceRoot": "evaluation/",
+    "evidenceDigestSha256": "10a259df2b2477ec029b8ddc60ce05c475ee42d090e36455b369bfcd3f3bac21",
+    "scorePath": "score.json",
+    "objectiveGatePassed": true
+  },
+  "confounds": [
+    "GPT-5.6 Sol was unavailable, so both treatments used the same GPT-5.5 model and Codex CLI version.",
+    "This is one paired run and cannot establish general causality."
+  ],
+  "notes": {
+    "operationalFailures": [
+      "GPT-5.6 Sol failed before generation because the installed Codex CLI could not resolve the model. No candidate files existed at failure time."
+    ],
+    "discardedWork": [],
+    "uncertainty": [
+      "Automated accessibility scan output is missing, so accessibility success is not inferred beyond observable source and screenshots."
+    ],
+    "lessons": [
+      "The baseline omitted comparison-period control but passed the entire objective runtime matrix."
+    ]
+  }
+}

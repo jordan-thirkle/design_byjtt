@@ -1,6 +1,8 @@
 # SaaS Analytics v0
 
-Status: **benchmark specification — not yet executed**
+Status: **first controlled pair completed on 2026-08-27**
+
+The frozen result and its limitations are documented in [`RESULTS.md`](./RESULTS.md). The baseline scored 78/100 with 28/28 objective gates; the ByJTT-guided candidate scored 68/100 with 20/28. This is a directional result from one pair, not a general ranking.
 
 ## Research question
 
