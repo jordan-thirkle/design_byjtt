@@ -2,8 +2,7 @@
 
 ## Reporting a Vulnerability
 
-**Do not open a public issue for security vulnerabilities.** Public disclosure
-before a fix gives attackers a window to exploit.
+**Do not open a public issue for security vulnerabilities.** Public disclosure before a fix gives attackers a window to exploit.
 
 ### Preferred path
 
@@ -30,23 +29,21 @@ before a fix gives attackers a window to exploit.
 
 ### Scope
 
-The security boundary covers the live site and the Design Studio application served at `design.byjtt.com`:
+The security boundary covers the live site and its client-side code:
 
-- The public website and its client-side code
-- API and data endpoints exposed by the site
-- Third-party integrations loaded by the site
+- The public website served at `byjtt.com` and its subdomains
+- API endpoints and data endpoints exposed by the site
+- Client-side JavaScript, analytics, and third-party integrations
 - Dependency supply-chain issues in `package.json` (report via the same channel)
 
 Out of scope:
 
-- Vulnerabilities in upstream frameworks (Astro, Eleventy, Vite, etc.) — report to those maintainers
+- Vulnerabilities in upstream frameworks — report to those maintainers
 - Self-XSS with no session or data impact
 - Theoretical issues with no reproducible exploit path
 
 ### Disclosure window
 
-We aim to acknowledge within 72 hours and to issue a patched release within a
-reasonable window depending on severity. Critical issues get priority.
+We aim to acknowledge within 72 hours and to issue a patched release within a reasonable window depending on severity. Critical issues get priority over lower-severity bugs.
 
-If you help us improve security and want public credit, we'll list you in the
-release notes. If you prefer anonymity, we'll say "a security researcher reported this."
+If you help us improve security and want public credit, we'll list you in the release notes. If you prefer anonymity, we'll say "a security researcher reported this."
