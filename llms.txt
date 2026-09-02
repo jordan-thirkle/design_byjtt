@@ -1,10 +1,10 @@
-# ByJTT Design
+# By JTT Design
 
-> ByJTT Design is a public design standard, research system and Studio for people, designers, developers and AI agents building digital products from August 2026 onward.
+> By JTT Design is a public design standard, research system and Studio for people, designers, developers and AI agents building digital products from August 2026 onward.
 
 ## Canonical standard
 
-- [ByJTT Design Standard v0.1](https://design.byjtt.com/standard/): the canonical human-readable public standard.
+- [By JTT Design Standard v0.1](https://design.byjtt.com/standard/): the canonical human-readable public standard.
 - [Machine-readable standard index](https://design.byjtt.com/standard.json): structured discovery surface for agents and tooling.
 
 ## Product surfaces
