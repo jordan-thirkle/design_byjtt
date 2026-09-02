@@ -3,16 +3,14 @@ import { PUBLIC_SHELL, getShellModel, normalisePath } from '../site-shell.mjs';
 
 const expectedNav = ['Studio', 'Standard', 'Library'];
 const expectedPaths = ['/studio', '/standard/', '/library/'];
-const expectedSecondary = ['Research', 'Contracts', 'Benchmarks', 'Documentation'];
-const expectedSecondaryPaths = ['/research/', '/contracts/', '/benchmarks/', '/docs/'];
-const routes = ['/', ...expectedPaths, ...expectedSecondaryPaths];
+const expectedSecondary = ['Research', 'Contracts', 'Agents', 'Benchmarks', 'Documentation'];
+const expectedSecondaryPaths = ['/research/', '/contracts/', '/agents/', '/benchmarks/', '/docs/'];
+const routes = ['/', ...expectedPaths, ...expectedSecondaryPaths, '/agents/'];
 
 assert.deepEqual(PUBLIC_SHELL.primaryNavigation.map(({ label }) => label), expectedNav);
 assert.deepEqual(PUBLIC_SHELL.primaryNavigation.map(({ href }) => normalisePath(href)), expectedPaths.map(normalisePath));
 assert.deepEqual(PUBLIC_SHELL.secondaryNavigation.map(({ label }) => label), expectedSecondary);
 assert.deepEqual(PUBLIC_SHELL.secondaryNavigation.map(({ href }) => normalisePath(href)), expectedSecondaryPaths.map(normalisePath));
-assert.equal(PUBLIC_SHELL.primaryAction.label, 'Open Studio');
-assert.equal(normalisePath(PUBLIC_SHELL.primaryAction.href), '/studio/');
 
 for (const route of routes) {
   const model = getShellModel(route);

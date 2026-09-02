@@ -50,7 +50,7 @@ test('mobile public shell stays focused and usable', async ({ page }) => {
   await expect(nav).toHaveCount(1);
   for (const label of primaryLabels) await expect(nav.getByRole('link', { name: label, exact: true })).toHaveCount(1);
   await expect(nav.getByRole('link', { name: 'Open Studio', exact: true })).toHaveCount(0);
-  await expect(nav.locator('.nav-more')).toBeVisible();
+  await expect(nav.locator('.nav-more summary')).toBeVisible();
   await nav.locator('.nav-more summary').click();
   await expect(nav.locator('.nav-more-links').getByRole('link', { name: 'Research', exact: true })).toBeVisible();
   await expect(page.locator('main#main')).toHaveCount(1);

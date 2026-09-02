@@ -1,7 +1,7 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { renderPublicFooter, renderPublicHeader } from '../site-shell.mjs';
+import { renderPublicFooter, renderPublicHeader, SHELL_RESPONSIVE_STYLE } from '../site-shell.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 export const routes = [
@@ -26,6 +26,12 @@ export function applyShellToHtml(html, route, relativePath) {
   const footerPattern = /<footer class="footer">[\s\S]*?<\/footer>/i;
   let output = replaceSingle(html, headerPattern, renderPublicHeader(route), 'public header', relativePath);
   output = replaceSingle(output, footerPattern, renderPublicFooter(), 'public footer', relativePath);
+  const stylePattern = /<style id="byjtt-shell-responsive">[\s\S]*?<\/style>/gi;
+  if (stylePattern.test(output)) {
+    output = output.replace(/<style id="byjtt-shell-responsive">[\s\S]*?<\/style>/gi, SHELL_RESPONSIVE_STYLE);
+  } else {
+    output = output.replace(/<\/header>/i, `</header>\n${SHELL_RESPONSIVE_STYLE}`);
+  }
   if (!/<main[^>]*\bid=["']main["']/i.test(output)) {
     output = replaceSingle(output, /<main(?![^>]*\bid=)[^>]*>/i, (match) => match.replace('<main', '<main id="main"'), 'main landmark', relativePath);
   }
