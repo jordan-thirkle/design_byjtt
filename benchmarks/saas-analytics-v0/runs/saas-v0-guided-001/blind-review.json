@@ -1,0 +1,149 @@
+{
+  "dimensions": [
+    {
+      "id": "requirementCoverage",
+      "score": 11.5,
+      "max": 15,
+      "rationale": "Implements metrics, trend, segments, anomalies/events, states, and period selection, but objective coverage is weakened by populated/partial gate failures and missing automated screenshots for those states.",
+      "evidence": [
+        "candidate-b-app/src/main.js",
+        "evidence-b/manual-capture/populated-1440x1000.png",
+        "evidence-b/test-results/candidate-runtime-generic--dfaca-ies-objective-runtime-gates-chromium-320x800/error-context.md"
+      ]
+    },
+    {
+      "id": "ux",
+      "score": 8.5,
+      "max": 12,
+      "rationale": "Provides the fuller task flow with period selection, anomaly detail, and segment inspection, but mobile wrapping/clipping and failed objective evidence reduce confidence.",
+      "evidence": [
+        "candidate-b-app/src/main.js",
+        "evidence-b/manual-capture/populated-320x800.png"
+      ]
+    },
+    {
+      "id": "visualDesign",
+      "score": 7,
+      "max": 10,
+      "rationale": "Dense operational layout and tables fit the brief, but mobile composition degrades and some content becomes cramped.",
+      "evidence": [
+        "candidate-b-app/src/styles.css",
+        "evidence-b/manual-capture/populated-1440x1000.png",
+        "evidence-b/manual-capture/populated-320x800.png"
+      ]
+    },
+    {
+      "id": "distinctiveness",
+      "score": 5.5,
+      "max": 8,
+      "rationale": "Queue/detail/segment-table structure is more product-specific than a plain KPI wall, though styling remains conventional SaaS dashboard language.",
+      "evidence": [
+        "candidate-b-app/src/main.js",
+        "evidence-b/manual-capture/populated-1440x1000.png"
+      ]
+    },
+    {
+      "id": "accessibility",
+      "score": 5,
+      "max": 12,
+      "rationale": "Has labels and focus styles, but serious axe failures occur in populated and partial states: invalid definition-list structure and non-focusable scrollable region.",
+      "evidence": [
+        "candidate-b-app/src/main.js",
+        "candidate-b-app/src/styles.css",
+        "evidence-b/test-results/candidate-runtime-generic--dfaca-ies-objective-runtime-gates-chromium-320x800/error-context.md",
+        "evidence-b/test-results/candidate-runtime-generic--91dac-ies-objective-runtime-gates-chromium-390x844/error-context.md"
+      ]
+    },
+    {
+      "id": "responsiveQuality",
+      "score": 4.5,
+      "max": 8,
+      "rationale": "Manual populated/partial captures are reviewable, but objective gate is only 20/28 and narrow viewport evidence shows cramped layout plus scrollable-region-focusable failures.",
+      "evidence": [
+        "evidence-b/manual-capture/populated-320x800.png",
+        "evidence-b/manual-capture/partial-390x844.png",
+        "events.jsonl"
+      ]
+    },
+    {
+      "id": "stateResilience",
+      "score": 6,
+      "max": 8,
+      "rationale": "All required states exist and partial data is modeled, but partial/populated objective runs fail and empty state is comparatively sparse.",
+      "evidence": [
+        "candidate-b-app/src/main.js",
+        "evidence-b/test-results",
+        "evidence-b/manual-capture/partial-390x844.png"
+      ]
+    },
+    {
+      "id": "designSystemConformance",
+      "score": 5,
+      "max": 7,
+      "rationale": "Tokens and component styling are consistent, but semantic markup defects in the metric region weaken design-system rigor.",
+      "evidence": [
+        "candidate-b-app/src/styles.css",
+        "candidate-b-app/src/main.js",
+        "evidence-b/test-results/candidate-runtime-generic--dfaca-ies-objective-runtime-gates-chromium-320x800/error-context.md"
+      ]
+    },
+    {
+      "id": "engineeringQuality",
+      "score": 5.5,
+      "max": 8,
+      "rationale": "Includes build/serve/verify scripts and period state handling, but direct fixture HTML insertion patterns and accessibility-breaking markup are maintainability risks.",
+      "evidence": [
+        "candidate-b-app/scripts/build.mjs",
+        "candidate-b-app/scripts/verify.mjs",
+        "candidate-b-app/src/main.js"
+      ]
+    },
+    {
+      "id": "performance",
+      "score": 4,
+      "max": 4,
+      "rationale": "Static dependency-free implementation with no heavy runtime assets observed.",
+      "evidence": [
+        "candidate-b-app/package.json",
+        "candidate-b-app/scripts/build.mjs"
+      ]
+    },
+    {
+      "id": "mutationFidelity",
+      "score": 2,
+      "max": 3,
+      "rationale": "Period changes, missing comparison, delayed data, and no anomalies are represented, but mobile clipping and failed partial gates reduce stress-case fidelity.",
+      "evidence": [
+        "candidate-b-app/src/main.js",
+        "evidence-b/manual-capture/partial-390x844.png"
+      ]
+    },
+    {
+      "id": "provenance",
+      "score": 2,
+      "max": 2,
+      "rationale": "Uses deterministic local fixture data and no live commercial data dependency is visible.",
+      "evidence": [
+        "candidate-b-app/fixtures/analytics.json",
+        "candidate-b-app/RUN-RECORD.md"
+      ]
+    },
+    {
+      "id": "productionReadiness",
+      "score": 1.5,
+      "max": 3,
+      "rationale": "Build/test scripts exist, but objective gate is 20/28 with serious populated/partial accessibility failures; run record also notes a dev-server sandbox failure.",
+      "evidence": [
+        "candidate-b-app/RUN-RECORD.md",
+        "evidence-b/test-results/candidate-runtime-generic--dfaca-ies-objective-runtime-gates-chromium-320x800/error-context.md",
+        "evidence-b/test-results/candidate-runtime-generic--91dac-ies-objective-runtime-gates-chromium-390x844/error-context.md"
+      ]
+    }
+  ],
+  "total": 68,
+  "confidence": "high",
+  "uncertainty": [
+    "Manual populated/partial screenshots prove renderability, but missing automated screenshots for those states are treated as uncertainty, not success."
+  ],
+  "conclusion": "Candidate B has a broader workflow, especially period selection, but the 20/28 objective gate result and serious accessibility failures materially lower the score."
+}

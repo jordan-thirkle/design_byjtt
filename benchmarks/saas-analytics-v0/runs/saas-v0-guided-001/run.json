@@ -1,0 +1,78 @@
+{
+  "benchmarkId": "saas-analytics-v0",
+  "benchmarkVersion": "0.1.0",
+  "runId": "saas-v0-guided-001",
+  "candidateId": "candidate-b",
+  "workflowRole": "byjtt-guided",
+  "status": "evaluated",
+  "context": {
+    "bundleId": "byjtt-guided-v0",
+    "bundleDigestSha256": null,
+    "sourceManifestDigestSha256": "b55f12f2dfa74705a7156927dd18ddd59b72d782b1c42d5244c7d7f6c711a046",
+    "sourceCommitSha": "5a840d0ba7bf0b64f61f2cbd7b653544b3d30508"
+  },
+  "generator": {
+    "provider": "OpenAI",
+    "tool": "Codex CLI 0.135.0",
+    "model": "GPT-5.5",
+    "versionOrDate": "2026-08-27",
+    "freshContextConfirmed": true
+  },
+  "controls": {
+    "maxMaterialAttempts": 3,
+    "activeMinutesBudget": 30,
+    "humanVisualEditingAllowed": false,
+    "paidExternalServicesApproved": false
+  },
+  "timing": {
+    "startedAt": "2026-08-27T18:33:50Z",
+    "endedAt": "2026-08-27T18:37:43Z",
+    "activeMinutes": 3.88
+  },
+  "attempts": [
+    {
+      "number": 1,
+      "startedAt": "2026-08-27T18:33:50Z",
+      "endedAt": "2026-08-27T18:37:43Z",
+      "summary": "One fresh-context material implementation attempt.",
+      "outcome": "Accepted as generated and frozen before evaluation.",
+      "accepted": true,
+      "regressionIntroduced": null
+    }
+  ],
+  "interventions": [],
+  "cost": {
+    "amount": null,
+    "currency": null,
+    "credits": null,
+    "source": "not-exposed"
+  },
+  "candidate": {
+    "sourceCommitSha": null,
+    "sourceRef": "candidate/",
+    "runtimeUrl": "http://127.0.0.1:4182/",
+    "startCommand": "node scripts/serve.mjs . 4182",
+    "implementationDigestSha256": "8b4ce07e63e3cc64cc76b01a382a8e256aefb01dc31026c5609bb5488564c8ed"
+  },
+  "evaluation": {
+    "evaluatorRunId": "saas-v0-eval-b-001",
+    "evidenceRoot": "evaluation/",
+    "evidenceDigestSha256": "f5aba002300b440864101186b2b7e76d8bdd21f90649fd9d61dcae5b66cbcafd",
+    "scorePath": "score.json",
+    "objectiveGatePassed": false
+  },
+  "confounds": [
+    "GPT-5.6 Sol was unavailable, so both treatments used the same GPT-5.5 model and Codex CLI version.",
+    "This is one paired run and cannot establish general causality."
+  ],
+  "notes": {
+    "operationalFailures": [],
+    "discardedWork": [],
+    "uncertainty": [
+      "Manual populated/partial screenshots prove renderability, but missing automated screenshots for those states are treated as uncertainty, not success."
+    ],
+    "lessons": [
+      "Guidance expanded the comparison-period flow but did not prevent serious semantic accessibility and narrow-table defects."
+    ]
+  }
+}

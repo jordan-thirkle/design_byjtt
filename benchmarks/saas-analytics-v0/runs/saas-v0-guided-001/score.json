@@ -1,0 +1,521 @@
+{
+  "benchmarkId": "saas-analytics-v0",
+  "benchmarkVersion": "0.1.0",
+  "runId": "saas-v0-guided-001",
+  "workflow": {
+    "name": "ByJTT-guided fresh-context generation",
+    "tools": [
+      {
+        "name": "Codex CLI with OpenAI GPT-5.5",
+        "versionOrDate": "0.135.0 / 2026-08-27"
+      }
+    ],
+    "contextNotes": "Received the frozen ByJTT guided context bundle."
+  },
+  "runDate": "2026-08-27",
+  "dimensions": {
+    "requirementCoverage": {
+      "score": 11.5,
+      "max": 15,
+      "rationale": "Implements metrics, trend, segments, anomalies/events, states, and period selection, but objective coverage is weakened by populated/partial gate failures and missing automated screenshots for those states.",
+      "evidenceRefs": [
+        "implementation",
+        "objective-evaluation",
+        "blind-review"
+      ],
+      "confidence": "high"
+    },
+    "ux": {
+      "score": 8.5,
+      "max": 12,
+      "rationale": "Provides the fuller task flow with period selection, anomaly detail, and segment inspection, but mobile wrapping/clipping and failed objective evidence reduce confidence.",
+      "evidenceRefs": [
+        "implementation",
+        "objective-evaluation",
+        "blind-review"
+      ],
+      "confidence": "high"
+    },
+    "visualDesign": {
+      "score": 7,
+      "max": 10,
+      "rationale": "Dense operational layout and tables fit the brief, but mobile composition degrades and some content becomes cramped.",
+      "evidenceRefs": [
+        "implementation",
+        "objective-evaluation",
+        "blind-review"
+      ],
+      "confidence": "high"
+    },
+    "distinctiveness": {
+      "score": 5.5,
+      "max": 8,
+      "rationale": "Queue/detail/segment-table structure is more product-specific than a plain KPI wall, though styling remains conventional SaaS dashboard language.",
+      "evidenceRefs": [
+        "implementation",
+        "objective-evaluation",
+        "blind-review"
+      ],
+      "confidence": "high"
+    },
+    "accessibility": {
+      "score": 5,
+      "max": 12,
+      "rationale": "Has labels and focus styles, but serious axe failures occur in populated and partial states: invalid definition-list structure and non-focusable scrollable region.",
+      "evidenceRefs": [
+        "implementation",
+        "objective-evaluation",
+        "blind-review"
+      ],
+      "confidence": "high"
+    },
+    "responsiveQuality": {
+      "score": 4.5,
+      "max": 8,
+      "rationale": "Manual populated/partial captures are reviewable, but objective gate is only 20/28 and narrow viewport evidence shows cramped layout plus scrollable-region-focusable failures.",
+      "evidenceRefs": [
+        "implementation",
+        "objective-evaluation",
+        "blind-review"
+      ],
+      "confidence": "high"
+    },
+    "stateResilience": {
+      "score": 6,
+      "max": 8,
+      "rationale": "All required states exist and partial data is modeled, but partial/populated objective runs fail and empty state is comparatively sparse.",
+      "evidenceRefs": [
+        "implementation",
+        "objective-evaluation",
+        "blind-review"
+      ],
+      "confidence": "high"
+    },
+    "designSystemConformance": {
+      "score": 5,
+      "max": 7,
+      "rationale": "Tokens and component styling are consistent, but semantic markup defects in the metric region weaken design-system rigor.",
+      "evidenceRefs": [
+        "implementation",
+        "objective-evaluation",
+        "blind-review"
+      ],
+      "confidence": "high"
+    },
+    "engineeringQuality": {
+      "score": 5.5,
+      "max": 8,
+      "rationale": "Includes build/serve/verify scripts and period state handling, but direct fixture HTML insertion patterns and accessibility-breaking markup are maintainability risks.",
+      "evidenceRefs": [
+        "implementation",
+        "objective-evaluation",
+        "blind-review"
+      ],
+      "confidence": "high"
+    },
+    "performance": {
+      "score": 4,
+      "max": 4,
+      "rationale": "Static dependency-free implementation with no heavy runtime assets observed.",
+      "evidenceRefs": [
+        "implementation",
+        "objective-evaluation",
+        "blind-review"
+      ],
+      "confidence": "high"
+    },
+    "mutationFidelity": {
+      "score": 2,
+      "max": 3,
+      "rationale": "Period changes, missing comparison, delayed data, and no anomalies are represented, but mobile clipping and failed partial gates reduce stress-case fidelity.",
+      "evidenceRefs": [
+        "implementation",
+        "objective-evaluation",
+        "blind-review"
+      ],
+      "confidence": "high"
+    },
+    "provenance": {
+      "score": 2,
+      "max": 2,
+      "rationale": "Uses deterministic local fixture data and no live commercial data dependency is visible.",
+      "evidenceRefs": [
+        "implementation",
+        "objective-evaluation",
+        "blind-review"
+      ],
+      "confidence": "high"
+    },
+    "productionReadiness": {
+      "score": 1.5,
+      "max": 3,
+      "rationale": "Build/test scripts exist, but objective gate is 20/28 with serious populated/partial accessibility failures; run record also notes a dev-server sandbox failure.",
+      "evidenceRefs": [
+        "implementation",
+        "objective-evaluation",
+        "blind-review"
+      ],
+      "confidence": "high"
+    }
+  },
+  "efficiency": {
+    "activeMinutes": 3.88,
+    "toolCalls": 23,
+    "retries": 0,
+    "humanInterventions": 0,
+    "knownCost": null,
+    "knownCostCurrency": null,
+    "replacedGeneratedCodePercent": 0,
+    "unexpectedRegressions": 2
+  },
+  "evidence": [
+    {
+      "id": "screenshot-populated-mobile-small",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/manual-capture/populated-320x800.png"
+      },
+      "description": "Manual post-gate capture of populated at mobile-small.",
+      "state": "populated",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 320,
+        "height": 800
+      }
+    },
+    {
+      "id": "screenshot-populated-mobile",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/manual-capture/populated-390x844.png"
+      },
+      "description": "Manual post-gate capture of populated at mobile.",
+      "state": "populated",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "screenshot-populated-tablet",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/manual-capture/populated-768x1024.png"
+      },
+      "description": "Manual post-gate capture of populated at tablet.",
+      "state": "populated",
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "screenshot-populated-desktop",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/manual-capture/populated-1440x1000.png"
+      },
+      "description": "Manual post-gate capture of populated at desktop.",
+      "state": "populated",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "id": "screenshot-loading-mobile-small",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--de466-ies-objective-runtime-gates-chromium-320x800/candidate-loading.png"
+      },
+      "description": "Automated evaluator capture of loading at mobile-small.",
+      "state": "loading",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 320,
+        "height": 800
+      }
+    },
+    {
+      "id": "screenshot-loading-mobile",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--de466-ies-objective-runtime-gates-chromium-390x844/candidate-loading.png"
+      },
+      "description": "Automated evaluator capture of loading at mobile.",
+      "state": "loading",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "screenshot-loading-tablet",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--de466-ies-objective-runtime-gates-chromium-768x1024/candidate-loading.png"
+      },
+      "description": "Automated evaluator capture of loading at tablet.",
+      "state": "loading",
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "screenshot-loading-desktop",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--de466-ies-objective-runtime-gates-chromium-1440x1000/candidate-loading.png"
+      },
+      "description": "Automated evaluator capture of loading at desktop.",
+      "state": "loading",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "id": "screenshot-empty-mobile-small",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--c43ed-ies-objective-runtime-gates-chromium-320x800/candidate-empty.png"
+      },
+      "description": "Automated evaluator capture of empty at mobile-small.",
+      "state": "empty",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 320,
+        "height": 800
+      }
+    },
+    {
+      "id": "screenshot-empty-mobile",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--c43ed-ies-objective-runtime-gates-chromium-390x844/candidate-empty.png"
+      },
+      "description": "Automated evaluator capture of empty at mobile.",
+      "state": "empty",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "screenshot-empty-tablet",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--c43ed-ies-objective-runtime-gates-chromium-768x1024/candidate-empty.png"
+      },
+      "description": "Automated evaluator capture of empty at tablet.",
+      "state": "empty",
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "screenshot-empty-desktop",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--c43ed-ies-objective-runtime-gates-chromium-1440x1000/candidate-empty.png"
+      },
+      "description": "Automated evaluator capture of empty at desktop.",
+      "state": "empty",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "id": "screenshot-partial-mobile-small",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/manual-capture/partial-320x800.png"
+      },
+      "description": "Manual post-gate capture of partial at mobile-small.",
+      "state": "partial",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 320,
+        "height": 800
+      }
+    },
+    {
+      "id": "screenshot-partial-mobile",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/manual-capture/partial-390x844.png"
+      },
+      "description": "Manual post-gate capture of partial at mobile.",
+      "state": "partial",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "screenshot-partial-tablet",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/manual-capture/partial-768x1024.png"
+      },
+      "description": "Manual post-gate capture of partial at tablet.",
+      "state": "partial",
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "screenshot-partial-desktop",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/manual-capture/partial-1440x1000.png"
+      },
+      "description": "Manual post-gate capture of partial at desktop.",
+      "state": "partial",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "id": "screenshot-error-mobile-small",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--6f49d-ies-objective-runtime-gates-chromium-320x800/candidate-error.png"
+      },
+      "description": "Automated evaluator capture of error at mobile-small.",
+      "state": "error",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 320,
+        "height": 800
+      }
+    },
+    {
+      "id": "screenshot-error-mobile",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--6f49d-ies-objective-runtime-gates-chromium-390x844/candidate-error.png"
+      },
+      "description": "Automated evaluator capture of error at mobile.",
+      "state": "error",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "screenshot-error-tablet",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--6f49d-ies-objective-runtime-gates-chromium-768x1024/candidate-error.png"
+      },
+      "description": "Automated evaluator capture of error at tablet.",
+      "state": "error",
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "id": "screenshot-error-desktop",
+      "type": "state-screenshot",
+      "location": {
+        "kind": "local",
+        "path": "evaluation/test-results/candidate-runtime-generic--6f49d-ies-objective-runtime-gates-chromium-1440x1000/candidate-error.png"
+      },
+      "description": "Automated evaluator capture of error at desktop.",
+      "state": "error",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "id": "implementation",
+      "type": "implementation",
+      "location": {
+        "kind": "local",
+        "path": "candidate"
+      },
+      "description": "Frozen generated candidate source.",
+      "state": null,
+      "viewport": null
+    },
+    {
+      "id": "objective-evaluation",
+      "type": "accessibility",
+      "location": {
+        "kind": "local",
+        "path": "evaluation"
+      },
+      "description": "20/28 objective runtime checks passed.",
+      "state": null,
+      "viewport": null
+    },
+    {
+      "id": "blind-review",
+      "type": "manual-review",
+      "location": {
+        "kind": "local",
+        "path": "blind-review.json"
+      },
+      "description": "Treatment-blind frozen scorecard.",
+      "state": null,
+      "viewport": null
+    },
+    {
+      "id": "generation-record",
+      "type": "other",
+      "location": {
+        "kind": "local",
+        "path": "generation"
+      },
+      "description": "Generation event log and final response.",
+      "state": null,
+      "viewport": null
+    }
+  ],
+  "uncertainty": [
+    "Manual populated/partial screenshots prove renderability, but missing automated screenshots for those states are treated as uncertainty, not success."
+  ],
+  "conclusion": "Candidate B has a broader workflow, especially period selection, but the 20/28 objective gate result and serious accessibility failures materially lower the score."
+}

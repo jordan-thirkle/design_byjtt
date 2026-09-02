@@ -90,5 +90,5 @@ export function renderPublicHeader(pathname) {
 
 export function renderPublicFooter() {
   const groups = PUBLIC_SHELL.footer.groups.map((group) => `<div class="footer-group"><strong>${escapeHtml(group.label)}</strong><div class="footer-links">${group.links.map((link) => `<a href="${link.href}">${escapeHtml(link.label)}</a>`).join('')}</div></div>`).join('');
-  return `<footer class="footer"><div class="footer-inner"><div class="footer-brand"><strong>© ByJTT · ByJTT Design</strong><p>A public design standard and working product for people, designers, developers and AI agents.</p></div><div class="footer-groups">${groups}</div></div></footer>`;
+  return `<footer class="footer"><div class="footer-inner"><div class="footer-brand"><strong>© By JTT · By JTT Design</strong><p>A public design standard and working product for people, designers, developers and AI agents.</p></div><div class="footer-groups">${groups}</div></div></footer>`;
 }

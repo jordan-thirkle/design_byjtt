@@ -1,0 +1,22 @@
+Implemented the runnable static web product in `/private/tmp/byjtt-saas-v0.HY9wqF/candidate-a`.
+
+Built:
+- [index.html](/private/tmp/byjtt-saas-v0.HY9wqF/candidate-a/index.html:1)
+- [src/app.js](/private/tmp/byjtt-saas-v0.HY9wqF/candidate-a/src/app.js:1)
+- [src/styles.css](/private/tmp/byjtt-saas-v0.HY9wqF/candidate-a/src/styles.css:1)
+- [package.json](/private/tmp/byjtt-saas-v0.HY9wqF/candidate-a/package.json:1)
+- [ACCESSIBILITY-SCAN.md](/private/tmp/byjtt-saas-v0.HY9wqF/candidate-a/ACCESSIBILITY-SCAN.md:1)
+- [UNMET-REQUIREMENTS.md](/private/tmp/byjtt-saas-v0.HY9wqF/candidate-a/UNMET-REQUIREMENTS.md:1)
+
+Required URLs are implemented:
+- `/`
+- `/?state=loading`
+- `/?state=empty`
+- `/?state=partial`
+- `/?state=error`
+
+Verification:
+- `npm test` passed.
+- I attempted to start `python3 -m http.server 4173`, but this sandbox blocks binding a local port with `PermissionError: [Errno 1] Operation not permitted`. The app is still set up to run normally with `npm start` in a standard local environment.
+
+Known unmet requirement is recorded: no automated axe/Lighthouse accessibility scan output was available without adding packages or using network access.
