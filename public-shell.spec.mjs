@@ -2,26 +2,32 @@ import { test, expect } from '@playwright/test';
 
 const routes = ['/', '/standard/', '/research/', '/contracts/', '/agents/', '/library/', '/benchmarks/', '/docs/'];
 const primaryLabels = ['Studio', 'Standard', 'Library'];
-const secondaryLabels = ['Research', 'Contracts', 'Benchmarks', 'Documentation'];
+const secondaryLabels = ['Research', 'Contracts', 'Agents', 'Benchmarks', 'Documentation'];
 const primaryRoutes = new Set(['/standard/', '/library/']);
 const secondaryRoutes = new Set(['/research/', '/contracts/', '/agents/', '/benchmarks/', '/docs/']);
 
+// At viewports <= 850px the nav collapses to the first primary link + the More
+// disclosure. Collapsed links are display:none, so they leave the accessibility
+// tree — getByRole counts must reflect that.
+function primaryExpectations(width) {
+  return primaryLabels.map((label) => ({ label, count: width <= 850 ? (label === 'Studio' ? 1 : 0) : 1 }));
+}
+
 for (const route of routes) {
   test(`canonical public shell: ${route}`, async ({ page }) => {
+    const width = page.viewportSize()?.width ?? 1440;
     await page.goto(route);
     const nav = page.locator('nav[aria-label="Primary navigation"]');
     await expect(nav).toHaveCount(1);
-    for (const label of primaryLabels) await expect(nav.getByRole('link', { name: label, exact: true })).toHaveCount(1);
-    const more = nav.locator('.nav-more');
-    if (await more.isVisible()) {
-      await expect(more.locator('summary')).toHaveText('More');
-      await more.locator('summary').click();
-      for (const label of secondaryLabels) await expect(more.locator('.nav-more-links').getByRole('link', { name: label, exact: true })).toHaveCount(1);
-    } else {
-      await expect(more).toHaveCount(1);
+    for (const { label, count } of primaryExpectations(width)) {
+      await expect(nav.getByRole('link', { name: label, exact: true })).toHaveCount(count);
     }
+    const more = nav.locator('.nav-more');
+    await expect(more.locator('summary')).toBeVisible();
+    await more.locator('summary').click();
+    for (const label of secondaryLabels) await expect(more.locator('.nav-more-links').getByRole('link', { name: label, exact: true })).toHaveCount(1);
     const cta = nav.getByRole('link', { name: 'Open Studio', exact: true });
-    if (await cta.isVisible()) await expect(cta).toHaveCount(1);
+    await expect(cta).toHaveCount(0);
     await expect(page.locator('a.skip[href="#main"]')).toHaveCount(1);
     await expect(page.locator('main#main')).toHaveCount(1);
     await expect(page.locator('footer.footer')).toHaveCount(1);
@@ -48,11 +54,13 @@ test('mobile public shell stays focused and usable', async ({ page }) => {
   await page.goto('/research/');
   const nav = page.locator('nav[aria-label="Primary navigation"]');
   await expect(nav).toHaveCount(1);
-  for (const label of primaryLabels) await expect(nav.getByRole('link', { name: label, exact: true })).toHaveCount(1);
+  for (const { label, count } of primaryExpectations(390)) {
+    await expect(nav.getByRole('link', { name: label, exact: true })).toHaveCount(count);
+  }
   await expect(nav.getByRole('link', { name: 'Open Studio', exact: true })).toHaveCount(0);
   await expect(nav.locator('.nav-more summary')).toBeVisible();
   await nav.locator('.nav-more summary').click();
-  await expect(nav.locator('.nav-more-links').getByRole('link', { name: 'Research', exact: true })).toBeVisible();
+  for (const label of secondaryLabels) await expect(nav.locator('.nav-more-links').getByRole('link', { name: label, exact: true })).toBeVisible();
   await expect(page.locator('main#main')).toHaveCount(1);
   await expect(page.locator('footer.footer')).toHaveCount(1);
   await expect(page.locator('a.skip[href="#main"]')).toHaveCount(1);
