@@ -5,6 +5,9 @@ import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const port = Number(process.env.PORT || 4174);
+const routeFiles = new Map([
+  ['/standard/', 'standard.html']
+]);
 const contentTypes = {
   '.html': 'text/html; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
@@ -18,7 +21,7 @@ const contentTypes = {
 createServer(async (request, response) => {
   try {
     const pathname = new URL(request.url ?? '/', `http://${request.headers.host}`).pathname;
-    const requested = pathname === '/' ? '/index.html' : pathname;
+    const requested = routeFiles.get(pathname) ?? (pathname === '/' ? '/index.html' : pathname);
     const relative = normalize(requested).replace(/^([/\\])+/, '');
     const candidate = join(root, relative);
 

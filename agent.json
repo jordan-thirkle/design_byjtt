@@ -1,0 +1,32 @@
+{
+  "name": "ByJTT Design",
+  "version": "0.1",
+  "purpose": "Help people and AI create digital products with clear purpose, accessible interactions, and evidence behind important decisions.",
+  "canonical": {
+    "standard": "/standard.json",
+    "humanStandard": "/standard/",
+    "studio": "/studio",
+    "library": "/library/",
+    "contracts": "/contracts/",
+    "research": "/research/",
+    "benchmarks": "/benchmarks/",
+    "documentation": "/docs/",
+    "agentGuidance": "/agents/",
+    "llms": "/llms.txt"
+  },
+  "recommendedWorkflow": [
+    "Understand the product goal and users.",
+    "Read the relevant parts of the ByJTT Design Standard.",
+    "Use or create a Design Contract when important decisions must remain true.",
+    "Create or revise the design in Studio when a working interface is useful.",
+    "Check accessibility, responsive behaviour, content, interaction states, and implementation reality.",
+    "Publish reusable work with its decisions and evidence when appropriate."
+  ],
+  "rules": [
+    "Treat /standard.json as the canonical machine-readable Standard index.",
+    "Do not infer design requirements from screenshots when an explicit contract or Standard rule exists.",
+    "Do not claim verification without recorded evidence.",
+    "Prefer established web standards and mature open-source solutions before inventing replacements.",
+    "Keep human control clear when AI suggests or executes consequential actions."
+  ]
+}

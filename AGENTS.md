@@ -59,6 +59,10 @@ When research affects a product or content decision, capture the finding, date, 
 ### Keep the project tool-independent
 Do not couple core architecture to whichever AI generator is currently fashionable. Tool adapters may change; product requirements, contracts, evaluation, provenance, and benchmark methodology should remain portable.
 
+## Web delivery standard
+
+For frontend work, use the shared By JTT web operating model: GitHub is source of truth; GitHub Actions is the routine build/browser/accessibility verification environment; Vercel Git auto-deployment is disabled; Vercel is used deliberately for production releases after review; and Cloudflare remains the domain/DNS layer with proxying off unless a documented exception exists. Do not re-enable preview deployments merely to obtain routine test evidence.
+
 ## Definition of done
 
 A change is done when:

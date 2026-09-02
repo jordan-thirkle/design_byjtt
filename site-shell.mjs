@@ -1,37 +1,41 @@
 export const PUBLIC_SHELL = {
   brand: {label: 'By JTT Design', href: '/', ariaLabel: 'By JTT Design home'},
   primaryNavigation: [
+    {label: 'Studio', href: '/studio'},
     {label: 'Standard', href: '/standard/'},
+    {label: 'Library', href: '/library/'}
+  ],
+  secondaryNavigation: [
     {label: 'Research', href: '/research/'},
     {label: 'Contracts', href: '/contracts/'},
     {label: 'Agents', href: '/agents/'},
-    {label: 'Library', href: '/library/'},
-    {label: 'Benchmarks', href: '/benchmarks/'}
+    {label: 'Benchmarks', href: '/benchmarks/'},
+    {label: 'Documentation', href: '/docs/'}
   ],
   primaryAction: {label: 'Open Studio', href: '/studio'},
   footer: {
     groups: [
       {
-        label: 'Explore',
+        label: 'Product',
         links: [
+          {label: 'Studio', href: '/studio'},
           {label: 'Standard', href: '/standard/'},
-          {label: 'Research', href: '/research/'},
-          {label: 'Contracts', href: '/contracts/'},
-          {label: 'Agents', href: '/agents/'},
-          {label: 'Library', href: '/library/'},
-          {label: 'Benchmarks', href: '/benchmarks/'}
+          {label: 'Library', href: '/library/'}
         ]
       },
       {
-        label: 'Use',
+        label: 'Learn',
         links: [
-          {label: 'Open Studio', href: '/studio'},
+          {label: 'Research', href: '/research/'},
+          {label: 'Contracts', href: '/contracts/'},
+          {label: 'Benchmarks', href: '/benchmarks/'},
           {label: 'Documentation', href: '/docs/'}
         ]
       },
       {
-        label: 'Machine-readable',
+        label: 'For AI',
         links: [
+          {label: 'Agent guidance', href: '/agents/'},
           {label: 'Standard index', href: '/standard.json'},
           {label: 'AI / llms.txt', href: '/llms.txt'}
         ]
@@ -42,7 +46,7 @@ export const PUBLIC_SHELL = {
 
 export function normalisePath(pathname) {
   if (!pathname || pathname === '/') return '/';
-  const value = pathname.replace(/\/+/g, '/');
+  const value = pathname.replace(/\\+/g, '/');
   return value.endsWith('/') ? value : `${value}/`;
 }
 
@@ -52,6 +56,10 @@ export function getShellModel(pathname) {
     ...PUBLIC_SHELL,
     currentPath: path,
     primaryNavigation: PUBLIC_SHELL.primaryNavigation.map((item) => ({
+      ...item,
+      current: normalisePath(item.href) === path
+    })),
+    secondaryNavigation: PUBLIC_SHELL.secondaryNavigation.map((item) => ({
       ...item,
       current: normalisePath(item.href) === path
     }))
@@ -67,12 +75,17 @@ function escapeHtml(value) {
     .replaceAll("'", '&#39;');
 }
 
+export const SHELL_RESPONSIVE_STYLE = `<style id="byjtt-shell-responsive">@media(max-width:850px){.nav{gap:.5rem}.nav-links{gap:.5rem}.nav-primary{gap:.5rem}.nav-links a,.nav-more summary{font-size:.8rem}.nav-primary a:not(:first-child){display:none}}</style>`;
+
 export function renderPublicHeader(pathname) {
   const model = getShellModel(pathname);
   const links = model.primaryNavigation.map((item) =>
     `<a href="${item.href}"${item.current ? ' aria-current="page"' : ''}>${escapeHtml(item.label)}</a>`
   ).join('');
-  return `<a class="skip" href="#main">Skip to content</a><header class="site-header"><nav class="nav" aria-label="Primary navigation"><a class="wordmark" href="/" aria-label="${escapeHtml(model.brand.ariaLabel)}">By JTT <i>Design</i></a><div class="nav-links">${links}<a class="nav-cta" href="${model.primaryAction.href}">${escapeHtml(model.primaryAction.label)}</a></div></nav></header>`;
+  const secondary = model.secondaryNavigation.map((item) =>
+    `<a href="${item.href}"${item.current ? ' aria-current="page"' : ''}>${escapeHtml(item.label)}</a>`
+  ).join('');
+  return `<a class="skip" href="#main">Skip to content</a><header class="site-header"><nav class="nav" aria-label="Primary navigation"><a class="wordmark" href="/" aria-label="${escapeHtml(model.brand.ariaLabel)}">By JTT <i>Design</i></a><div class="nav-links"><div class="nav-primary">${links}</div><details class="nav-more"><summary>More</summary><div class="nav-more-links">${secondary}</div></details></div></nav></header>`;
 }
 
 export function renderPublicFooter() {

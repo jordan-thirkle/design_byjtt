@@ -4,16 +4,16 @@ import { join } from 'node:path';
 
 const root = new URL('../', import.meta.url);
 const publicRoutes = [
-  ['/', 'index.html'],
-  ['/standard/', 'standard.html'],
-  ['/research/', 'research/index.html'],
-  ['/contracts/', 'contracts/index.html'],
-  ['/agents/', 'agents/index.html'],
-  ['/library/', 'library/index.html'],
-  ['/benchmarks/', 'benchmarks/index.html'],
-  ['/docs/', 'docs/index.html'],
+  ['/','index.html'],
+  ['/standard/','standard.html'],
+  ['/research/','research/index.html'],
+  ['/contracts/','contracts/index.html'],
+  ['/agents/','agents/index.html'],
+  ['/library/','library/index.html'],
+  ['/benchmarks/','benchmarks/index.html'],
+  ['/docs/','docs/index.html'],
 ];
-const sourceFiles = ['standard.md', 'standard.json', 'standard.schema.json', 'llms.txt'];
+const sourceFiles = ['standard.md', 'standard.json', 'standard.schema.json', 'llms.txt', 'agent.json'];
 
 function file(path) {
   return join(root.pathname, path);
@@ -31,11 +31,17 @@ const standard = await readFile(file('standard.json'), 'utf8');
 const schema = await readFile(file('standard.schema.json'), 'utf8');
 const llms = await readFile(file('llms.txt'), 'utf8');
 const source = await readFile(file('standard.md'), 'utf8');
+const agent = JSON.parse(await readFile(file('agent.json'), 'utf8'));
 assert.match(source, /# ByJTT Design Standard v0\.1/);
 assert.doesNotMatch(schema, /"const":\s*"0\.0"/);
 assert.match(standard, /"version"\s*:\s*"0\.1"/);
 assert.match(standard, /"publicSiteShell"/);
-assert.match(llms, /\(https:\/\/design\.byjtt\.com\/standard\/\)/);
+assert.match(llms, /\(https:\/\/design\.byjtt\.com\/agent\.json\)/);
+assert.equal(agent.name, 'ByJTT Design');
+assert.equal(agent.canonical.standard, '/standard.json');
+assert.equal(agent.canonical.studio, '/studio');
+assert.equal(agent.canonical.library, '/library/');
+assert.ok(Array.isArray(agent.recommendedWorkflow) && agent.recommendedWorkflow.length >= 5);
 for (const relativePath of sourceFiles) await readFile(file(relativePath), 'utf8');
 
 const shellSource = await readFile(file('site-shell.mjs'), 'utf8');
